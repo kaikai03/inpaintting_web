@@ -18,15 +18,16 @@ import secondcomponent from '~/components/secondcomponent.vue'
 import third from "~/components/third";
 
 
-Vue.http.interceptors.push((request, next) => {
-  // 请求发送前的处理逻辑
-  request.headers.set('testxxx', "testttt ")
-  next((response) => {
-    // 请求发送后的处理逻辑
-    // 根据请求的状态，response参数会返回给successCallback或errorCallback
-    return response
-  })
-})
+// Vue.http.interceptors.push((request, next) => {
+//   // 请求发送前的处理逻辑
+//   request.headers.set('Access-Control-Allow-Origin', '*')
+//   next((response) => {
+//     // 请求发送后的处理逻辑
+//     // 根据请求的状态，response参数会返回给successCallback或errorCallback
+//     return response
+//   })
+// })
+
 
 
 

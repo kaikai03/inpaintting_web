@@ -27,7 +27,7 @@
             }
         },
         mounted: function() {
-            this.$http.get('https://api.apiopen.top/getWangYiNews', {withCredentials:true}, {
+            this.$http.get('https://api.apiopen.top/getWangYiNews', {}, {
                 headers: {
 
                 },
