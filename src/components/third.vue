@@ -1,7 +1,7 @@
 <template>
     <div id="third">
         <h1>third</h1>
-        <a>written by {{author}}</a>
+        <a>written by {{$store.state.name}}</a>
     </div>
 </template>
 

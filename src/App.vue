@@ -8,12 +8,17 @@
     </div>
     <firstcomponent></firstcomponent>
     <ul>
-      <li> <router-link to="/first">“第一页” </router-link> </li>
-      <li> <router-link to="/second">“第二页” </router-link> </li>
+      <li> <router-link to="/first" >“第一页” </router-link> </li>
+      <li> <router-link to="/second" >“第二页” </router-link> </li>
       <!-- 带查询参数，下面的结果为 /second?xxx=private -->
       <li> <router-link to="/third" >“third” </router-link> </li>
     </ul>
-    <router-view class="view"></router-view>
+    <transition mode="out-in">
+      <router-view name="view1"></router-view>
+    </transition>
+    <transition mode="out-in">
+      <router-view name="view2"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -51,4 +56,16 @@
     background-color: beige;
     font-size: 30px;
   }
+
+  .v-enter,
+  .v-leave-to {
+    opacity: 0;
+    transform: translateX(140px);
+  }
+
+  .v-enter-active,
+  .v-leave-active {
+    transition: all 0.5s ease
+  }
+
 </style>

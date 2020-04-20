@@ -1,51 +1,38 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import router_ from "~/router/router";
+import store_ from "~/store";
 import App from './App.vue'
 Vue.use(ElementUI)
 
-
-import VueRouter from "vue-router"
-Vue.use(VueRouter)
-
-import VueResource from 'vue-resource'
-Vue.use(VueResource);
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies);
 
 
 // Vue.config.debug = true;
 
 
-const firstview = { template: '<div><h2>我是第 1 个子页面</h2></div>' }
 import firstcomponent from '~/components/firstcomponent.vue'
 import secondcomponent from '~/components/secondcomponent.vue'
 import third from "~/components/third";
 
-const router = new VueRouter({
-  mode: 'history',
-  base: __dirname,
-  routes: [
-    {
-      path: '/',
-      redirect: '/first'
-    },
-    {
-      path: '/first',
-      component: firstview
-    },
-    {
-      path: '/second',
-      component: secondcomponent
-    },
-    {
-      path: '/third',
-      component: third
-    },
-  ]
+
+Vue.http.interceptors.push((request, next) => {
+  // 请求发送前的处理逻辑
+  request.headers.set('testxxx', "testttt ")
+  next((response) => {
+    // 请求发送后的处理逻辑
+    // 根据请求的状态，response参数会返回给successCallback或errorCallback
+    return response
+  })
 })
+
 
 
 new Vue({
   el: '#first',
-  router: router,
+  router: router_,
+  store:store_,
   render: h => h(App)
 })
