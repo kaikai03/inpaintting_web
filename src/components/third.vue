@@ -1,7 +1,8 @@
 <template>
     <div id="third">
         <h1>third</h1>
-        <a>written by {{$store.state.name}}</a>
+        <a>written by {{$store.state.name}}</a><br>
+        <a>author by {{author}}</a>
     </div>
 </template>
 
@@ -10,7 +11,7 @@
         name: "third",
         data(){
             return {
-                author:'third'
+                author:this.$route.path
             }
         },
         beforeRouteLeave(to, from, next) {

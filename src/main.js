@@ -33,7 +33,7 @@ import third from "~/components/third";
 
 
 new Vue({
-  el: '#first',
+  el: '#main',
   router: router_,
   store:store_,
   render: h => h(App)

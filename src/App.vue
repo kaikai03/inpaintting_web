@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <transition mode="out-in">
       <mainlayout></mainlayout>
-    </transition>
   </div>
 </template>
 
@@ -26,7 +24,13 @@
 
 <style>
 #app{
-  height: 100%;
+  margin:0px auto;
+  padding:0px;
 }
+body{
+  margin:0px auto;
+  padding:0px;
+}
+
 
 </style>

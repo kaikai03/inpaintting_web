@@ -1,11 +1,13 @@
 <template>
-    <div class="navigator">
-        <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-        <el-radio-button :label="false">展开</el-radio-button>
-        <el-radio-button :label="true">收起</el-radio-button>
-    </el-radio-group>
+    <div class="navigator" @mouseover="mouseover" @mouseleave="mouseleave">
+<!--        <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">-->
+<!--            <el-radio-button :label="false">展开</el-radio-button>-->
+<!--            <br>-->
+<!--            <el-radio-button :label="true">收起</el-radio-button>-->
+<!--        </el-radio-group>-->
+<!--        router :default-active="$route.path"-->
     <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-             :collapse="isCollapse">
+             :collapse="isCollapse" >
         <el-submenu index="1">
             <template slot="title">
                 <i class="el-icon-location"></i>
@@ -13,8 +15,12 @@
             </template>
             <el-menu-item-group>
                 <span slot="title">分组一</span>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
+                <el-menu-item index="1-1">
+                    <router-link to="/first">选项1</router-link>
+                </el-menu-item>
+                <el-menu-item index="1-2">
+                    <router-link to="/third">选项2</router-link>
+                </el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="分组2">
                 <el-menu-item index="1-3">选项3</el-menu-item>
@@ -54,6 +60,12 @@
             },
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
+            },
+            mouseover() {
+                this.isCollapse= false
+            },
+            mouseleave() {
+                this.isCollapse= true
             }
         }
     }
