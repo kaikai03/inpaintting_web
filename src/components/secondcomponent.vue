@@ -18,6 +18,7 @@
 
 
 <script>
+    import http from "~/api/http";
     export default {
         name: "secondcomponent",
         data(){
@@ -27,21 +28,27 @@
             }
         },
         mounted: function() {
-            this.$http.get('https://api.apiopen.top/getWangYiNews', {}, {
-                headers: {
-
-                },
-                emulateJSON: true
-            }).then(function(response) {
-              // 这里是处理正确的回调
-
-                this.articles = response.data.result
-                // this.articles = response.data["subjects"] 也可以
-                console.log(this.articles)
-            }, function(response) {
-                // 这里是处理错误的回调
-                console.log(response)
-            });
+            // https://api.apiopen.top/getWangYiNews
+            http.getRequest('127.0.0.1:8010/ffff',
+                (res) => {
+                    this.articles = res.data.result
+                    console.log(res)
+                })
+            // this.$http.get('https://api.apiopen.top/getWangYiNews', {}, {
+            //     headers: {
+            //
+            //     },
+            //     emulateJSON: true
+            // }).then(function(response) {
+            //   // 这里是处理正确的回调
+            //
+            //     this.articles = response.data.result
+            //     // this.articles = response.data["subjects"] 也可以
+            //     console.log(this.articles)
+            // }, function(response) {
+            //     // 这里是处理错误的回调
+            //     console.log(response)
+            // });
         }
     }
 </script>

@@ -13,10 +13,10 @@ const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   routes: [
-    {
-      path: '/',
-      redirect: '/first'
-    },
+    // {
+    //   path: '/',
+    //   redirect: '/first'
+    // },
     {
       path: '/first',
       components: {view1:firstview}
@@ -27,7 +27,7 @@ const router = new VueRouter({
     },
     {
       path: '/third',
-      components: {view2:third}
+      components: {view1:third,view2:secondcomponent}
     },
   ]
 })
