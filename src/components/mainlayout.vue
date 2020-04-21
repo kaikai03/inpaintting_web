@@ -7,7 +7,9 @@
     <!-- 嵌套容器 -->
     <el-container>
       <!-- 侧边导航菜单 -->
-      <el-aside width="150px"></el-aside>
+      <el-aside style="width: auto">
+        <navigator></navigator>
+      </el-aside>
       <!-- 内容 -->
       <el-main>
         <!-- 第一列栅格布局 -->
@@ -15,6 +17,7 @@
           <el-col :span="12" class="col1">
             <li>
               <router-link to="/first">“第一页”</router-link>
+                <el-button type="danger">主要按钮</el-button>
             </li>
           </el-col>
           <el-col :span="12" class="col2">
@@ -38,11 +41,13 @@
 </template>
 
 <script>
-    import firstcomponent from "~/components/firstcomponent";
-    import secondcomponent from "~/components/secondcomponent";
-    import third from "~/components/third";
+    import navigator from "~/components/navigator";
+
     export default {
-        name: "mainlayout"
+        name: "mainlayout",
+        components:{
+          navigator
+        }
     }
 </script>
 

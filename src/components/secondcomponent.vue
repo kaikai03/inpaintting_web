@@ -33,7 +33,11 @@
                 (res) => {
                     this.articles = res.data.result
                     console.log(res)
-                })
+                },
+                (er) => {
+                    window.confirm('NetError: ' + er.status)
+                }
+            )
             // this.$http.get('https://api.apiopen.top/getWangYiNews', {}, {
             //     headers: {
             //
