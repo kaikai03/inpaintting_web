@@ -1,5 +1,7 @@
 <template>
-    <div class="navigator" @mouseover="mouseover" @mouseleave="mouseleave">
+<!--    <div class="navigator" @mouseover="mouseover" @mouseleave="mouseleave">-->
+    <div class="navigator" v-on="{mouseenter:mouseover,mouseleave:mouseleave}">
+
 <!--        <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">-->
 <!--            <el-radio-button :label="false">展开</el-radio-button>-->
 <!--            <br>-->

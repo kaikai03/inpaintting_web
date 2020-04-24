@@ -1,11 +1,14 @@
 <template>
   <div id="app">
+      <iconstable></iconstable>
       <mainlayout></mainlayout>
   </div>
 </template>
 
 <script>
   import mainlayout from "~/components/mainlayout";
+  import iconstable from "~/components/common/iconstable";
+
   export default {
     data(){
       return {
@@ -17,7 +20,7 @@
 
     },
     components:{
-      mainlayout
+      mainlayout,iconstable
     }
   }
 </script>
