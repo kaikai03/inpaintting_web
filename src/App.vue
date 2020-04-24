@@ -1,18 +1,21 @@
 <template>
   <div id="app">
-      <iconstable></iconstable>
-      <mainlayout></mainlayout>
+
+<!--    <twinklingimage imgname="logo.png"></twinklingimage>-->
+    <twinklingimage :imgfile="imgf"></twinklingimage>
+<!--      <iconstable></iconstable>-->
+<!--      <mainlayout></mainlayout>-->
   </div>
 </template>
 
 <script>
   import mainlayout from "~/components/mainlayout";
   import iconstable from "~/components/common/iconstable";
-
+  import twinklingimage from "~/components/common/twinklingimage";
   export default {
     data(){
       return {
-        msg:'export',
+        imgf:require('./assets/logo.png'),
         dirname:__dirname
       }
     },
@@ -20,7 +23,7 @@
 
     },
     components:{
-      mainlayout,iconstable
+      mainlayout,iconstable,twinklingimage
     }
   }
 </script>
@@ -34,6 +37,5 @@ body{
   margin:0px auto;
   padding:0px;
 }
-
 
 </style>
