@@ -2,11 +2,13 @@
     <div>
     <div class="box">
 <!--        <img :src="require('../../assets/'+imgname)" style="display:block;">-->
-        <img :src="imgfile" style="display:block;">
+        <img v-if="imgfile" :src="imgfile" style="display:block;" >
+        <img v-else v-bind:src="imgadd" style="display:block;" >
+
         <b class="shan"></b>
     </div>
     <img src="../../assets/logo.png" style="display:block;">
-       {{imgfile}}
+       {{imgadd}}
 
     </div>
 </template>
@@ -15,9 +17,10 @@
     export default {
         name: "twinklingimage",
         data(){
-            return {imgsrc:'../../assets/'}
-        }
-        ,props:['imgname','imgfile']
+            return {}
+        },
+        props: {'imgadd':String,'imgfile':String},
+
     }
 </script>
 

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
 
-<!--    <twinklingimage imgname="logo.png"></twinklingimage>-->
     <twinklingimage :imgfile="imgf"></twinklingimage>
+<!--    <twinklingimage  imgadd="http://127.0.0.1:8888/logo.png" ></twinklingimage>-->
 <!--      <iconstable></iconstable>-->
 <!--      <mainlayout></mainlayout>-->
   </div>
@@ -15,16 +15,17 @@
   export default {
     data(){
       return {
-        imgf:require('./assets/logo.png'),
+        imgf:"",
         dirname:__dirname
       }
     },
-    methods: {
-
-    },
-    components:{
-      mainlayout,iconstable,twinklingimage
-    }
+      methods: {},
+      mounted() {
+          this.imgf = require('./assets/logo.png')
+      },
+      components: {
+          mainlayout, iconstable, twinklingimage
+      }
   }
 </script>
 
