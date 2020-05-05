@@ -4,9 +4,9 @@
     <el-header height="40px"  style="display: table">
       <h3 style="display: table-cell ;vertical-align: middle">图像</h3>
     </el-header>
-    <carouselcomponent>
+    <carousel>
 
-    </carouselcomponent>
+    </carousel>
     <!-- 嵌套容器 -->
     <el-container>
       <!-- 侧边导航菜单 -->
@@ -45,13 +45,13 @@
 
 <script>
     import navigator from "~/components/navigator";
-    import carouselcomponent from "~/components/carouselcomponent";
+    import carousel from "~/components/carousel";
 
 
     export default {
         name: "mainlayout",
         components:{
-          navigator,carouselcomponent
+          navigator,carousel
         }
     }
 </script>

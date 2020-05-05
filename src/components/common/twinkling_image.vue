@@ -15,7 +15,7 @@
 
 <script>
     export default {
-        name: "twinklingimage",
+        name: "twinkling_image",
         data(){
             return {}
         },

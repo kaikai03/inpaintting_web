@@ -11,7 +11,7 @@
 <script>
   import mainlayout from "~/components/mainlayout";
   import iconstable from "~/components/common/iconstable";
-  import twinklingimage from "~/components/common/twinklingimage";
+  import twinkling_image from "~/components/common/twinkling_image";
   export default {
     data(){
       return {
@@ -22,9 +22,10 @@
       methods: {},
       mounted() {
           this.imgf = require('./assets/logo.png')
+          // this.$router.push({name:"first1"})
       },
       components: {
-          mainlayout, iconstable, twinklingimage
+          mainlayout, iconstable, twinkling_image
       }
   }
 </script>

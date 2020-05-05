@@ -18,6 +18,7 @@ const router = new VueRouter({
     //   redirect: '/first'
     // },
     {
+      name: 'first1',
       path: '/first',
       components: {view1:firstview}
     },
@@ -26,6 +27,7 @@ const router = new VueRouter({
       components: {view1:secondcomponent}
     },
     {
+      name: 'third3',
       path: '/third',
       components: {view1:third,view2:secondcomponent}
     },
