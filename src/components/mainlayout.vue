@@ -1,9 +1,12 @@
 <template>
   <el-container>
     <!-- 顶栏 -->
-    <el-header height="60px">
-      <h2>Element 页面布局</h2>
+    <el-header height="40px"  style="display: table">
+      <h3 style="display: table-cell ;vertical-align: middle">图像</h3>
     </el-header>
+    <carouselcomponent>
+
+    </carouselcomponent>
     <!-- 嵌套容器 -->
     <el-container>
       <!-- 侧边导航菜单 -->
@@ -42,11 +45,13 @@
 
 <script>
     import navigator from "~/components/navigator";
+    import carouselcomponent from "~/components/carouselcomponent";
+
 
     export default {
         name: "mainlayout",
         components:{
-          navigator
+          navigator,carouselcomponent
         }
     }
 </script>
@@ -57,8 +62,9 @@
     min-height:800px; height:auto!important; height:900px;
   }
 .el-header {
-  background-color: #409EFF;
-  color: white;
+  background-color: white;
+  color: gray;
+  width: 100%;
 }
 .el-footer {
   background-color: #909399;
