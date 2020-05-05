@@ -1,10 +1,10 @@
 <template>
   <div id="app">
 
-    <twinklingimage :imgfile="imgf"></twinklingimage>
+<!--    <twinklingimage :imgfile="imgf"></twinklingimage>-->
 <!--    <twinklingimage  imgadd="http://127.0.0.1:8888/logo.png" ></twinklingimage>-->
 <!--      <iconstable></iconstable>-->
-<!--      <mainlayout></mainlayout>-->
+      <mainlayout></mainlayout>
   </div>
 </template>
 
