@@ -1,23 +1,21 @@
 <template>
   <div>
-    <img_loading_progress></img_loading_progress>
-<!--    <el-carousel :autoplay="autoplay" :interval="2000" type="card" height="400px" ref="carousel"-->
-<!--                 arrow="never" @change="((pre, next) => {change(pre, next)})">-->
-<!--      <el-carousel-item v-for="(item,index) in playitems" :key="item.index" name="index">-->
-<!--        <div style="height: 100%;width: 100%;" @click="clickitem(item)">-->
-<!--          <div style="height: 30%;width: 30%; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background-color: red"-->
-<!--               @click.stop="clickplay(item)">-->
-<!--            <p class="medium">{{ item }}</p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </el-carousel-item>-->
-<!--    </el-carousel>-->
+    <el-carousel :autoplay="autoplay" :interval="2000" type="card" height="400px" ref="carousel"
+                 arrow="never" @change="((pre, next) => {change(pre, next)})">
+      <el-carousel-item v-for="(item,index) in playitems" :key="item.index" name="index">
+        <div style="height: 100%;width: 100%;" @click="clickitem(item)">
+          <div style="height: 30%;width: 30%; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background-color: red"
+               @click.stop="clickplay(item)">
+            <p class="medium">{{ item }}</p>
+          </div>
+        </div>
+      </el-carousel-item>
+    </el-carousel>
   </div>
 </template>
 
 
 <script>
-    import img_loading_progress from "~/components/common/img_loading_progress";
     import navigator from "~/components/navigator";
     export default {
         name: "carousel",
@@ -56,7 +54,7 @@
           }
         },
         components:{
-          img_loading_progress
+
         }
     }
 </script>

@@ -4,11 +4,14 @@
     <el-header height="40px"  style="display: table">
       <h3 style="display: table-cell ;vertical-align: middle">图像</h3>
     </el-header>
-    <carousel>
 
-    </carousel>
+    <el-container id="carousel_container">
+    <img_loading_progress></img_loading_progress>
+    </el-container>
+<!--    <carousel>-->
+<!--    </carousel>-->
     <!-- 嵌套容器 -->
-    <el-container>
+    <el-container id="main_container">
       <!-- 侧边导航菜单 -->
       <el-aside style="width: auto">
         <navigator></navigator>
@@ -46,19 +49,24 @@
 <script>
     import navigator from "~/components/navigator";
     import carousel from "~/components/carousel";
+    import img_loading_progress from "~/components/common/img_loading_progress";
 
 
     export default {
         name: "mainlayout",
         components:{
-          navigator,carousel
+          navigator,carousel,img_loading_progress
         }
     }
 </script>
 
 
 <style>
-  .el-container {
+  #carousel_container {
+    height:400px;
+    style:"background-color: #8c939d";
+  }
+  #main_container {
     min-height:800px; height:auto!important; height:900px;
   }
 .el-header {
