@@ -1,15 +1,15 @@
 <template>
   <el-container>
     <!-- 顶栏 -->
-    <el-header height="40px"  style="display: table">
+    <el-header height="40px" style="display: table">
       <h3 style="display: table-cell ;vertical-align: middle">图像</h3>
     </el-header>
 
     <el-container id="carousel_container">
-    <img_loading_progress></img_loading_progress>
+      <carousel></carousel>
     </el-container>
-<!--    <carousel>-->
-<!--    </carousel>-->
+    <!--    <carousel>-->
+    <!--    </carousel>-->
     <!-- 嵌套容器 -->
     <el-container id="main_container">
       <!-- 侧边导航菜单 -->
@@ -23,7 +23,7 @@
           <el-col :span="12" class="col1">
             <li>
               <router-link to="/first">“第一页”</router-link>
-                <el-button type="danger">主要按钮</el-button>
+              <el-button type="danger">主要按钮</el-button>
             </li>
           </el-col>
           <el-col :span="12" class="col2">
@@ -49,13 +49,11 @@
 <script>
     import navigator from "~/components/navigator";
     import carousel from "~/components/carousel";
-    import img_loading_progress from "~/components/common/img_loading_progress";
-
 
     export default {
         name: "mainlayout",
         components:{
-          navigator,carousel,img_loading_progress
+          navigator,carousel
         }
     }
 </script>
@@ -73,6 +71,7 @@
   background-color: white;
   color: gray;
   width: 100%;
+  z-index: 2;
 }
 .el-footer {
   background-color: #909399;
@@ -84,6 +83,7 @@
 }
 .el-main {
   background-color: darkkhaki;
+  z-index: 2;
 }
 .el-col {
   height: 200px;

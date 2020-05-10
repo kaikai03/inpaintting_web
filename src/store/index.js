@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        name: 'helloVueX'
+        name:'black tome',
+        host: document.location.hostname
     },
     mutations: {
         edit(state,payload) {

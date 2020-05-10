@@ -30,7 +30,7 @@ const router = new VueRouter({
       name: 'third3',
       path: '/third',
       components: {view1:third,view2:secondcomponent}
-    },
+    }
   ]
 })
 
