@@ -22,6 +22,17 @@
                                           ref="videoPlayer"
                                           :playsinline="true"
                                           :options="playerOptions"
+                                          @play="onPlayerPlay($event)"
+                                          @pause="onPlayerPause($event)"
+                                          @ended="onPlayerEnded($event)"
+                                          @waiting=""
+                                          @playing=""
+                                          @loadeddata=""
+                                          @timeupdate=""
+                                          @canplay=""
+                                          @canplaythrough=""
+                                          @statechanged=""
+                                          @ready=""
                             ></video-player>
 <!--                            </div>-->
                         </div>
