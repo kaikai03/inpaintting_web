@@ -1,7 +1,8 @@
 <template>
     <div id="progress_main" >
         <div id="progress"  ref="progress_ref">
-            <el-progress type="circle" :percentage="percentage" :status="status" :width=width :stroke-width=stroke ></el-progress>
+            <el-progress type="circle" :percentage="percentage" :status="status" :width=width :stroke-width=stroke :show-text="show_text"></el-progress>
+            <el-button id="refresh_btn_large" v-show="has_error" icon="el-icon-refresh" @click="start()" circle> </el-button>
         </div>
     </div>
 
@@ -19,9 +20,11 @@
               count:0,
               percentage:0,
               has_error:false,
-              playitems:[{"index":1,"type":"0","img":"http://127.0.0.1:90/imgs/1.jpg","media":"http://127.0.0.1:8020/mv/mv1.mp4"},
-                {"index":2,"type":"1","img":"http://127.0.0.1:90/imgs/2.jpg","media":"http://127.0.0.1:8020/gif/gif1.gif"},
-                {"index":3,"type":"1","img":"http://127.0.0.1:90/imgs/3.gif~","media":"http://127.0.0.1:8020/gif/gif3.gif"}]
+              show_text:true,
+              success_delay:2500,
+              playitems:[{"index":1,"type":"0","img":"http://127.0.0.1:90/imgs/1.jpg","media":"http://127.0.0.1:90/v/1.mp4"},
+                {"index":2,"type":"1","img":"http://127.0.0.1:90/imgs/2.jpg","media":"http://127.0.0.1:90/v/2.mp4"},
+                {"index":3,"type":"1","img":"http://127.0.0.1:90/imgs/3.gif","media":"http://127.0.0.1:90/v/3.mp4"}]
           }
         },
         methods: {
@@ -30,6 +33,7 @@
                 this.count = 0
                 this.percentage = 0
                 this.has_error = false
+                this.show_text = true
             },
             async update() {
                 while (!this.has_error) {
@@ -48,7 +52,7 @@
                     }
                 }
             },
-            remove() {
+            progress_remove() {
                 this.$refs.progress_ref.parentNode.removeChild(this.$refs.progress_ref)
             },
             start(src) {
@@ -64,7 +68,7 @@
                             if (this.count == this.playitems.length - 1) {
                                 console.log("加载OK： ", index + ' : ' + e.target.src)
                                 console.log("全部完成")
-                                sleep(2500).then(() => {
+                                sleep(this.success_delay).then(() => {
                                     this.success_callback(this.playitems)
                                 })
                             } else {
@@ -84,6 +88,8 @@
                                 showClose: true,
                                 type: 'error'
                             });
+                            this.has_error = true
+                            this.show_text = false
                             this.error_callback()
                         }
                     })
@@ -114,6 +120,24 @@
     #progress{
         width: auto;
         height: auto;
+    }
+
+    #refresh_btn_large {
+        position: absolute;
+        z-index: 2;
+        left: 50%;
+        top: 50%;
+
+        height: 160px;
+        width: 160px;
+        margin-top: -80px;
+        margin-left: -80px;
+        background-color: transparent;
+        font-size: 50px;
+        border: transparent;
+        font-weight: bold;
+        opacity: 0.4;
+        color: #F56C6C;
     }
 
 </style>
