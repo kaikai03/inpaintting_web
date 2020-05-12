@@ -13,9 +13,9 @@
     <!-- 嵌套容器 -->
     <el-container id="main_container">
       <!-- 侧边导航菜单 -->
-      <el-aside style="width: auto;">
+      <el-aside id='aside_left' style="width: auto;">
         <navigator></navigator>
-      </el-aside>
+      </el-aside >
       <!-- 内容 -->
       <el-main>
         <!-- 第一列栅格布局 -->
@@ -40,10 +40,15 @@
           </el-col>
         </el-row>
       </el-main>
+      <el-aside  id='aside_right' style="width: 200px;">
+
+      </el-aside>
     </el-container>
     <!-- 底栏 -->
     <el-footer height="20px">&copy;  kai_kai03@hotmail.com &nbsp;  2020</el-footer>
+    <el-button id="dangling"></el-button>
   </el-container>
+
 </template>
 
 <script>
@@ -79,9 +84,16 @@
   color: black;
   text-align: center;
 }
-.el-aside {
-  background-color: snow;
-}
+  .el-aside {
+    background-color: snow;
+  }
+  #aside_left {
+    width: auto;
+  }
+  #aside_right {
+    background-color: #3a8ee6;
+    z-index: 2;
+  }
 .el-main {
   background-color: whitesmoke;
   z-index: 2;
@@ -98,6 +110,15 @@
 .col3 {
   background-color: thistle;
 }
+  #dangling{
+    position: fixed;
+    left: 96%;
+    top: 88%;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    z-index: 99;
+  }
 </style>
 
 
