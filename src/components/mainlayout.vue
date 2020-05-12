@@ -13,7 +13,7 @@
     <!-- 嵌套容器 -->
     <el-container id="main_container">
       <!-- 侧边导航菜单 -->
-      <el-aside style="width: auto">
+      <el-aside style="width: auto;">
         <navigator></navigator>
       </el-aside>
       <!-- 内容 -->
@@ -42,11 +42,12 @@
       </el-main>
     </el-container>
     <!-- 底栏 -->
-    <el-footer height="30px">&copy;究极死胖兽 2019</el-footer>
+    <el-footer height="20px">&copy;  kai_kai03@hotmail.com &nbsp;  2020</el-footer>
   </el-container>
 </template>
 
 <script>
+    import band_backspace from "~/js/band_backspace"
     import navigator from "~/components/navigator";
     import carousel from "~/components/carousel";
 
@@ -61,28 +62,28 @@
 
 <style>
   #carousel_container {
-    height:400px;
+    height:360px;
     style:"background-color: #8c939d";
   }
   #main_container {
     min-height:800px; height:auto!important; height:900px;
   }
 .el-header {
-  background-color: white;
+  background-color: snow;
   color: gray;
   width: 100%;
   z-index: 2;
 }
 .el-footer {
-  background-color: #909399;
+  background-color: snow;
   color: black;
   text-align: center;
 }
 .el-aside {
-  background-color: chartreuse;
+  background-color: snow;
 }
 .el-main {
-  background-color: darkkhaki;
+  background-color: whitesmoke;
   z-index: 2;
 }
 .el-col {
