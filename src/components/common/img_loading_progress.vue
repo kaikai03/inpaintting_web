@@ -22,9 +22,9 @@
               has_error:false,
               show_text:true,
               success_delay:2500,
-              playitems:[{"index":1,"type":"0","img":"http://127.0.0.1:90/imgs/1.jpg","media":"http://127.0.0.1:90/v/1.mp4"},
-                {"index":2,"type":"1","img":"http://127.0.0.1:90/imgs/2.jpg","media":"http://127.0.0.1:90/v/2.mp4"},
-                {"index":3,"type":"1","img":"http://127.0.0.1:90/imgs/3.gif","media":"http://127.0.0.1:90/v/3.mp4"}]
+              playitems:[{"index":0,"type":"0","img":"http://127.0.0.1:90/imgs/1.jpg","media":"http://127.0.0.1:90/v/1.mp4"},
+                {"index":1,"type":"1","img":"http://127.0.0.1:90/imgs/2.jpg","media":"http://127.0.0.1:90/v/2.mp4"},
+                {"index":2,"type":"1","img":"http://127.0.0.1:90/imgs/3.gif","media":"http://127.0.0.1:90/v/3.mp4"}]
           }
         },
         methods: {
