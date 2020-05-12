@@ -46,7 +46,6 @@
     </el-container>
     <!-- 底栏 -->
     <el-footer height="20px">&copy;  kai_kai03@hotmail.com &nbsp;  2020</el-footer>
-    <el-button id="dangling"></el-button>
   </el-container>
 
 </template>
@@ -110,15 +109,7 @@
 .col3 {
   background-color: thistle;
 }
-  #dangling{
-    position: fixed;
-    left: 96%;
-    top: 88%;
-    width: 50px;
-    height: 50px;
-    background-color: red;
-    z-index: 99;
-  }
+
 </style>
 
 
