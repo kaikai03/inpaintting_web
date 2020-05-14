@@ -3,6 +3,7 @@
     <!-- 顶栏 -->
     <el-header height="40px" style="display: table">
       <h3 style="display: table-cell ;vertical-align: middle">图像</h3>
+      <h5 style="display: table-cell ;vertical-align: middle;text-align: right;">{{area}}&emsp;{{ip}}</h5>
     </el-header>
 
     <el-container id="carousel_container">
@@ -57,7 +58,18 @@
 
     export default {
         name: "mainlayout",
-        components:{
+      data(){
+          return{
+            ip:null,
+            area:null
+          }
+      },
+        mounted() {
+          this.ip = sessionStorage.getItem('ip')
+          this.area = sessionStorage.getItem('area')
+          console.log(this.ip,this.area)
+        },
+      components:{
           navigator,carousel
         }
     }
