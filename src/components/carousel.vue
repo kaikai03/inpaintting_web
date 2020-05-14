@@ -118,6 +118,9 @@
                     let option = JSON.parse(JSON.stringify(this.player_option_base))
                     option.sources[0].src = item.media
                     option.poster = item.img
+                    if(index==0){
+                        option.autoplay = true
+                    }
                     options.push(option)
                 }
                 return options

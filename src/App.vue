@@ -5,7 +5,7 @@
 <!--    <twinklingimage  imgadd="http://127.0.0.1:8888/logo.png" ></twinklingimage>-->
 <!--      <iconstable></iconstable>-->
       <mainlayout ></mainlayout >
-          <el-button id="dangling" :style="'opacity:'+opacity_dangling"></el-button>
+          <el-button class="el-icon-d-arrow-right" id="dangling" :style="'opacity:'+opacity_dangling" @click="totop_click()"></el-button>
       <div id="bottom_placeholder" />
   </div>
 </template>
@@ -29,7 +29,20 @@
               let window_height = document.documentElement.clientHeight
               let body_height = document.body.clientHeight
               let offset_percent = pos/(body_height-window_height)
-              this.opacity_dangling = (offset_percent>0.70)?0.70:offset_percent
+              this.opacity_dangling = (offset_percent>0.50)?0.50:offset_percent
+          },
+          totop_click(){
+              this.scroll_top()
+          },
+          scroll_top(){
+              let scrollTimer = setInterval(() => {
+                  if (document.documentElement.scrollTop > 0) {
+                      document.documentElement.scrollTop -=1
+                      this.scroll_top()
+                  } else {
+                      clearInterval(scrollTimer); // 清除计时器
+                  }
+              }, 25);
           }
       },
       mounted() {
@@ -56,18 +69,20 @@
 
     #dangling {
         position: fixed;
-        left: 0px;
-        bottom: 0px;
-        width: 100%;
-        height: 20px;
+        left: 96%;
+        top: 88%;
+        width: 44px;
         background-color: lightgray;
         z-index: 99;
         border: 0px transparent;
+        font-size: 20px;
+        transform:rotate(270deg);
+        padding-left: 13px;
     }
 
     #bottom_placeholder {
         width: 100%;
-        height: 25px;
+        height: 0px;
 
     }
 </style>
