@@ -3,7 +3,7 @@
     <!-- 顶栏 -->
     <el-header height="40px" style="display: table">
       <h3 style="display: table-cell ;vertical-align: middle">图像</h3>
-      <h5 style="display: table-cell ;vertical-align: middle;text-align: right;">{{area}}&emsp;{{ip}}</h5>
+      <h5 style="display: table-cell ;vertical-align: middle;text-align: right;">{{area}}&emsp;{{ip}}&emsp;{{sys}}-{{browser}}</h5>
     </el-header>
 
     <el-container id="carousel_container">
@@ -55,18 +55,30 @@
     import band_backspace from "~/js/band_backspace"
     import navigator from "~/components/navigator";
     import carousel from "~/components/carousel";
+    import * as get_base_info from '~/js/get_base_info'
 
     export default {
         name: "mainlayout",
       data(){
           return{
             ip:null,
-            area:null
+            area:null,
+            sys:null,
+            browser:null,
           }
       },
         mounted() {
-          this.ip = sessionStorage.getItem('ip')
-          this.area = sessionStorage.getItem('area')
+          // this.ip = sessionStorage.getItem('ip')
+          // this.area = sessionStorage.getItem('area')
+          get_base_info.get_address().then(addr => {this.ip = addr})
+          get_base_info.get_city().then(area => {this.area = area})
+          this.sys = get_base_info.get_os()
+          this.browser = get_base_info.get_current_browser()
+          sessionStorage.setItem('ip', this.ip)
+          sessionStorage.setItem('area', this.area)
+          sessionStorage.setItem('sys', this.sys)
+          sessionStorage.setItem('browser', this.browser)
+
           console.log(this.ip,this.area)
         },
       components:{
