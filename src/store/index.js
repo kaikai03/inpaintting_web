@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        name:'black tome',
+        name:'host',
         host: document.location.hostname
     },
     mutations: {

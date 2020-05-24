@@ -15,6 +15,13 @@ import 'vue-video-player/src/custom-theme.css'
 import 'video.js/dist/video-js.css'
 Vue.use(VideoPlayer)
 
+import global_backen from "~/global_backen";
+Vue.prototype.backen = global_backen
+
+import http from "~/api/http";
+Vue.prototype.network = http
+
+
 // Vue.config.debug = true;
 
 
