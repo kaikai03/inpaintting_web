@@ -2,7 +2,7 @@
     <div id="progress_main" >
         <div id="progress"  ref="progress_ref">
             <el-progress type="circle" :percentage="percentage" :status="status" :width=width :stroke-width=stroke :show-text="show_text"></el-progress>
-            <el-button id="refresh_btn_large" v-show="has_error" icon="el-icon-refresh" @click="start()" circle> </el-button>
+            <el-button id="refresh_btn_large" v-show="has_error" icon="el-icon-refresh" @click="refresh()" circle> </el-button>
         </div>
     </div>
 
@@ -14,6 +14,7 @@
         props: {'success_callback':Function,'error_callback':Function},
         data(){
           return{
+              current_request_add: null,
               stroke:12,
               width:145,
               status:null,
@@ -22,9 +23,9 @@
               has_error:false,
               show_text:true,
               success_delay:2500,
-              playitems:[{"index":0,"type":"0","img":"http://127.0.0.1:90/imgs/1.jpg","media":"http://127.0.0.1:90/v/1.mp4"},
-                {"index":1,"type":"1","img":"http://127.0.0.1:90/imgs/2.jpg","media":"http://127.0.0.1:90/v/2.mp4"},
-                {"index":2,"type":"1","img":"http://127.0.0.1:90/imgs/3.gif","media":"http://127.0.0.1:90/v/3.mp4"}]
+              items:[{"index":0,"type":"0","cover":"http://127.0.0.1:90/imgs/1.jpg","src":"http://127.0.0.1:90/v/1.mp4"},
+                {"index":1,"type":"1","cover":"http://127.0.0.1:90/imgs/2.jpg","src":"http://127.0.0.1:90/v/2.mp4"},
+                {"index":2,"type":"1","cover":"http://127.0.0.1:90/imgs/3.gif","src":"http://127.0.0.1:90/v/3.mp4"}]
           }
         },
         methods: {
@@ -34,10 +35,11 @@
                 this.percentage = 0
                 this.has_error = false
                 this.show_text = true
+                this.current_request_add = null
             },
             async update() {
                 while (!this.has_error) {
-                    if (this.percentage < Math.round((this.count / this.playitems.length) * 100)) {
+                    if (this.percentage < Math.round((this.count / this.items.length) * 100)) {
                         let step = Math.random()
                         if (this.percentage + step > 100) {
                             this.percentage = 100
@@ -55,21 +57,42 @@
             progress_remove() {
                 this.$refs.progress_ref.parentNode.removeChild(this.$refs.progress_ref)
             },
-            start(src) {
-                // TODO:之后，替换掉静态的this.playitems
+            start(api_src) {
                 this.re_init()
                 this.update()
+                this.current_request_add = api_src
                 console.log("start")
-                for (let [index, item] of this.playitems.entries()) {
+                this.network.get_request(this.current_request_add,
+                    (res) => {
+                        this.items = res.body
+                        this.download(this.items)
+                    },
+                    (er) => {
+                        this.status = "exception"
+                        this.$message({
+                            message: '网络错误，请重新加载',
+                            center: true,
+                            showClose: true,
+                            type: 'error'
+                        });
+                        this.has_error = true
+                        this.show_text = false
+                        this.error_callback()
+                    }
+                )
+
+            },
+            download(items){
+                for (let [index, item] of items.entries()) {
                     sleep(1000 * index).then(() => {
                         let img = new Image()
-                        img.src = item.img
+                        img.src = item.cover
                         img.onload = (e) => {
-                            if (this.count == this.playitems.length - 1) {
+                            if (this.count == items.length - 1) {
                                 console.log("加载OK： ", index + ' : ' + e.target.src)
                                 console.log("全部完成")
                                 sleep(this.success_delay).then(() => {
-                                    this.success_callback(this.playitems)
+                                    this.success_callback(items)
                                 })
                             } else {
                                 console.log("加载OK： ", index + ' : ' + e.target.src)
@@ -94,6 +117,9 @@
                         }
                     })
                 }
+            },
+            refresh(){
+                this.start(this.current_request_add)
             }
 
         },

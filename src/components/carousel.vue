@@ -16,8 +16,8 @@
                         <div class="videoPlay" style="height: 100%;width: 100%;">
 <!--                            <div style="height: 30%;width: 30%; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background-color: red"-->
 <!--                                 @click.stop="clickplay(item)">-->
-<!--                                <p class="medium">{{ item.img }}</p>-->
-<!--                            <el-image :src=item.img fit="scale-down" style="height: 100%;width: 100%;"></el-image>-->
+<!--                                <p class="medium">{{ item.cover }}</p>-->
+<!--                            <el-image :src=item.cover fit="scale-down" style="height: 100%;width: 100%;"></el-image>-->
                             <video-player class="video-player vjs-custom-skin"
                                           ref="videoPlayer"
                                           :playsinline="true"
@@ -104,7 +104,7 @@
                 console.log("btn")
                 this.progress_show = true
                 this.carousel_show = false
-                this.$refs.progress.start("图片地址")
+                this.$refs.progress.start(this.backen.random_videos_urlmaker(5))
 
             },
             onplayerStateChanged(playerCurrentState) {
@@ -116,8 +116,8 @@
                 let options = [];
                 for (let [index, item] of playitems.entries()) {
                     let option = JSON.parse(JSON.stringify(this.player_option_base))
-                    option.sources[0].src = item.media
-                    option.poster = item.img
+                    option.sources[0].src = item.src
+                    option.poster = item.cover
                     if(index==0){
                         option.autoplay = true
                     }
@@ -157,7 +157,7 @@
 
         },
         mounted() {
-            this.$refs.progress.start("图片地址")
+            this.$refs.progress.start(this.backen.random_videos_urlmaker(5))
         },
         components:{
           img_loading_progress
