@@ -116,7 +116,7 @@
                 let options = [];
                 for (let [index, item] of playitems.entries()) {
                     let option = JSON.parse(JSON.stringify(this.player_option_base))
-                    option.sources[0].src = item.src
+                    option.sources[0].src = item.src[0]
                     option.poster = item.cover
                     if(index==0){
                         option.autoplay = true
