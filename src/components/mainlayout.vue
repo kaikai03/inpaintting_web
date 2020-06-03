@@ -12,13 +12,14 @@
     <!--    <carousel>-->
     <!--    </carousel>-->
     <!-- 嵌套容器 -->
-    <el-container id="main_container">
+    <el-container id='main_container'>
       <!-- 侧边导航菜单 -->
-      <el-aside id='aside_left' style="width: auto;">
+      <el-aside id='aside_left' style='width: auto;'>
         <navigator></navigator>
       </el-aside >
       <!-- 内容 -->
       <el-main>
+          <router-view id='main_view' name='main_view'></router-view>
 <!--        &lt;!&ndash; 第一列栅格布局 &ndash;&gt;-->
 <!--        <el-row>-->
 <!--          <el-col :span="12" class="col1">-->
@@ -56,6 +57,7 @@
     import navigator from "~/components/navigator";
     import carousel from "~/components/carousel";
     import * as get_base_info from '~/js/get_base_info'
+    import dashboard from "~/components/dashboard";
 
     export default {
         name: "mainlayout",
@@ -96,6 +98,14 @@
   #main_container {
     min-height:800px; height:auto!important; height:900px;
   }
+  #main_view {
+      display: block;
+      height: 100%;
+      width: 100%;
+      margin: auto;
+      background-color: chartreuse;
+  }
+
 .el-header {
   background-color: snow;
   color: gray;
@@ -117,10 +127,11 @@
     background-color: #3a8ee6;
     z-index: 2;
   }
-.el-main {
-  background-color: whitesmoke;
-  z-index: 2;
-}
+    .el-main {
+      /*whitesmoke;*/
+      background-color: red;
+      z-index: 2;
+    }
 .el-col {
   height: 200px;
 }

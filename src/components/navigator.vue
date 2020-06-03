@@ -14,7 +14,7 @@
                 <i class="el-icon-odometer"></i>
                 <span slot="title">dash</span>
             </el-menu-item>
-            <el-menu-item index="/first" >
+            <el-menu-item index="/upload" >
                 <i class="el-icon-upload2"></i>
                 <span slot="title">upload
                 </span>

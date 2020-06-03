@@ -1,5 +1,5 @@
 <template>
-    
+    <div>芜湖dash</div>
 </template>
 
 <script>
