@@ -19,27 +19,27 @@
       </el-aside >
       <!-- 内容 -->
       <el-main>
-        <!-- 第一列栅格布局 -->
-        <el-row>
-          <el-col :span="12" class="col1">
-            <li>
-              <router-link to="/first">“第一页”</router-link>
-              <el-button type="danger">主要按钮</el-button>
-            </li>
-          </el-col>
-          <el-col :span="12" class="col2">
-            <li>
-              <router-link to="/third">“third”</router-link>
-            </li>
-          </el-col>
-        </el-row>
-        <!-- 第二列布局 -->
-        <el-row>
-          <el-col :span="24" class="col3">
-            <router-view name="view1"></router-view>
-            <router-view name="view2"></router-view>
-          </el-col>
-        </el-row>
+<!--        &lt;!&ndash; 第一列栅格布局 &ndash;&gt;-->
+<!--        <el-row>-->
+<!--          <el-col :span="12" class="col1">-->
+<!--            <li>-->
+<!--              <router-link to="/first">“第一页”</router-link>-->
+<!--              <el-button type="danger">主要按钮</el-button>-->
+<!--            </li>-->
+<!--          </el-col>-->
+<!--          <el-col :span="12" class="col2">-->
+<!--            <li>-->
+<!--              <router-link to="/third">“third”</router-link>-->
+<!--            </li>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
+<!--        &lt;!&ndash; 第二列布局 &ndash;&gt;-->
+<!--        <el-row>-->
+<!--          <el-col :span="24" class="col3">-->
+<!--            <router-view name="view1"></router-view>-->
+<!--            <router-view name="view2"></router-view>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
       </el-main>
       <el-aside  id='aside_right' style="width: 200px;">
 
@@ -103,7 +103,7 @@
   z-index: 2;
 }
 .el-footer {
-  background-color: snow;
+  background-color: floralwhite;
   color: black;
   text-align: center;
 }
