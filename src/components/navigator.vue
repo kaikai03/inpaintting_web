@@ -10,7 +10,7 @@
         <!--        router :default-active="$route.path"-->
         <el-menu :default-active="$route.path" :router="true" :unique-opened="true" class="el-menu-vertical-demo" @open="handle_open" @close="handleClose"
                  :collapse="isCollapse"  @select="select_item" :active="selected">
-            <el-menu-item index="/">
+            <el-menu-item index="/dash">
                 <i class="el-icon-odometer"></i>
                 <span slot="title">dash</span>
             </el-menu-item>
