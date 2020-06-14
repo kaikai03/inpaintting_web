@@ -99,7 +99,7 @@
     min-height:800px; height:auto!important; height:900px;
   }
   #main_view {
-      display: block;
+      display: flex;
       height: 100%;
       width: 100%;
       margin: auto;
@@ -132,18 +132,16 @@
       background-color: red;
       z-index: 2;
     }
-.el-col {
-  height: 200px;
-}
-.col1 {
-  background-color: teal;
-}
-.col2 {
-  background-color: tomato;
-}
-.col3 {
-  background-color: thistle;
-}
+
+/*.col1 {*/
+/*  background-color: teal;*/
+/*}*/
+/*.col2 {*/
+/*  background-color: tomato;*/
+/*}*/
+/*.col3 {*/
+/*  background-color: thistle;*/
+/*}*/
 
 </style>
 
