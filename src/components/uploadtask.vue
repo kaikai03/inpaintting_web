@@ -1,11 +1,38 @@
 <template>
     <el-row type="flex" class="row-bg" justify="space-around">
-        <el-col :span="12" id="task-setting" class="grid-content bg-purple">
+        <el-col :span="8" id="task-setting" class="grid-content bg-purple">
 
+            <el-form ref="form" :model="form" label-width="80px"size="medium">
+                <el-form-item label="FPS">
+                    <el-input v-model="form.fps" placeholder="请输入内容" style="width: 90%;"></el-input>
+                </el-form-item>
 
+                <el-form-item label="总帧数" >
+                    <el-input v-model="form.frames" placeholder="请输入内容" style="width: 90%;"></el-input>
+                </el-form-item>
+
+                <el-form-item label="扫描行" >
+                    <el-input v-model="form.scan" placeholder="请输入内容" style="width: 90%;"></el-input>
+                </el-form-item>
+
+                <el-form-item label="视频后缀" >
+                    <el-input v-model="form.postfix[0]" placeholder="请输入内容" style="width: 90%;"></el-input>
+                </el-form-item>
+
+                <el-form-item label="轨道深度" >
+                    <el-input v-model="form.zoomx[0]" placeholder="X" style="width: 30%;"></el-input>
+                    <el-input v-model="form.zoomy[0]" placeholder="Y" style="width: 30%;"></el-input>
+                    <el-input v-model="form.zoomz[0]" placeholder="Z" style="width: 30%;"></el-input>
+                </el-form-item>
+
+                <el-form-item label="拍摄轨道" >
+                    <el-input v-model="form.track[0]" placeholder="请输入内容" style="width: 90%;"></el-input>
+                </el-form-item>
+
+            </el-form>
 
         </el-col>
-        <el-col :span="11" id="task-fileupload" class="grid-content bg-purple-light">
+        <el-col :span="15" id="task-fileupload" class="grid-content bg-purple-light">
               <div class="border-wrapper">
 			<div class="border-top"></div>
 			<div class="border-left"></div>
@@ -49,12 +76,27 @@
             return {
                 // [{name,url}]
                 fileList: [],
-                limit_flag:false
+                limit_flag: false,
+                form: {
+                    fps: 24,
+                    frames: 240,
+                    scan: '',
+                    postfix: ['',''],
+                    zoomx: [0.1,2.0],
+                    zoomy: [0.1,2.0],
+                    zoomz: [0.1,2.0],
+                    track: [0.1,2.0]
+                }
             };
         },
-        // beforeRouteLeave(to, from, next) {
-        //     if (window.confirm('有设置未提交，是否确认离开')) {next()} else {next(false)}
-        // },
+        beforeRouteLeave(to, from, next) {
+            if(this.$refs.uploadimg.uploadFiles.length > 0){
+                if (window.confirm('有设置未提交，是否确认离开')) {next()} else {next(false)}
+            }else {
+                next()
+            }
+
+        },
         methods: {
             before_upload(file) {
                 const is_in_condition = (file.type === 'image/jpeg') || (file.type === 'image/png') || (file.type === 'image/bmp');
@@ -106,6 +148,14 @@
 
     #task-setting {
         background-color: teal;
+        display: flex;
+            justify-content: center;
+            align-items: center;
+    }
+
+    .el-form{
+        width: 50%;
+
     }
 
     /*#task-fileupload {*/
