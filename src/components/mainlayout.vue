@@ -129,7 +129,7 @@
   }
     .el-main {
       /*whitesmoke;*/
-      background-color: red;
+      background-color: #f4f4f5;
       z-index: 2;
     }
 
