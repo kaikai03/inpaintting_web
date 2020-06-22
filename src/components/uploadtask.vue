@@ -19,28 +19,40 @@
                     </el-col>
 
                     <el-col style="width: 60%" >
-                        <div class="more_videos" v-for="(item, index) in form.postfix">
-                            <div class="video_head">视频{{index+1}}</div>
-                            <el-form-item label="视频后缀">
-                                <el-input v-model="form.postfix[index]" placeholder="请输入内容"
-                                          style="width: 95%;min-width: 158px;"></el-input>
-                            </el-form-item>
+                        <el-collapse v-model="active_item">
+                            <div class="more_videos" v-for="(item, index) in form.postfix">
+                                <el-collapse-item class="video_head"  :title="'视频'+index" :name="index">
+                                <el-form-item label="视频后缀">
+                                    <el-input v-model="form.postfix[index]" placeholder="请输入内容"
+                                              style="width: 95%;min-width: 158px;"></el-input>
+                                </el-form-item>
 
-                            <el-form-item label="轨道深度">
-                                <el-input v-model="form.zoomx[index]" placeholder="X" style="width: 30.5%;min-width: 50px;"></el-input>
-                                <el-input v-model="form.zoomy[index]" placeholder="Y" style="width: 30.5%;min-width: 50px;"></el-input>
-                                <el-input v-model="form.zoomz[index]" placeholder="Z" style="width: 30.5%;min-width: 50px;"></el-input>
-                            </el-form-item>
+                                <el-form-item label="轨道深度">
+                                    <el-input v-model="form.zoomx[index]" placeholder="X"
+                                              style="width: 30.5%;min-width: 50px;"></el-input>
+                                    <el-input v-model="form.zoomy[index]" placeholder="Y"
+                                              style="width: 30.5%;min-width: 50px;"></el-input>
+                                    <el-input v-model="form.zoomz[index]" placeholder="Z"
+                                              style="width: 30.5%;min-width: 50px;"></el-input>
+                                </el-form-item>
 
-                            <el-form-item label="拍摄轨道">
-                                <!--<el-input v-model="form.track[index]" placeholder="请输入内容" style="width: 90%;"></el-input>-->
-                                <el-radio-group v-model="form.track[index]" size="mini" style="width: 95%;min-width: 158px;">
-                                    <el-radio class="params-setting-track-radio" label="double-straight-line"  border>dolly</el-radio>
-                                    <el-radio class="params-setting-track-radio" label="straight-line"  border>straight</el-radio>
-                                    <el-radio class="params-setting-track-radio" label="circle" border>circle</el-radio>
-                                </el-radio-group>
-                            </el-form-item>
-                        </div>
+                                <el-form-item label="拍摄轨道">
+                                    <!--<el-input v-model="form.track[index]" placeholder="请输入内容" style="width: 90%;"></el-input>-->
+                                    <el-radio-group v-model="form.track[index]" size="mini"
+                                                    style="width: 95%;min-width: 158px;">
+                                        <el-radio class="params-setting-track-radio" label="double-straight-line"
+                                                  border>dolly
+                                        </el-radio>
+                                        <el-radio class="params-setting-track-radio" label="straight-line" border>
+                                            straight
+                                        </el-radio>
+                                        <el-radio class="params-setting-track-radio" label="circle" border>circle
+                                        </el-radio>
+                                    </el-radio-group>
+                                </el-form-item>
+                            </el-collapse-item>
+                            </div>
+                        </el-collapse>
                         <div style="width: 100%;display: flex; justify-content: left">
                             <el-button type="primary" size="mini" class="add_video" @click="add_video">添加视频</el-button>
                         </div>
@@ -92,16 +104,17 @@
         data() {
             return {
                 // [{name,url}]
+                active_item:[0,1],
                 fileList: [],
                 limit_flag: false,
                 form: {
                     fps: 24,
                     frames: 240,
                     scan: '',
-                    postfix: ['',''],
-                    zoomx: [0.1,2.0],
-                    zoomy: [0.1,2.0],
-                    zoomz: [0.1,2.0],
+                    postfix: [''],
+                    zoomx: [0.1],
+                    zoomy: [0.1],
+                    zoomz: [0.1],
                     track: ['double-straight-line','straight-line']
                 }
             };
@@ -153,11 +166,13 @@
                 console.log('handleRemove:', file);
             },
             add_video(){
+
                this.form.zoomx.push(3.0);
                this.form.zoomy.push(3.0);
                this.form.zoomz.push(3.0);
                this.form.track.push('circle');
                this.form.postfix.push('');
+               this.active_item.push(this.form.postfix.length-1)
             }
 
         }
@@ -192,15 +207,22 @@
     }
     .more_videos{
         width: 95%;
-        border: 1px solid darkgray;
-        margin-bottom: 10px;
+        border: 1px solid #409EFF;
+        margin-bottom: 14px;
     }
     .video_head{
-        text-align: center;
-        border: 1px solid darkgray;
-        color: gray;
-        margin-bottom: 10px;
+        /*text-align: center;*/
+        /*border: 1px solid darkgray;*/
+        /*color: gray;*/
+        /*margin-bottom: 10px;*/
+        background-color: transparent;
     }
+
+    .el-collapse{
+        border-top:unset;
+        border-bottom:unset;
+    }
+
     .el-radio.is-bordered.params-setting-track-radio{
         width: 100%;
         min-width: 158px;
@@ -219,7 +241,7 @@
     .add_video{
         width: 93%;
         min-width: 240px;
-        margin-top: -20px;
+        /*margin-top: -20px;*/
     }
 
 
@@ -330,4 +352,21 @@
         height: 200px;
         background-color: transparent;
     }
+    .el-collapse-item__header {
+        padding-left: 45%;
+        color: #409EFF;
+    }
+    .el-collapse-item__wrap{
+        background-color: unset;
+        border-bottom: unset;
+    }
+    .el-collapse-item__header{
+        height: 28px;
+        line-height:28px;
+        border-bottom-color: #409EFF;
+    }
+    .el-collapse-item__content{
+        margin-top: 14px;
+    }
+
 </style>
