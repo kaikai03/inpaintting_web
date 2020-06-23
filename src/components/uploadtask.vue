@@ -21,10 +21,13 @@
                     <el-col style="width: 60%" >
                         <el-collapse v-model="active_item">
                             <div class="more_videos" v-for="(item, index) in form.postfix">
-                                <el-collapse-item class="video_head"  :title="'视频'+index" :name="index">
+
+                                <el-collapse-item class="video_head"  :title="'视频'+(index+1)" :name="index">
+
                                 <el-form-item label="视频后缀">
                                     <el-input v-model="form.postfix[index]" placeholder="请输入内容"
-                                              style="width: 95%;min-width: 158px;"></el-input>
+                                              style="width: 90%;min-width: 110px;"></el-input>
+                                    <el-button class="del_video_btn" type="text" icon="el-icon-delete" @click="del_video(index)"></el-button>
                                 </el-form-item>
 
                                 <el-form-item label="轨道深度">
@@ -104,7 +107,7 @@
         data() {
             return {
                 // [{name,url}]
-                active_item:[0,1],
+                active_item:[0],
                 fileList: [],
                 limit_flag: false,
                 form: {
@@ -166,13 +169,21 @@
                 console.log('handleRemove:', file);
             },
             add_video(){
-
                this.form.zoomx.push(3.0);
                this.form.zoomy.push(3.0);
                this.form.zoomz.push(3.0);
                this.form.track.push('circle');
                this.form.postfix.push('');
                this.active_item.push(this.form.postfix.length-1)
+            },
+            del_video(index){
+                console.log(this.active_item,index)
+                this.form.zoomx.splice(index, 1);
+                this.form.zoomy.splice(index, 1);
+               this.form.zoomz.splice(index, 1);
+               this.form.track.splice(index, 1);
+               this.form.postfix.splice(index, 1);
+                this.active_item = this.active_item.filter((x) => x != index)
             }
 
         }
@@ -187,7 +198,7 @@
 
     #task-setting {
         /*background-color: teal;*/
-        min-width: 400px;
+        min-width: 420px;
         /*display: flex;*/
         /*justify-content: center;*/
         /*align-items: center;*/
@@ -217,6 +228,11 @@
         /*margin-bottom: 10px;*/
         background-color: transparent;
     }
+    .del_video_btn{
+        position: absolute;
+        color: #E6A23C;
+        font-size: larger;
+    }
 
     .el-collapse{
         border-top:unset;
@@ -225,7 +241,7 @@
 
     .el-radio.is-bordered.params-setting-track-radio{
         width: 100%;
-        min-width: 158px;
+        min-width: 148px;
         margin-left: 0px;
         margin-bottom: 3px;
         margin-right: 0px;
@@ -367,6 +383,7 @@
     }
     .el-collapse-item__content{
         margin-top: 14px;
+        padding-bottom: 2px;
     }
 
 </style>
