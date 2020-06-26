@@ -42,7 +42,7 @@
 
                                 <el-form-item label="拍摄轨道">
                                     <!--<el-input v-model="form.track[index]" placeholder="请输入内容" style="width: 90%;"></el-input>-->
-                                    <el-radio-group v-model="form.track[index]" size="mini"
+                                    <el-radio-group v-model="form.track[index]" size="mini" @change="((value)=>{radio_handle(value, postfix, index)})"
                                                     style="width: 95%;min-width: 158px;">
                                         <el-radio class="params-setting-track-radio" label="double-straight-line" border>
                                             dolly
@@ -185,6 +185,9 @@
                this.form.track.splice(index, 1);
                this.form.postfix.splice(index, 1);
                 this.active_item = this.active_item.filter((x) => x != index)
+            },
+            radio_handle(value, postfix, index){
+                console.log(value, postfix, index)
             }
 
         }
