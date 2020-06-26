@@ -26,7 +26,7 @@
 
                                 <el-form-item label="名称后缀">
                                     <el-input v-model="form.postfix[index]" placeholder="视频文件的tag" ref="postfix"
-                                              maxlength="108" show-word-limit
+                                              maxlength="12" show-word-limit
                                               style="width: 90%;min-width: 110px;"></el-input>
                                     <el-button class="del_video_btn" type="text" icon="el-icon-delete" @click="del_video(index)"></el-button>
                                 </el-form-item>
