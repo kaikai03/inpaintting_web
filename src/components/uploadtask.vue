@@ -25,8 +25,8 @@
                                 <el-collapse-item class="video_head"  :title="'视频'+(index+1)" :name="index">
 
                                 <el-form-item label="名称后缀">
-                                    <el-input v-model="form.postfix[index]" placeholder="视频文件的tag" :ref="'postfix'+index"
-                                              maxlength="8" show-word-limit
+                                    <el-input v-model="form.postfix[index]" placeholder="视频文件的tag" ref="postfix"
+                                              maxlength="108" show-word-limit
                                               style="width: 90%;min-width: 110px;"></el-input>
                                     <el-button class="del_video_btn" type="text" icon="el-icon-delete" @click="del_video(index)"></el-button>
                                 </el-form-item>
@@ -45,12 +45,12 @@
                                     <el-radio-group v-model="form.track[index]" size="mini" @change="((value)=>{radio_handle(value, postfix, index)})"
                                                     style="width: 95%;min-width: 158px;">
                                         <el-radio class="params-setting-track-radio" label="double-straight-line" border>
-                                            dolly
+                                            Dolly-Zoom
                                         </el-radio>
                                         <el-radio class="params-setting-track-radio" label="straight-line" border>
-                                            straight
+                                            Straight
                                         </el-radio>
-                                        <el-radio class="params-setting-track-radio" label="circle" border>circle
+                                        <el-radio class="params-setting-track-radio" label="circle" border>Circle
                                         </el-radio>
                                     </el-radio-group>
                                 </el-form-item>
@@ -187,7 +187,11 @@
                 this.active_item = this.active_item.filter((x) => x != index)
             },
             radio_handle(value, postfix, index){
-                console.log(value, postfix, index)
+                if(postfix == '' || postfix == null || postfix == 'Dolly-Zoom' || postfix == 'Straight' || postfix == 'Circle') {
+                    if (value == 'double-straight-line'){this.form.postfix[index]='Dolly-Zoom'}
+                    if (value == 'straight-line'){this.form.postfix[index]='Straight'}
+                    if (value == 'circle'){this.form.postfix[index]='Circle'}
+                }
             }
 
         }
