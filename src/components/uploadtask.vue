@@ -6,36 +6,37 @@
                 <el-row id="params-setting-row">
                     <el-col style="width: 40%" >
                         <el-form-item label="FPS">
-                            <el-input v-model="form.fps" placeholder="请输入内容" style="width: 90%;"></el-input>
+                            <el-input v-model.number="form.fps" placeholder="请输入内容" style="width: 90%;"></el-input>
                         </el-form-item>
 
                         <el-form-item label="总帧数">
-                            <el-input v-model="form.frames" placeholder="请输入内容" style="width: 90%;"></el-input>
+                            <el-input v-model.number="form.frames" placeholder="请输入内容" style="width: 90%;"></el-input>
                         </el-form-item>
 
                         <el-form-item label="扫描行">
-                            <el-input v-model="form.scan" placeholder="请输入内容" style="width: 90%;"></el-input>
+                            <el-input v-model.number="form.scan" placeholder="请输入内容" style="width: 90%;"></el-input>
                         </el-form-item>
                     </el-col>
 
                     <el-col style="width: 60%" >
                         <el-collapse v-model="active_item">
-                            <div class="more_videos" v-for="(item, index) in form.postfix">
+                            <div class="more_videos" v-for="(postfix, index) in form.postfix">
 
                                 <el-collapse-item class="video_head"  :title="'视频'+(index+1)" :name="index">
 
-                                <el-form-item label="视频后缀">
-                                    <el-input v-model="form.postfix[index]" placeholder="请输入内容"
+                                <el-form-item label="名称后缀">
+                                    <el-input v-model="form.postfix[index]" placeholder="视频文件的tag" :ref="'postfix'+index"
+                                              maxlength="8" show-word-limit
                                               style="width: 90%;min-width: 110px;"></el-input>
                                     <el-button class="del_video_btn" type="text" icon="el-icon-delete" @click="del_video(index)"></el-button>
                                 </el-form-item>
 
                                 <el-form-item label="轨道深度">
-                                    <el-input v-model="form.zoomx[index]" placeholder="X"
+                                    <el-input v-model="form.zoomx[index]" placeholder="X" oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
                                               style="width: 30.5%;min-width: 50px;"></el-input>
-                                    <el-input v-model="form.zoomy[index]" placeholder="Y"
+                                    <el-input v-model="form.zoomy[index]" placeholder="Y" oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
                                               style="width: 30.5%;min-width: 50px;"></el-input>
-                                    <el-input v-model="form.zoomz[index]" placeholder="Z"
+                                    <el-input v-model="form.zoomz[index]" placeholder="Z" oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
                                               style="width: 30.5%;min-width: 50px;"></el-input>
                                 </el-form-item>
 
@@ -43,8 +44,8 @@
                                     <!--<el-input v-model="form.track[index]" placeholder="请输入内容" style="width: 90%;"></el-input>-->
                                     <el-radio-group v-model="form.track[index]" size="mini"
                                                     style="width: 95%;min-width: 158px;">
-                                        <el-radio class="params-setting-track-radio" label="double-straight-line"
-                                                  border>dolly
+                                        <el-radio class="params-setting-track-radio" label="double-straight-line" border>
+                                            dolly
                                         </el-radio>
                                         <el-radio class="params-setting-track-radio" label="straight-line" border>
                                             straight
@@ -187,6 +188,7 @@
             }
 
         }
+
     }
 </script>
 
