@@ -191,6 +191,7 @@
                     if (value == 'double-straight-line'){this.form.postfix[index]='Dolly-Zoom'}
                     if (value == 'straight-line'){this.form.postfix[index]='Straight'}
                     if (value == 'circle'){this.form.postfix[index]='Circle'}
+                    this.$forceUpdate();
                 }
             }
 
