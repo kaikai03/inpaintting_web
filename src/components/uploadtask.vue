@@ -2,19 +2,19 @@
     <el-row type="flex" class="row-bg" justify="space-around">
         <el-col :span="8" id="task-setting" class="grid-content bg-purple">
 
-            <el-form ref="form" :model="form" label-width="80px" size="medium">
+            <el-form ref="form" :model="form" :rules="rules" label-width="80px" size="medium">
                 <el-row id="params-setting-row">
                     <el-col style="width: 40%" >
-                        <el-form-item label="FPS">
-                            <el-input v-model.number="form.fps" placeholder="请输入内容" style="width: 90%;"></el-input>
+                        <el-form-item label="FPS" prop="fps" >
+                            <el-input v-model.number="form.fps" placeholder="帧率" style="width: 90%;"></el-input>
                         </el-form-item>
 
-                        <el-form-item label="总帧数">
-                            <el-input v-model.number="form.frames" placeholder="请输入内容" style="width: 90%;"></el-input>
+                        <el-form-item label="总帧数" prop="frames">
+                            <el-input v-model.number="form.frames" placeholder="视频长度"  style="width: 90%;"></el-input>
                         </el-form-item>
 
                         <el-form-item label="扫描行">
-                            <el-input v-model.number="form.scan" placeholder="请输入内容" style="width: 90%;"></el-input>
+                            <el-input v-model.number="form.scan" placeholder="视频高度" style="width: 90%;"></el-input>
                         </el-form-item>
                     </el-col>
 
@@ -115,11 +115,20 @@
                     fps: 24,
                     frames: 240,
                     scan: '',
-                    postfix: [''],
+                    postfix: ['Dolly-Zoom'],
                     zoomx: [0.1],
                     zoomy: [0.1],
                     zoomz: [0.1],
                     track: ['double-straight-line','straight-line']
+                },
+                rules: {
+                    fps: [
+                        {required: true, message: '请输入帧率', trigger: 'blur'},
+                        {min: 5, max: 60, message: '限制5~60 帧/每秒', trigger: 'blur'}
+                    ],
+                    frames:[
+                        {required: true, message: '总帧数=fps*视频时长', trigger: 'blur'}
+                    ]
                 }
             };
         },
@@ -178,12 +187,11 @@
                this.active_item.push(this.form.postfix.length-1)
             },
             del_video(index){
-                console.log(this.active_item,index)
                 this.form.zoomx.splice(index, 1);
                 this.form.zoomy.splice(index, 1);
-               this.form.zoomz.splice(index, 1);
-               this.form.track.splice(index, 1);
-               this.form.postfix.splice(index, 1);
+                this.form.zoomz.splice(index, 1);
+                this.form.track.splice(index, 1);
+                this.form.postfix.splice(index, 1);
                 this.active_item = this.active_item.filter((x) => x != index)
             },
             radio_handle(value, postfix, index){
