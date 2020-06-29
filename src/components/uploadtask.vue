@@ -13,36 +13,51 @@
                             <el-input v-model.number="form.frames" placeholder="视频长度"  style="width: 90%;"></el-input>
                         </el-form-item>
 
-                        <el-form-item label="扫描行">
+                        <el-form-item label="扫描行" prop="scan">
                             <el-input v-model.number="form.scan" placeholder="视频高度" style="width: 90%;"></el-input>
                         </el-form-item>
                     </el-col>
 
                     <el-col style="width: 60%" >
                         <el-collapse v-model="active_item">
-                            <div class="more_videos" v-for="(postfix, index) in form.postfix">
+                            <div class="more_videos" v-for="(postfix_, index) in form.postfix">
 
                                 <el-collapse-item class="video_head"  :title="'视频'+(index+1)" :name="index">
 
-                                <el-form-item label="名称后缀">
-                                    <el-input v-model="form.postfix[index]" placeholder="视频文件的tag" ref="postfix"
+                                <el-form-item label="名称后缀" :prop="`postfix[${index}]`" :rules="{ required: true, message: 'Required', trigger: 'blur' }" >
+                                    <el-input v-model="form.postfix[index]" placeholder="视频文件的tag"
                                               maxlength="12" show-word-limit
                                               style="width: 90%;min-width: 110px;"></el-input>
                                     <el-button class="del_video_btn" type="text" icon="el-icon-delete" @click="del_video(index)"></el-button>
                                 </el-form-item>
 
-                                <el-form-item label="轨道深度">
-                                    <el-input v-model="form.zoomx[index]" placeholder="X" oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
-                                              style="width: 30.5%;min-width: 50px;"></el-input>
-                                    <el-input v-model="form.zoomy[index]" placeholder="Y" oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
-                                              style="width: 30.5%;min-width: 50px;"></el-input>
-                                    <el-input v-model="form.zoomz[index]" placeholder="Z" oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
-                                              style="width: 30.5%;min-width: 50px;"></el-input>
+                                <el-form-item label="轨道深度" style="height: 30px;">
+                                    <el-col :span="7">
+                                        <el-form-item :prop="`zoomx[${index}]`" :rules="{ required: true, message: 'Required', trigger: 'blur' }">
+                                        <el-input id="zoomx_input" v-model="form.zoomx[index]" placeholder="X"
+                                                  oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
+                                                  style="min-width: 50px; padding-left: 0px"></el-input>
+                                            </el-form-item>
+                                    </el-col>
+                                    <el-col :span="7">
+                                        <el-form-item :prop="`zoomy[${index}]`" :rules="{ required: true, message: 'Required', trigger: 'blur' }">
+                                        <el-input id="zoomy_input" v-model="form.zoomy[index]" placeholder="Y"
+                                                  oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
+                                                  style="min-width: 50px;"></el-input>
+                                            </el-form-item>
+                                    </el-col>
+                                    <el-col :span="7">
+                                        <el-form-item :prop="`zoomz[${index}]`" :rules="{ required: true, message: 'Required', trigger: 'blur' }">
+                                        <el-input id="zoomz_input" v-model="form.zoomz[index]" placeholder="Z"
+                                                  oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
+                                                  style="min-width: 50px;"></el-input>
+                                            </el-form-item>
+                                    </el-col>
                                 </el-form-item>
 
                                 <el-form-item label="拍摄轨道">
                                     <!--<el-input v-model="form.track[index]" placeholder="请输入内容" style="width: 90%;"></el-input>-->
-                                    <el-radio-group v-model="form.track[index]" size="mini" @change="((value)=>{radio_handle(value, postfix, index)})"
+                                    <el-radio-group v-model="form.track[index]" size="mini" @change="((value)=>{radio_handle(value, postfix_, index)})"
                                                     style="width: 95%;min-width: 158px;">
                                         <el-radio class="params-setting-track-radio" label="double-straight-line" border>
                                             Dolly-Zoom
@@ -106,6 +121,14 @@
     export default {
         name: "uploadtask",
         data() {
+            let validator_frames = (rule, value, callback) => {
+                if(!Number.isInteger(value)){
+                    callback(new Error('必须为整数'))
+                }
+                if (value < this.form.fps*5 ) {
+                    return callback(new Error('总帧数 >= fps*5'));
+                }
+            };
             return {
                 // [{name,url}]
                 active_item:[0],
@@ -124,11 +147,27 @@
                 rules: {
                     fps: [
                         {required: true, message: '请输入帧率', trigger: 'blur'},
-                        {min: 5, max: 60, message: '限制5~60 帧/每秒', trigger: 'blur'}
+                        {type:'number',message: '必须为数字值', trigger: 'blur'},
+                        {validator(rule, value, callback) {if(!Number.isInteger(value) || value<5 || value>60){callback(new Error('限制5~60帧/秒'))}}, trigger: 'blur'}
                     ],
                     frames:[
-                        {required: true, message: '总帧数=fps*视频时长', trigger: 'blur'}
-                    ]
+                        {required: true, message: '总帧数=fps*视频时长', trigger: 'blur'},
+                        {type:'number',message: '必须为数字值', trigger: 'blur'},
+                        {validator: validator_frames, trigger: 'blur'}
+                    ],
+                    scan:[
+                        {required: true, message: '请输入视频高度', trigger: 'blur'},
+                        {type:'number',message: '必须为数字值', trigger: 'blur'},
+                        {validator(rule, value, callback) {if(!Number.isInteger(value) || value<160 || value>1080){callback(new Error('限制160~1080整数'))}}, trigger: 'blur'}
+                    ],
+                    // postfix:[
+                    //     {required: true, message: '请输入视频别称', trigger: 'blur'},
+                    //     {type:'number',message: '必须为数字值', trigger: 'blur'}
+                    // ],
+                    zoom:[
+                        {required: true, message: '请输入移动范围', trigger: 'blur'},
+                        {type:'number',message: '必须为数字值', trigger: 'blur'}
+                    ],
                 }
             };
         },
@@ -375,6 +414,8 @@
         left: 2px;
     }
 
+
+
 </style>
 
 <style>
@@ -402,6 +443,12 @@
     .el-collapse-item__content{
         margin-top: 14px;
         padding-bottom: 2px;
+    }
+
+    #zoomx_input ,#zoomy_input ,#zoomz_input {
+        padding-left: 3px;
+        padding-right: 3px;
+        text-align: center;
     }
 
 </style>
