@@ -193,6 +193,7 @@
                 console.log('handleSuccess:',file);
             },
             handle_error(err, file, fileList) {
+                this.$message.error('上传图片失败!请检查网络');
                 console.log('handleError:',err);
             },
             handle_preview(file) {
