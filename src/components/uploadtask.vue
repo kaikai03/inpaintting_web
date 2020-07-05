@@ -24,14 +24,14 @@
 
                                 <el-collapse-item class="video_head"  :title="'视频'+(index+1)" :name="index">
 
-                                <el-form-item label="名称后缀" :prop="`postfix[${index}]`" :rules="{ required: true, message: '不可为空', trigger: 'blur' }" >
+                                <el-form-item label="名称后缀" prop="label_star"  >
                                     <el-input v-model="form.postfix[index]" placeholder="视频文件的tag"
                                               maxlength="12" show-word-limit
                                               style="width: 90%;min-width: 110px;"></el-input>
                                     <el-button class="del_video_btn" type="text" icon="el-icon-delete" @click="del_video(index)"></el-button>
                                 </el-form-item>
 
-                                <el-form-item label="轨道深度" style="height: 30px;" :prop="`zoom[${index}]`" :rules="{ required: true, message: '不可为空', trigger: 'blur' }">
+                                <el-form-item label="轨道深度" style="height: 30px;" prop="label_star" >
                                     <el-col :span="7">
                                         <el-form-item :prop="`zoomx[${index}]`" :rules="{validator: validator_zoom, trigger: 'blur' }">
                                         <el-input id="zoomx_input" v-model="form.zoomx[index]" placeholder="X"
@@ -55,7 +55,7 @@
                                     </el-col>
                                 </el-form-item>
 
-                                <el-form-item label="拍摄轨道" :prop="`track[${index}]`" :rules="{ required: true, message: '不可为空', trigger: 'blur' }">
+                                <el-form-item label="拍摄轨道" :prop="`track[${index}]`" >
                                     <!--<el-input v-model="form.track[index]" placeholder="请输入内容" style="width: 90%;"></el-input>-->
                                     <el-radio-group v-model="form.track[index]" size="mini" @change="((value)=>{radio_handle(value, postfix_, index)})"
                                                     style="width: 95%;min-width: 158px;">
@@ -160,9 +160,8 @@
                         {type:'number',message: '必须为数字值', trigger: 'blur'},
                         {validator(rule, value, callback) {if(!Number.isInteger(value) || value<160 || value>1080){callback(new Error('限制160~1080整数'))}}, trigger: 'blur'}
                     ],
-                    zoom:[
-                        {required: true, message: '请输入移动范围', trigger: 'blur'},
-                        {type:'number',message: '必须为数字值', trigger: 'blur'}
+                    label_star:[
+                        {required: true},
                     ],
                 }
             };
