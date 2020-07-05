@@ -24,30 +24,30 @@
 
                                 <el-collapse-item class="video_head"  :title="'视频'+(index+1)" :name="index">
 
-                                <el-form-item label="名称后缀" :prop="`postfix[${index}]`" :rules="{ required: true, message: 'Required', trigger: 'blur' }" >
+                                <el-form-item label="名称后缀" :prop="`postfix[${index}]`" :rules="{ required: true, message: '不可为空', trigger: 'blur' }" >
                                     <el-input v-model="form.postfix[index]" placeholder="视频文件的tag"
                                               maxlength="12" show-word-limit
                                               style="width: 90%;min-width: 110px;"></el-input>
                                     <el-button class="del_video_btn" type="text" icon="el-icon-delete" @click="del_video(index)"></el-button>
                                 </el-form-item>
 
-                                <el-form-item label="轨道深度" style="height: 30px;">
+                                <el-form-item label="轨道深度" style="height: 30px;" :prop="`zoom[${index}]`" :rules="{ required: true, message: '不可为空', trigger: 'blur' }">
                                     <el-col :span="7">
-                                        <el-form-item :prop="`zoomx[${index}]`" :rules="{ required: true, message: 'Required', trigger: 'blur' }">
+                                        <el-form-item :prop="`zoomx[${index}]`" :rules="{validator: validator_zoom, trigger: 'blur' }">
                                         <el-input id="zoomx_input" v-model="form.zoomx[index]" placeholder="X"
                                                   oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
                                                   style="min-width: 50px; padding-left: 0px"></el-input>
                                             </el-form-item>
                                     </el-col>
                                     <el-col :span="7">
-                                        <el-form-item :prop="`zoomy[${index}]`" :rules="{ required: true, message: 'Required', trigger: 'blur' }">
+                                        <el-form-item :prop="`zoomy[${index}]`" :rules="{ validator: validator_zoom, trigger: 'blur' }">
                                         <el-input id="zoomy_input" v-model="form.zoomy[index]" placeholder="Y"
                                                   oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
                                                   style="min-width: 50px;"></el-input>
                                             </el-form-item>
                                     </el-col>
                                     <el-col :span="7">
-                                        <el-form-item :prop="`zoomz[${index}]`" :rules="{ required: true, message: 'Required', trigger: 'blur' }">
+                                        <el-form-item :prop="`zoomz[${index}]`" :rules="{ validator: validator_zoom, trigger: 'blur' }">
                                         <el-input id="zoomz_input" v-model="form.zoomz[index]" placeholder="Z"
                                                   oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
                                                   style="min-width: 50px;"></el-input>
@@ -55,7 +55,7 @@
                                     </el-col>
                                 </el-form-item>
 
-                                <el-form-item label="拍摄轨道">
+                                <el-form-item label="拍摄轨道" :prop="`track[${index}]`" :rules="{ required: true, message: '不可为空', trigger: 'blur' }">
                                     <!--<el-input v-model="form.track[index]" placeholder="请输入内容" style="width: 90%;"></el-input>-->
                                     <el-radio-group v-model="form.track[index]" size="mini" @change="((value)=>{radio_handle(value, postfix_, index)})"
                                                     style="width: 95%;min-width: 158px;">
@@ -137,7 +137,7 @@
                 form: {
                     fps: 24,
                     frames: 240,
-                    scan: '',
+                    scan: 166,
                     postfix: ['Dolly-Zoom'],
                     zoomx: [0.1],
                     zoomy: [0.1],
@@ -160,10 +160,6 @@
                         {type:'number',message: '必须为数字值', trigger: 'blur'},
                         {validator(rule, value, callback) {if(!Number.isInteger(value) || value<160 || value>1080){callback(new Error('限制160~1080整数'))}}, trigger: 'blur'}
                     ],
-                    // postfix:[
-                    //     {required: true, message: '请输入视频别称', trigger: 'blur'},
-                    //     {type:'number',message: '必须为数字值', trigger: 'blur'}
-                    // ],
                     zoom:[
                         {required: true, message: '请输入移动范围', trigger: 'blur'},
                         {type:'number',message: '必须为数字值', trigger: 'blur'}
@@ -239,6 +235,14 @@
                     if (value == 'straight-line'){this.form.postfix[index]='Straight'}
                     if (value == 'circle'){this.form.postfix[index]='Circle'}
                     this.$forceUpdate();
+                }
+            },
+            validator_zoom(rule, value, callback) {
+                if (value == "") {
+                    return callback(new Error('禁止为空'));
+                }
+                if (value >= 1 ||  value <= -1) {
+                    return callback(new Error('（-1，+1）'));
                 }
             }
 
