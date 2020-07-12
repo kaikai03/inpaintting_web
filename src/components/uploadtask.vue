@@ -258,11 +258,22 @@
             onSubmitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        const loading = this.$loading({
+                          lock: true,
+                          text: '正在上传，请稍后',
+                          // spinner: 'el-icon-loading',
+                          background: 'rgba(0, 0, 0, 0.6)',
+                          target: document.querySelector('.el-main')
+                        });
+                        setTimeout(() => {
+                          loading.close();
+                        }, 10000);
                         this.network.post_request(this.backen.upload_tasks(),
                             JSON.stringify(this.form),
                             (res) => {
                                 console.log(res);
                                 console.log("network sucess");
+                                loading.close();
                             },
                             (er) => {
                                 this.$message({
@@ -271,6 +282,7 @@
                                     showClose: true,
                                     type: 'error'
                                 });
+                                loading.close();
                             }
                         )
                     }
@@ -393,7 +405,7 @@
         width: 100%;
         height: 100%;
         background: grey;
-        z-index: 9999;
+        z-index: 90;
         border-radius: 10px;
     }
 
