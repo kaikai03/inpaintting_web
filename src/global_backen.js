@@ -11,5 +11,8 @@ export default {
     },
     upload_img_urlmaker() {
         return http_prefix + backen + ":" + port + "/uploadimg/"
+    },
+    upload_tasks() {
+        return http_prefix + backen + ":" + port + "/uploadtask/"
     }
 }

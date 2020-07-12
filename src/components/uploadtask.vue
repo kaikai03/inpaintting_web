@@ -1,8 +1,7 @@
 <template>
     <el-row type="flex" class="row-bg" justify="space-around">
         <el-col :span="8" id="task-setting" class="grid-content bg-purple">
-
-            <el-form ref="form" :model="form" :rules="rules" label-width="80px" size="medium">
+            <el-form ref="form" :model="form" :rules="rules" label-width="80px" size="medium" class="demo-ruleForm" status-icon>
                 <el-row id="params-setting-row">
                     <el-col style="width: 40%" >
                         <el-form-item label="FPS" prop="fps" >
@@ -16,39 +15,43 @@
                         <el-form-item label="扫描行" prop="scan">
                             <el-input v-model.number="form.scan" placeholder="视频高度" style="width: 90%;"></el-input>
                         </el-form-item>
+
+                        <div style="width: 100%;display: flex; justify-content: center">
+                            <el-button type="primary" size="mini" class="submit" @click="onSubmitForm('form')">提交任务</el-button>
+                        </div>
                     </el-col>
 
                     <el-col style="width: 60%" >
                         <el-collapse v-model="active_item">
-                            <div class="more_videos" v-for="(postfix_, index) in form.postfix">
+                            <div class="more-videos" v-for="(postfix_, index) in form.postfix">
 
-                                <el-collapse-item class="video_head"  :title="'视频'+(index+1)" :name="index">
+                                <el-collapse-item class="video-head" :title="'视频'+(index+1)" :name="index">
 
-                                <el-form-item label="名称后缀" prop="label_star"  >
-                                    <el-input v-model="form.postfix[index]" placeholder="视频文件的tag"
+                                <el-form-item label="名称后缀" :prop="`postfix[${index}]`"  :rules="{required:true, message:'请输入视频名称后缀', trigger: 'blur' }">
+                                    <el-input v-model="form.postfix[index]" placeholder="名称后缀"
                                               maxlength="12" show-word-limit
                                               style="width: 90%;min-width: 110px;"></el-input>
-                                    <el-button class="del_video_btn" type="text" icon="el-icon-delete" @click="del_video(index)"></el-button>
+                                    <el-button class="del-video-btn" type="text" icon="el-icon-delete" @click="onDelVideo(index)"></el-button>
                                 </el-form-item>
 
-                                <el-form-item label="轨道深度" style="height: 30px;" prop="label_star" >
+                                <el-form-item label="轨道深度" style="height: 30px;"  >
                                     <el-col :span="7">
-                                        <el-form-item :prop="`zoomx[${index}]`" :rules="{validator: validator_zoom, trigger: 'blur' }">
-                                        <el-input id="zoomx_input" v-model="form.zoomx[index]" placeholder="X"
+                                        <el-form-item :prop="`zoomx[${index}]`" :rules="{validator: zoomValidator, trigger: 'change' }">
+                                        <el-input id="zoomx-input" v-model="form.zoomx[index]" placeholder="X"
                                                   oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
                                                   style="min-width: 50px; padding-left: 0px"></el-input>
                                             </el-form-item>
                                     </el-col>
                                     <el-col :span="7">
-                                        <el-form-item :prop="`zoomy[${index}]`" :rules="{ validator: validator_zoom, trigger: 'blur' }">
-                                        <el-input id="zoomy_input" v-model="form.zoomy[index]" placeholder="Y"
+                                        <el-form-item :prop="`zoomy[${index}]`" :rules="{ validator: zoomValidator, trigger: 'change' }">
+                                        <el-input id="zoomy-input" v-model="form.zoomy[index]" placeholder="Y"
                                                   oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
                                                   style="min-width: 50px;"></el-input>
                                             </el-form-item>
                                     </el-col>
                                     <el-col :span="7">
-                                        <el-form-item :prop="`zoomz[${index}]`" :rules="{ validator: validator_zoom, trigger: 'blur' }">
-                                        <el-input id="zoomz_input" v-model="form.zoomz[index]" placeholder="Z"
+                                        <el-form-item :prop="`zoomz[${index}]`" :rules="{ validator: zoomValidator, trigger: 'change' }">
+                                        <el-input id="zoomz-input" v-model="form.zoomz[index]" placeholder="Z"
                                                   oninput="if(isNaN(value)) { value = null } if(value.indexOf('.')>0){value=value.slice(0,value.indexOf('.')+4)}"
                                                   style="min-width: 50px;"></el-input>
                                             </el-form-item>
@@ -57,7 +60,7 @@
 
                                 <el-form-item label="拍摄轨道" :prop="`track[${index}]`" >
                                     <!--<el-input v-model="form.track[index]" placeholder="请输入内容" style="width: 90%;"></el-input>-->
-                                    <el-radio-group v-model="form.track[index]" size="mini" @change="((value)=>{radio_handle(value, postfix_, index)})"
+                                    <el-radio-group v-model="form.track[index]" size="mini" @change="((value)=>{onHandleRadio(value, postfix_, index)})"
                                                     style="width: 95%;min-width: 158px;">
                                         <el-radio class="params-setting-track-radio" label="double-straight-line" border>
                                             Dolly-Zoom
@@ -73,7 +76,7 @@
                             </div>
                         </el-collapse>
                         <div style="width: 100%;display: flex; justify-content: left">
-                            <el-button type="primary" size="mini" class="add_video" @click="add_video">添加视频</el-button>
+                            <el-button plain size="mini" class="add-video" @click="onAddVideo">添加视频</el-button>
                         </div>
                     </el-col>
                 </el-row>
@@ -92,16 +95,16 @@
                     class="upload-file"
                     ref="uploadimg"
                     :action=this.backen.upload_img_urlmaker()
-                    :before-upload="before_upload"
-                    :on-preview="handle_preview"
-                    :on-remove="handle_remove"
-                    :before-remove="before_remove"
-                    :on-error="handle_error"
-                    :on-success="handle_success"
+                    :before-upload="onHandleBeforeUpload"
+                    :on-preview="onHandlePreview"
+                    :on-remove="onHandleRemove"
+                    :before-remove="beforeRemove"
+                    :on-error="onHandleError"
+                    :on-success="onHandleSuccess"
                     multiple
                     drag
                     :limit="6"
-                    :on-exceed="handle_exceed"
+                    :on-exceed="onHandleExceed"
                     :file-list="fileList"
                     list-type="picture">
                 <i class="el-icon-upload"></i>
@@ -121,13 +124,14 @@
     export default {
         name: "uploadtask",
         data() {
-            let validator_frames = (rule, value, callback) => {
+            let validatorFrames = (rule, value, callback) => {
                 if(!Number.isInteger(value)){
                     callback(new Error('必须为整数'))
                 }
                 if (value < this.form.fps*5 ) {
-                    return callback(new Error('总帧数 >= fps*5'));
+                    callback(new Error('总帧数 >= fps*5'));
                 }
+                callback();
             };
             return {
                 // [{name,url}]
@@ -142,26 +146,26 @@
                     zoomx: [0.1],
                     zoomy: [0.1],
                     zoomz: [0.1],
-                    track: ['double-straight-line','straight-line']
+                    track: ['double-straight-line']
                 },
                 rules: {
                     fps: [
-                        {required: true, message: '请输入帧率', trigger: 'blur'},
-                        {type:'number',message: '必须为数字值', trigger: 'blur'},
-                        {validator(rule, value, callback) {if(!Number.isInteger(value) || value<5 || value>60){callback(new Error('限制5~60帧/秒'))}}, trigger: 'blur'}
+                        {required: true, message: '请输入帧率', trigger: 'change'},
+                        {type:'number',message: '必须为数字值', trigger: 'change'},
+                        {validator(rule, value, callback) {if(!Number.isInteger(value) || value<5 || value>60){callback(new Error('限制5~60帧/秒'))};callback();}, trigger: 'change'}
                     ],
                     frames:[
-                        {required: true, message: '总帧数=fps*视频时长', trigger: 'blur'},
-                        {type:'number',message: '必须为数字值', trigger: 'blur'},
-                        {validator: validator_frames, trigger: 'blur'}
+                        {required: true, message: '总帧数=fps*视频时长', trigger: 'change'},
+                        // {type:'number',message: '必须为数字值', trigger: 'blur'},
+                        {validator: validatorFrames, trigger: 'change'}
                     ],
                     scan:[
-                        {required: true, message: '请输入视频高度', trigger: 'blur'},
-                        {type:'number',message: '必须为数字值', trigger: 'blur'},
-                        {validator(rule, value, callback) {if(!Number.isInteger(value) || value<160 || value>1080){callback(new Error('限制160~1080整数'))}}, trigger: 'blur'}
+                        {required: true, message: '请输入视频高度', trigger: 'change'},
+                        {type:'number',message: '必须为数字值', trigger: 'change'},
+                        {validator(rule, value, callback) {if(!Number.isInteger(value) || value<160 || value>1080){callback(new Error('限制160~1080整数'))};callback();}, trigger: 'change'}
                     ],
                     label_star:[
-                        {required: true},
+                        {required: true, trigger: 'none'},
                     ],
                 }
             };
@@ -175,7 +179,7 @@
 
         },
         methods: {
-            before_upload(file) {
+            onHandleBeforeUpload(file) {
                 const is_in_condition = (file.type === 'image/jpeg') || (file.type === 'image/png') || (file.type === 'image/bmp');
                 const is_in_5M = file.size / 1024 / 1024 < 5;
                 if (!is_in_condition) {
@@ -188,32 +192,32 @@
                 }
                 return is_in_condition && is_in_5M;
             },
-            handle_success(response, file, fileList) {
+            onHandleSuccess(response, file, fileList) {
                 // fileList.push({'name':file.response.origin, 'remote_name':file.response.save_name})
                 console.log('handleSuccess:',file);
             },
-            handle_error(err, file, fileList) {
+            onHandleError(err, file, fileList) {
                 this.$message.error('上传图片失败!请检查网络');
                 console.log('handleError:',err);
             },
-            handle_preview(file) {
+            onHandlePreview(file) {
                 console.log(this.$refs.uploadimg.uploadFiles);
                 console.log('handlePreview:', file);
             },
-            handle_exceed(files, fileList) {
+            onHandleExceed(files, fileList) {
                 this.$message.warning(`当前限制选择 6 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
             },
-            before_remove(file, fileList) {
+            beforeRemove(file, fileList) {
                 if(this.limit_flag){
                     this.limit_flag = false
                     return true
                 }
                 return this.$confirm(`确定移除 ${file.name}？`);
             },
-            handle_remove(file, fileList) {
+            onHandleRemove(file, fileList) {
                 console.log('handleRemove:', file);
             },
-            add_video(){
+            onAddVideo(){
                this.form.zoomx.push(3.0);
                this.form.zoomy.push(3.0);
                this.form.zoomz.push(3.0);
@@ -221,7 +225,11 @@
                this.form.postfix.push('');
                this.active_item.push(this.form.postfix.length-1)
             },
-            del_video(index){
+            onDelVideo(index){
+                if(this.form.postfix.length<=1){
+                    this.$message.warning('至少要生成一个视频');
+                    return;
+                }
                 this.form.zoomx.splice(index, 1);
                 this.form.zoomy.splice(index, 1);
                 this.form.zoomz.splice(index, 1);
@@ -229,7 +237,7 @@
                 this.form.postfix.splice(index, 1);
                 this.active_item = this.active_item.filter((x) => x != index)
             },
-            radio_handle(value, postfix, index){
+            onHandleRadio(value, postfix, index){
                 if(postfix == '' || postfix == null || postfix == 'Dolly-Zoom' || postfix == 'Straight' || postfix == 'Circle') {
                     if (value == 'double-straight-line'){this.form.postfix[index]='Dolly-Zoom'}
                     if (value == 'straight-line'){this.form.postfix[index]='Straight'}
@@ -237,14 +245,36 @@
                     this.$forceUpdate();
                 }
             },
-            validator_zoom(rule, value, callback) {
+            zoomValidator(rule, value, callback) {
                 if (value == "") {
-                    return callback(new Error('禁止为空'));
+                    callback(new Error('禁止为空'));
                 }
                 if (value >= 1 ||  value <= -1) {
-                    return callback(new Error('（-1，+1）'));
+                    callback(new Error('（-1，+1）'));
                 }
-            }
+                callback();
+            },
+            onSubmitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.network.post_request(this.backen.upload_tasks(),
+                            JSON.stringify(this.form),
+                            (res) => {
+                                console.log(res);
+                                console.log("network sucess");
+                            },
+                            (er) => {
+                                this.$message({
+                                    message: '网络错误，请重新加载',
+                                    center: true,
+                                    showClose: true,
+                                    type: 'error'
+                                });
+                            }
+                        )
+                    }
+                });
+            },
 
         }
 
@@ -277,22 +307,22 @@
     .el-form-item {
         margin-bottom: 22px;
     }
-    .more_videos{
+    .more-videos{
         width: 95%;
         border: 1px solid #409EFF;
         margin-bottom: 14px;
     }
-    .video_head{
+    .video-head{
         /*text-align: center;*/
         /*border: 1px solid darkgray;*/
         /*color: gray;*/
         /*margin-bottom: 10px;*/
         background-color: transparent;
     }
-    .del_video_btn{
+    .del-video-btn{
         position: absolute;
         color: #E6A23C;
-        font-size: larger;
+        font-size: medium;
     }
 
     .el-collapse{
@@ -315,10 +345,12 @@
     .el-radio.is-bordered.is-checked {
         border-color: #409EFF;
     }
-    .add_video{
-        width: 93%;
+    .add-video{
+        width: 96%;
         min-width: 240px;
-        /*margin-top: -20px;*/
+        margin-top: -12px;
+        color: #a0cfff;
+        border-color: #a0cfff;
     }
 
 
@@ -449,10 +481,14 @@
         padding-bottom: 2px;
     }
 
-    #zoomx_input ,#zoomy_input ,#zoomz_input {
+    #zoomx-input ,#zoomy-input ,#zoomz-input {
         padding-left: 3px;
         padding-right: 3px;
         text-align: center;
+    }
+
+    .el-input__suffix{
+        right: -4px;
     }
 
 </style>

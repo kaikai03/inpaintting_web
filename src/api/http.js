@@ -30,7 +30,11 @@ export default {
                 .catch(er_);
         });
     },
-    post_request(url, params, cb) {
+    post_request(url, params, cb, er) {
+        let er_ = er
+        if(typeof(er_) != "function"){
+            er_ = (err) => {console.log(err);}
+        }
         return new Promise((resolve, reject) => {
             Vue.http.post(
                 url,
@@ -38,9 +42,7 @@ export default {
                 {emulateJSON: true}
             )
                 .then(cb)
-                .catch((err) => {
-                    reject(err);
-                });
+                .catch(er_);
         });
     }
 }
