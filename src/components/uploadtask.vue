@@ -1,7 +1,7 @@
 <template>
     <el-row type="flex" class="row-bg" justify="space-around">
         <el-col :span="8" id="task-setting" class="grid-content bg-purple">
-            <el-form ref="form" :model="form" :rules="rules" label-width="80px" size="medium" class="demo-ruleForm" status-icon>
+            <el-form ref="form" :model="form" :rules="rules" label-width="80px" size="medium" status-icon>
                 <el-row id="params-setting-row">
                     <el-col style="width: 40%" >
                         <el-form-item label="FPS" prop="fps" >
@@ -34,7 +34,8 @@
                                     <el-button class="del-video-btn" type="text" icon="el-icon-delete" @click="onDelVideo(index)"></el-button>
                                 </el-form-item>
 
-                                <el-form-item label="轨道深度" style="height: 30px;"  >
+                                <el-form-item label="轨道深度" style="height: 30px;"  :prop="`track[${index}]`" :rules="{ required:true, trigger: 'blur' }">
+                                    <el-input id="zoomx-input" v-model="form.track[index]" style="display: none"></el-input>
                                     <el-col :span="7">
                                         <el-form-item :prop="`zoomx[${index}]`" :rules="{validator: zoomValidator, trigger: 'change' }">
                                         <el-input id="zoomx-input" v-model="form.zoomx[index]" placeholder="X"
