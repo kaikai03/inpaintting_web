@@ -140,6 +140,7 @@
                 fileList: [],
                 limit_flag: false,
                 form: {
+                    goods:[],
                     fps: 24,
                     frames: 240,
                     scan: 166,
@@ -256,6 +257,14 @@
                 callback();
             },
             onSubmitForm(formName) {
+                if (this.$refs.uploadimg.uploadFiles.length == 0){
+                    this.$message.warning("请先准备好要处理的图片")
+                    return false
+                }
+                this.form.goods.splice(0)
+                this.$refs.uploadimg.uploadFiles.forEach((value, index, array)=> {
+                    this.form.goods.push(value.response['save_name'])
+                })
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         const loading = this.$loading({
@@ -265,9 +274,9 @@
                           background: 'rgba(0, 0, 0, 0.6)',
                           target: document.querySelector('.el-main')
                         });
-                        setTimeout(() => {
-                          loading.close();
-                        }, 10000);
+                        // setTimeout(() => {
+                        //   loading.close();
+                        // }, 10000);
                         this.network.post_request(this.backen.upload_tasks(),
                             JSON.stringify(this.form),
                             (res) => {
