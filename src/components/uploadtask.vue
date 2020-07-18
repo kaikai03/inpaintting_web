@@ -27,7 +27,7 @@
 
                                 <el-collapse-item class="video-head" :title="'视频'+(index+1)" :name="index">
 
-                                <el-form-item label="名称后缀" :prop="`postfix[${index}]`"  :rules="{required:true, message:'请输入视频名称后缀', trigger: 'blur' }">
+                                <el-form-item label="名称后缀" :prop="`postfix[${index}]`"  :rules="{required:true, message:'请输入视频名称后缀', trigger: 'change' }">
                                     <el-input v-model="form.postfix[index]" placeholder="名称后缀"
                                               maxlength="12" show-word-limit
                                               style="width: 90%;min-width: 110px;"></el-input>
@@ -241,10 +241,10 @@
             },
             onHandleRadio(value, postfix, index){
                 if(postfix == '' || postfix == null || postfix == 'Dolly-Zoom' || postfix == 'Straight' || postfix == 'Circle') {
-                    if (value == 'double-straight-line'){this.form.postfix[index]='Dolly-Zoom'}
-                    if (value == 'straight-line'){this.form.postfix[index]='Straight'}
-                    if (value == 'circle'){this.form.postfix[index]='Circle'}
-                    this.$forceUpdate();
+                    if (value == 'double-straight-line'){this.$set(this.form.postfix,index,'Dolly-Zoom')}//this.form.postfix[index]='Dolly-Zoom'
+                    if (value == 'straight-line'){this.$set(this.form.postfix,index,'Straight')}//this.form.postfix[index]='Straight'
+                    if (value == 'circle'){this.$set(this.form.postfix,index,'Circle')} //this.form.postfix[index]='Circle'
+                    //this.$forceUpdate();
                 }
             },
             zoomValidator(rule, value, callback) {
