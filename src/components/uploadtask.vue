@@ -513,4 +513,8 @@
         right: -4px;
     }
 
+    .el-input .el-input__count .el-input__count-inner{
+        background-color: transparent;
+    }
+
 </style>
