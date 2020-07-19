@@ -143,11 +143,11 @@
                     goods:[],
                     fps: 24,
                     frames: 240,
-                    scan: 166,
+                    scan: 320,
                     postfix: ['Dolly-Zoom'],
-                    zoomx: [0.1],
-                    zoomy: [0.1],
-                    zoomz: [0.1],
+                    zoomx: [0.0],
+                    zoomy: [0.0],
+                    zoomz: [-0.05],
                     track: ['double-straight-line']
                 },
                 rules: {
@@ -220,10 +220,10 @@
                 console.log('handleRemove:', file);
             },
             onAddVideo(){
-               this.form.zoomx.push(3.0);
-               this.form.zoomy.push(3.0);
-               this.form.zoomz.push(3.0);
-               this.form.track.push('circle');
+               this.form.zoomx.push(0.0);
+               this.form.zoomy.push(0.0);
+               this.form.zoomz.push(-0.5);
+               this.form.track.push('double-straight-line');
                this.form.postfix.push('');
                this.active_item.push(this.form.postfix.length-1)
             },
@@ -248,7 +248,7 @@
                 }
             },
             zoomValidator(rule, value, callback) {
-                if (value == "") {
+                if (value === "") {
                     callback(new Error('禁止为空'));
                 }
                 if (value >= 1 ||  value <= -1) {
