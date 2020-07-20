@@ -281,16 +281,18 @@
                             JSON.stringify(this.form),
                             (res) => {
                                 console.log(res);
-                                console.log("network sucess");
+                                console.log("upload sucess");
+                                this.$message({message: '任务创建成功', center: true, showClose: true, type: 'success',effect:"dark"});
+                                this.$refs.uploadimg.clearFiles()
                                 loading.close();
                             },
                             (er) => {
-                                this.$message({
-                                    message: '网络错误，请重新加载',
-                                    center: true,
-                                    showClose: true,
-                                    type: 'error'
-                                });
+                                console.log(er)
+                                if(er.status == 507){
+                                    this.$message({message: '服务器存储错误，请刷新页面', center: true, showClose: true, type: 'error',effect:"dark"});
+                                }else{
+                                    this.$message({message: '网络错误，请重新加载', center: true, showClose: true, type: 'error' });
+                                }
                                 loading.close();
                             }
                         )
