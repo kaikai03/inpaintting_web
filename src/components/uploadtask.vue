@@ -324,9 +324,18 @@
         padding-top: 24px;
         padding-bottom: 24px;
     }
+    /*TODO: 固定左侧三个输入框位置*/
     .el-form{
         width: 100%;
+        overflow: auto;
+        height: 800px;
+        overflow-y: scroll;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;  /* IE 10+ */
     }
+    .el-form::-webkit-scrollbar { /* WebKit */
+        width: 0;
+        height: 0;}
 
     .el-form-item {
         margin-bottom: 22px;

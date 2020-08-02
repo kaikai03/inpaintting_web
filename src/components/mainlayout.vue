@@ -42,7 +42,7 @@
 <!--          </el-col>-->
 <!--        </el-row>-->
       </el-main>
-      <el-aside  id='aside_right' style="width: 200px;">
+      <el-aside  id='aside_right' style="width: 290px;">
         <taskqueue> </taskqueue>
       </el-aside>
     </el-container>
