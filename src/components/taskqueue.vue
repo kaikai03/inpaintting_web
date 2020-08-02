@@ -1,6 +1,6 @@
 <template>
     <div class="taskqueue">
-        <div class="infinite-list" style="overflow:auto" >
+        <div class="infinite-list" >
             <ul class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
                 <li v-for="i in count" class="list-item">{{ i }}</li>
             </ul>
@@ -15,7 +15,7 @@
         name: "taskqueue",
         data() {
             return {
-                count: 10,
+                count: 40,
                 loading: false
             }
         },
@@ -29,12 +29,12 @@
         },
         methods: {
             load() {
-                // this.loading = true
-                // setTimeout(() => {
-                //     this.count += 2
-                //     this.loading = false
-                // }, 2000)
-                this.count += 2
+                this.loading = true
+                setTimeout(() => {
+                    this.count += 2
+                    this.loading = false
+                }, 1000)
+                // this.count += 2
             }
         }
     }
@@ -42,11 +42,23 @@
 
 <style>
 .taskqueue {
-    width: 100%;
-    max-height: 100px;
-  font-family: Helvetica, sans-serif;
-  text-align: center;
+     position: relative;
+     padding-top: 24px;
+     padding-bottom: 24px;
 }
+    .infinite-list{
+        background-color: #F56C6C;
+        height: 800px;
+        overflow-y: scroll;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;  /* IE 10+ */
+    }
+
+    .infinite-list::-webkit-scrollbar { /* WebKit */
+        width: 0;
+        height: 0;}
+
+
 
 </style>
 
