@@ -314,6 +314,8 @@
     #task-setting {
         /*background-color: teal;*/
         min-width: 420px;
+        height: 800px;
+        overflow: hidden;
         /*display: flex;*/
         /*justify-content: center;*/
         /*align-items: center;*/
@@ -328,7 +330,7 @@
     .el-form{
         width: 100%;
         overflow: auto;
-        height: 800px;
+        height: 100%;
         overflow-y: scroll;
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none;  /* IE 10+ */

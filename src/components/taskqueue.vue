@@ -31,7 +31,7 @@
             load() {
                 this.loading = true
                 setTimeout(() => {
-                    this.count += 2
+                    this.count += 4
                     this.loading = false
                 }, 1000)
                 // this.count += 2
@@ -45,10 +45,12 @@
      position: relative;
      padding-top: 24px;
      padding-bottom: 24px;
+    height: 800px;
+    overflow: hidden;
 }
     .infinite-list{
         background-color: #F56C6C;
-        height: 800px;
+        height: 100%;
         overflow-y: scroll;
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none;  /* IE 10+ */
