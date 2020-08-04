@@ -229,9 +229,16 @@
 
                this.$nextTick(() => {
                    var container = this.$el.querySelector(".more-videos-collapse");
-                    container.scrollTop = container.scrollHeight;
 
-
+                   let scrollTimer = setInterval(() => {
+                       if (container.scrollTop < container.scrollHeight - container.offsetHeight) {
+                           container.scrollTop += 15
+                           console.log('more-videos-collapse moving');
+                       } else {
+                           clearInterval(scrollTimer); // 清除计时器
+                           console.log('moving finish');
+                       }
+                   }, 10);
                 });
 
             },
@@ -329,6 +336,7 @@
         /*display: flex;*/
         /*justify-content: center;*/
         /*align-items: center;*/
+        /*border: 5px solid #FF0000;*/
     }
 
     #params-setting-row{
@@ -339,15 +347,8 @@
 
     .el-form{
         width: 100%;
-        /*overflow: auto;*/
-        /*height: 100%;*/
-        /*overflow-y: scroll;*/
-        /*scrollbar-width: none; !* Firefox *!*/
-        /*-ms-overflow-style: none;  !* IE 10+ *!*/
     }
-    /*.el-form::-webkit-scrollbar { !* WebKit *!*/
-    /*    width: 0;*/
-    /*    height: 0;}*/
+
 
     .el-form-item {
         margin-bottom: 22px;
@@ -362,13 +363,13 @@
         overflow: auto;
         max-height: calc(var(--kerenl-height) - 40px - 24px);
         overflow-y: scroll;
-        /*scrollbar-width: none; !* Firefox *!*/
-        /*-ms-overflow-style: none;  !* IE 10+ *!*/
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;  /* IE 10+ */
     }
 
-     /*.more-videos-collapse::-webkit-scrollbar { !* WebKit *!*/
-     /*   width: 0;*/
-     /*   height: 0;}*/
+     .more-videos-collapse::-webkit-scrollbar { /* WebKit */
+        width: 0;
+        height: 0;}
 
     .video-head{
         /*text-align: center;*/
@@ -414,6 +415,7 @@
 
     #task-fileupload {
         min-width: 380px;
+        height: var(--kerenl-height);
         /*background-color: tomato;*/
     }
 
