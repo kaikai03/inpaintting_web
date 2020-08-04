@@ -22,7 +22,7 @@
                     </el-col>
 
                     <el-col style="width: 60%" >
-                        <el-collapse v-model="active_item">
+                        <el-collapse class="more-videos-collapse" v-model="active_item">
                             <div class="more-videos" v-for="(postfix_, index) in form.postfix">
 
                                 <el-collapse-item class="video-head" :title="'视频'+(index+1)" :name="index">
@@ -226,6 +226,14 @@
                this.form.track.push('double-straight-line');
                this.form.postfix.push('');
                this.active_item.push(this.form.postfix.length-1)
+
+               this.$nextTick(() => {
+                   var container = this.$el.querySelector(".more-videos-collapse");
+                    container.scrollTop = container.scrollHeight;
+
+
+                });
+
             },
             onDelVideo(index){
                 if(this.form.postfix.length<=1){
@@ -306,6 +314,8 @@
 </script>
 
 <style scoped>
+    * { --kerenl-height:800px;}
+
     .el-col {
         height: 100%;
         border-radius: 4px;
@@ -314,7 +324,7 @@
     #task-setting {
         /*background-color: teal;*/
         min-width: 420px;
-        height: 800px;
+        height: var(--kerenl-height);
         overflow: hidden;
         /*display: flex;*/
         /*justify-content: center;*/
@@ -326,27 +336,40 @@
         padding-top: 24px;
         padding-bottom: 24px;
     }
-    /*TODO: 固定左侧三个输入框位置*/
+
     .el-form{
         width: 100%;
-        overflow: auto;
-        height: 100%;
-        overflow-y: scroll;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none;  /* IE 10+ */
+        /*overflow: auto;*/
+        /*height: 100%;*/
+        /*overflow-y: scroll;*/
+        /*scrollbar-width: none; !* Firefox *!*/
+        /*-ms-overflow-style: none;  !* IE 10+ *!*/
     }
-    .el-form::-webkit-scrollbar { /* WebKit */
-        width: 0;
-        height: 0;}
+    /*.el-form::-webkit-scrollbar { !* WebKit *!*/
+    /*    width: 0;*/
+    /*    height: 0;}*/
 
     .el-form-item {
         margin-bottom: 22px;
     }
+
     .more-videos{
         width: 95%;
         border: 1px solid #409EFF;
         margin-bottom: 14px;
     }
+    .more-videos-collapse{
+        overflow: auto;
+        max-height: calc(var(--kerenl-height) - 40px - 24px);
+        overflow-y: scroll;
+        /*scrollbar-width: none; !* Firefox *!*/
+        /*-ms-overflow-style: none;  !* IE 10+ *!*/
+    }
+
+     /*.more-videos-collapse::-webkit-scrollbar { !* WebKit *!*/
+     /*   width: 0;*/
+     /*   height: 0;}*/
+
     .video-head{
         /*text-align: center;*/
         /*border: 1px solid darkgray;*/
@@ -383,7 +406,6 @@
     .add-video{
         width: 96%;
         min-width: 240px;
-        margin-top: -12px;
         color: #a0cfff;
         border-color: #a0cfff;
     }
