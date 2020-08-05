@@ -1,9 +1,9 @@
 <template>
-    <div id="carousel_main">
+    <div id="carousel-main">
 
         <div id="progress">
             <transition mode="out-in">
-                <img_loading_progress v-show="progress_show" :success_callback="add_carousel_flag" :error_callback="load_img_error" ref="progress"></img_loading_progress>
+                <img-loading-progress v-show="progress_show" :successCallback="addCarouselFlag" :errorCallback="loadImgError" ref="progress"></img-loading-progress>
             </transition>
         </div>
 
@@ -11,7 +11,7 @@
         <div id="carousel">
             <transition mode="out-in">
                 <el-carousel v-show="carousel_show" :autoplay="carousel_autoplay" :interval="3000" type="card" ref="carousel"
-                             arrow="never" @change="((next, pre) => {on_change(pre, next)})">
+                             arrow="never" @change="((next, pre) => {onChange(pre, next)})">
                     <el-carousel-item v-for="(item,index) in playitems" :key="item.index" name="index">
                         <div class="videoPlay" style="height: 100%;width: 100%;">
 <!--                            <div style="height: 30%;width: 30%; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background-color: red"-->
@@ -43,7 +43,7 @@
 
 
             <transition mode="out-in">
-               <el-button id="refresh_btn" icon="el-icon-refresh" @click="refresh_btn_click()" circle> </el-button>
+               <el-button id="refresh-btn" icon="el-icon-refresh" @click="refreshBtnClick()" circle> </el-button>
             </transition>
 
 
@@ -52,7 +52,7 @@
 
 
 <script>
-    import img_loading_progress from "~/components/common/img_loading_progress";
+    import imgLoadingProgress from "~/components/common/img_loading_progress";
     export default {
         name: "carousel",
         data() {
@@ -89,18 +89,18 @@
             }
         },
         methods: {
-            add_carousel_flag(playitems) {
+            addCarouselFlag(playitems) {
                 console.log(playitems)
                 this.playitems = playitems
-                this.player_options = this.get_options(this.playitems)
+                this.player_options = this.getOptions(this.playitems)
                 this.progress_show = false
                 this.carousel_show = true
                 this.carousel_autoplay = true
             },
-            load_img_error() {
+            loadImgError() {
 
             },
-            refresh_btn_click() {
+            refreshBtnClick() {
                 console.log("btn")
                 this.progress_show = true
                 this.carousel_show = false
@@ -112,7 +112,7 @@
             },
             onPlayerPlay(player){},
             onPlayerEnded(player){},
-            get_options(playitems) {
+            getOptions(playitems) {
                 let options = [];
                 for (let [index, item] of playitems.entries()) {
                     let option = JSON.parse(JSON.stringify(this.player_option_base))
@@ -125,7 +125,7 @@
                 }
                 return options
             },
-            on_change(pre, next) {
+            onChange(pre, next) {
                 // console.log('change', pre, next);
                 this.$refs.videoPlayer[pre].player.pause()
                 this.$refs.videoPlayer[next].player.play()
@@ -160,13 +160,13 @@
             this.$refs.progress.start(this.backen.random_videos_urlmaker(5))
         },
         components:{
-          img_loading_progress
+          imgLoadingProgress
         }
     }
 </script>
 
 <style scoped>
-    #carousel_main {
+    #carousel-main {
         height: 100%;
         width: 100%;
         position: relative;
@@ -187,7 +187,7 @@
 
 
 
-    #refresh_btn{
+    #refresh-btn{
         position: absolute;
         z-index: 2;
         left:96%;

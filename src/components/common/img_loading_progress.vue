@@ -1,8 +1,8 @@
 <template>
-    <div id="progress_main" >
+    <div id="progress-main" >
         <div id="progress"  ref="progress_ref">
             <el-progress type="circle" :percentage="percentage" :status="status" :width=width :stroke-width=stroke :show-text="show_text"></el-progress>
-            <el-button id="refresh_btn_large" v-show="has_error" icon="el-icon-refresh" @click="refresh()" circle> </el-button>
+            <el-button id="refresh-btn-large" v-show="has_error" icon="el-icon-refresh" @click="refresh()" circle> </el-button>
         </div>
     </div>
 
@@ -10,8 +10,8 @@
 
 <script>
     export default {
-        name: "img_loading_progress",
-        props: {'success_callback':Function,'error_callback':Function},
+        name: "imgLoadingProgress",
+        props: {'successCallback':Function,'errorCallback':Function},
         data(){
           return{
               current_request_add: null,
@@ -77,7 +77,7 @@
                         });
                         this.has_error = true
                         this.show_text = false
-                        this.error_callback()
+                        this.errorCallback()
                     }
                 )
 
@@ -92,7 +92,7 @@
                                 console.log("加载OK： ", index + ' : ' + e.target.src)
                                 console.log("全部完成")
                                 sleep(this.success_delay).then(() => {
-                                    this.success_callback(items)
+                                    this.successCallback(items)
                                 })
                             } else {
                                 console.log("加载OK： ", index + ' : ' + e.target.src)
@@ -113,7 +113,7 @@
                             });
                             this.has_error = true
                             this.show_text = false
-                            this.error_callback()
+                            this.errorCallback()
                         }
                     })
                 }
@@ -135,7 +135,7 @@
 </script>
 
 <style scoped>
-    #progress_main{
+    #progress-main{
         width: 100%;
         height: 100%;
         background-color: transparent;
@@ -148,7 +148,7 @@
         height: auto;
     }
 
-    #refresh_btn_large {
+    #refresh-btn-large {
         position: absolute;
         z-index: 2;
         left: 50%;

@@ -43,7 +43,7 @@
 <!--        </el-row>-->
       </el-main>
       <el-aside  id='aside_right' style="width: 290px;">
-        <taskqueue> </taskqueue>
+        <task-queue> </task-queue>
       </el-aside>
     </el-container>
     <!-- 底栏 -->
@@ -58,7 +58,7 @@
     import carousel from "~/components/carousel";
     import * as get_base_info from '~/js/get_base_info'
     import dashboard from "~/components/dashboard";
-    import taskqueue from "~/components/taskqueue";
+    import taskQueue from "~/components/taskqueue";
 
     export default {
         name: "mainlayout",
@@ -85,7 +85,7 @@
           console.log(this.ip,this.area)
         },
       components:{
-          navigator,carousel,taskqueue
+          navigator,carousel,taskQueue
         }
     }
 </script>

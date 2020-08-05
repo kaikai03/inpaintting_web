@@ -1,11 +1,11 @@
 <template>
-    <div class="taskqueue">
+    <div class="task-queue">
         <div class="infinite-list" >
             <div class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
                 <p v-for="i in count" class="list-item">{{ i }}</p>
 
-                <p v-if="loading" class="list-item">加载中...</p>
-                <p v-if="noMore" class="list-item">没有更多了</p>
+                <p v-if="loading" class="list-loading">加载中...</p>
+                <p v-if="noMore" class="list-noMore">没有更多了</p>
             </div>
         </div>
     </div>
@@ -13,7 +13,7 @@
 
 <script>
     export default {
-        name: "taskqueue",
+        name: "taskQueue",
         data() {
             return {
                 count: 40,
@@ -49,7 +49,7 @@
 
 
 <style scoped>
-    .taskqueue {
+    .task-queue {
         position: relative;
         padding-top: 24px;
         padding-bottom: 24px;
@@ -76,7 +76,7 @@
 
     }
 
-    .infinite-list .list .list-item {
+    .infinite-list .list-item {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -86,6 +86,14 @@
         margin: 2px;
         color: #7dbcfc;
         border-radius: 5px;
+    }
+
+    .infinite-list .list .list-noMore {
+
+    }
+
+    .infinite-list .list .list-loading {
+
     }
 
 </style>
