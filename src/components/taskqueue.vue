@@ -2,7 +2,11 @@
     <div class="task-queue">
         <div class="infinite-list" >
             <div class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
-                <p v-for="i in count" class="list-item">{{ i }}</p>
+                <div v-for="i in count" class="list-item">
+                    <queue-item :index=i :name="`item${i}`" :img="`addr${i}`"
+                                :progress="`progress${i}`" :stat="`stat${i}`"
+                                :time="`time${i}`"></queue-item>
+                </div>
 
                 <p v-if="loading" class="list-loading">加载中...</p>
                 <p v-if="noMore" class="list-noMore">没有更多了</p>
@@ -12,17 +16,18 @@
 </template>
 
 <script>
+    import queueItem from "~/components/taskqueueitem";
     export default {
         name: "taskQueue",
         data() {
             return {
-                count: 40,
+                count: 25,
                 loading: false
             }
         },
         computed: {
             noMore() {
-                return this.count >= 80
+                return this.count >= 35
             },
             disabled() {
                 return this.loading || this.noMore
@@ -37,6 +42,9 @@
                 }, 1000)
                 // this.count += 2
             }
+        },
+        components:{
+          queueItem
         }
     }
 </script>
@@ -51,8 +59,9 @@
 <style scoped>
     .task-queue {
         position: relative;
-        padding-top: 24px;
-        padding-bottom: 24px;
+        padding-top: 20px;
+        padding-right: 4px;
+        padding-bottom: 20px;
         height: 800px;
         overflow: hidden;
     }
@@ -80,19 +89,27 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100px;
+        /*height: 100px;*/
         /*width: 100%;*/
-        background: #e8f3fe;
-        margin: 2px;
-        color: #7dbcfc;
-        border-radius: 5px;
+        /*background: #e8f3fe;*/
+        margin: 3px;
+        /*color: #7dbcfc;*/
+        /*border-radius: 5px;*/
     }
 
     .infinite-list .list .list-noMore {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
 
     }
 
     .infinite-list .list .list-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
 
     }
 
