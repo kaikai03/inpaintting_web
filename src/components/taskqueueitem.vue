@@ -57,11 +57,13 @@
         height: 50px;
     }
     #star .el-button--text{
-         border-color:red;
-        padding-left: 5px;
-        padding-right: 5px;
-        padding-top: 0px;
-        padding-bottom: 26px;
+         /*border-color:red;*/
+        /*padding-left: 5px;*/
+        /*padding-right: 5px;*/
+        /*padding-top: 0px;*/
+        /*padding-bottom: 26px;*/
+        padding: 0px 5px 26px 5px;
+        margin-top: -8px
     }
     .icon-red{
         color: red;
