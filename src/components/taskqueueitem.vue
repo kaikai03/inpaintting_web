@@ -3,7 +3,7 @@
         <el-row type="flex">
             <el-col :span="4" id="index" > {{index}}</el-col>
             <el-col :span="12" >
-                <div id="name">{{name}}</div>
+                <div id="name" :alt="name">{{name}}</div>
                 <div id="time">{{time}}</div>
             </el-col>
         </el-row>
@@ -71,6 +71,88 @@
     .icon-blue{
         color: blue;
     }
+    #time{
+        font-size: 12px;
+        color: lightgray;
+    }
+
+    #name{
+        font-weight:bold;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        overflow:hidden;
+    }
+    #name:hover:before{
+        cursor: help;
+        content:attr(alt);
+        /*background: red;*/
+        /*color: #3a8ee6;*/
+        /*padding: .8em 1em;*/
+        /*position: absolute;*/
+        /*left: 0%;*/
+        /*top: 0%;*/
+        /*margin-left: 14px;*/
+        /*white-space: pre ;*/
+
+        /*content:"[line " attr(title) "]";*/
+
+        width: 200px;
+        background-color: rgba(0, 0, 0, 0.7);
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 18px;
+        padding: 10px 20px;
+        color: #fff;
+        position: absolute;
+        z-index: 10001;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        text-align: center;
+
+        top: 100%;
+        margin-top: 10px;
+        right: 0px;
+        }
+
+    #name:hover:after {
+        /*content: "";*/
+        /*position: absolute;*/
+        /*left: 0%;*/
+        /*width: 0;*/
+        /*height: 0;*/
+        /*border-right: 8px solid #d9444a;*/
+        /*border-top: 8px solid transparent;*/
+        /*border-bottom: 8px solid transparent;*/
+
+                font-size: 14px;
+        font-weight: normal;
+        line-height: 18px;
+        color: #fff;
+        text-align: center;
+
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+
+        border-width: 0 9px 10px 9px;
+        border-color: transparent transparent rgba(0, 0, 0, 0.7) transparent;
+        top: -10px;
+        left: 50%;
+        margin-left: -9px;
+
+                right: 0;
+        left: auto;
+        margin-right: 9px;
+    }
+
+
+
 
 </style>
 

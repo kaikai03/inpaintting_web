@@ -3,9 +3,9 @@
         <div class="infinite-list" >
             <div class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
                 <div v-for="i in count" class="list-item">
-                    <queue-item :index=i :name="`item${i}`" :img="`addr${i}`"
+                    <queue-item :index=i :name="`QQ截图20200720184455.png${i}`" :img="`addr${i}`"
                                 :progress="`progress${i}`" :stat="`stat${i}`"
-                                :time="`time${i}`"></queue-item>
+                                :time="`2020-8-6 15:21:06${i}`"></queue-item>
                 </div>
 
                 <p v-if="loading" class="list-loading">加载中...</p>
