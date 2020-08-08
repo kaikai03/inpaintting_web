@@ -1,8 +1,12 @@
 <template>
     <div class="queue-item">
         <el-row type="flex">
-            <el-col :span="4" id="index" > {{index}}</el-col>
-            <el-col :span="12" >
+            <el-col :span="4" id="index" >
+                <span id="index-text">
+                    {{index}}
+                </span>
+            </el-col>
+            <el-col :span="18" >
                 <div id="name" :alt="name">{{name}}</div>
                 <div id="time">{{time}}</div>
             </el-col>
@@ -15,8 +19,9 @@
                 </el-button>
             </el-col>
             <el-col :span="20" id="img">
-                <el-image id="image" fit="scale-down" lazy
-                        src="...">
+<!--                'fill', 'contain', 'cover', 'none', 'scale-down'-->
+                <el-image id="image" fit="contain" lazy
+                        src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg">
                     <div slot="placeholder" class="image-slot">
                         加载中<span class="dot">...</span>
                     </div>
@@ -60,10 +65,21 @@
         box-sizing: border-box;
     }
     #index{
-        padding: 8px 0px 0px 8px;
+        padding: 1px 0px 0px 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: darkgray;
     }
+    #index #index-text{
+        display: block;
+        text-align: center;
+            width: 20px;
+            height: auto;
+            border-radius: 50%;
+        border: 1px solid darkgray;
+    }
+
     #star {
-        font-size: 1px;
         height: 50px;
     }
     #star .el-button--text{
@@ -72,6 +88,7 @@
         /*padding-right: 5px;*/
         /*padding-top: 0px;*/
         /*padding-bottom: 26px;*/
+        font-size: 25px;
         padding: 0px 5px 26px 5px;
         margin-top: -8px
     }
@@ -83,7 +100,8 @@
     }
     #time{
         font-size: 12px;
-        color: lightgray;
+        color:grey;
+        margin-left: 14px;
     }
 
     #name{
@@ -91,27 +109,20 @@
         text-overflow:ellipsis;
         white-space:nowrap;
         overflow:hidden;
+        margin-bottom: 2px;
+        margin-top: 2px;
     }
     #name:hover:before{
         cursor: help;
         content:attr(alt);
-        /*background: red;*/
-        /*color: #3a8ee6;*/
-        /*padding: .8em 1em;*/
-        /*position: absolute;*/
-        /*left: 0%;*/
-        /*top: 0%;*/
-        /*margin-left: 14px;*/
-        /*white-space: pre ;*/
 
-        /*content:"[line " attr(title) "]";*/
 
-        width: 200px;
+        width: auto;
         background-color: rgba(0, 0, 0, 0.7);
-        font-size: 14px;
+        font-size: 12px;
         font-weight: normal;
-        line-height: 18px;
-        padding: 10px 20px;
+        line-height: 15px;
+        padding: 8px 10px;
         color: #fff;
         position: absolute;
         z-index: 10001;
@@ -123,9 +134,10 @@
         box-sizing: border-box;
         text-align: center;
 
-        top: 100%;
-        margin-top: 10px;
-        right: 0px;
+        top: 25px;
+        /*margin-top: 20px;*/
+        /*right: 0px;*/
+        left: 20%;
         }
 
     #name:hover:after {
@@ -138,9 +150,9 @@
         /*border-top: 8px solid transparent;*/
         /*border-bottom: 8px solid transparent;*/
 
-                font-size: 14px;
+        font-size: 14px;
         font-weight: normal;
-        line-height: 18px;
+        line-height: 14px;
         color: #fff;
         text-align: center;
 
@@ -152,21 +164,41 @@
 
         border-width: 0 9px 10px 9px;
         border-color: transparent transparent rgba(0, 0, 0, 0.7) transparent;
-        top: -10px;
-        left: 50%;
+        top: 15px;
+        /*left: 50%;*/
         margin-left: -9px;
 
-                right: 0;
-        left: auto;
+        right: auto;
+        left: 30%;
         margin-right: 9px;
     }
 
     #img .el-image{
         width: 100%;
-        height: 75px;
-        background: teal;
+        height: 120px;
+        background: rgba(99, 99, 99, 0.2);
+
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+
+        margin-top: 4px;
+        margin-bottom: 4px;
     }
 
+    #img .image-slot {
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background: rgba(250, 250, 250, 0.3);
+        color: #909399;
+    }
+     #img .el-icon-picture-outline{
+         font-size: 40px;
+     }
 
 
 

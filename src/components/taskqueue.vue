@@ -37,9 +37,9 @@
             load() {
                 this.loading = true
                 setTimeout(() => {
-                    this.count += 4
+                    this.count += 2
                     this.loading = false
-                }, 1000)
+                }, 2000)
                 // this.count += 2
             }
         },
