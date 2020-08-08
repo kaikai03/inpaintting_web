@@ -14,7 +14,17 @@
                     <i :class="{'el-icon-star-on':1, 'icon-red':'red'=='blue', 'icon-blue':'blue'=='blue'}"></i>
                 </el-button>
             </el-col>
-            <el-col :span="12" id="img"> {{img}} </el-col>
+            <el-col :span="20" id="img">
+                <el-image id="image" fit="scale-down" lazy
+                        src="...">
+                    <div slot="placeholder" class="image-slot">
+                        加载中<span class="dot">...</span>
+                    </div>
+                    <div slot="error" class="image-slot">
+                        <i class="el-icon-picture-outline"></i>
+                    </div>
+                </el-image>
+            </el-col>
         </el-row>
 
 <!--        <p>{{index}}, {{stat}}</p>-->
@@ -149,6 +159,12 @@
                 right: 0;
         left: auto;
         margin-right: 9px;
+    }
+
+    #img .el-image{
+        width: 100%;
+        height: 75px;
+        background: teal;
     }
 
 
