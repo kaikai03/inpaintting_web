@@ -13,10 +13,24 @@
         </el-row>
 
         <el-row >
-            <el-col :span="4"  id="star">
-                <el-button class="star" type="text" @click="onStarClick($event)">
-                    <i :class="{'el-icon-star-on':1, 'icon-red':'red'==btnStat, 'icon-blue':'blue'==btnStat }"></i>
-                </el-button>
+            <el-col :span="4" id="star">
+                <el-popover
+                        placement="bottom"
+                        width="100"
+                        trigger="focus">
+                      <div style="text-align: right; margin: 0">
+                        <el-button  type="text" @click="onStarClick($event)" >
+                            <i class="el-icon-star-on icon-red"> </i>
+                        </el-button>
+                        <el-button  type="text" @click="onStarClick($event)" >
+                            <i class="el-icon-star-on icon-blue"> </i>
+                        </el-button>
+                      </div>
+
+                    <el-button class="star" type="text" @click="onStarClick($event)" slot="reference">
+                        <i :class="{'el-icon-star-on':1, 'icon-red':'red'==btnStat, 'icon-blue':'blue'==btnStat }"></i>
+                    </el-button>
+                </el-popover>
             </el-col>
             <el-col :span="20" id="img">
 <!--                'fill', 'contain', 'cover', 'none', 'scale-down'-->
