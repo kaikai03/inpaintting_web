@@ -14,8 +14,8 @@
 
         <el-row >
             <el-col :span="4"  id="star">
-                <el-button class="star" type="text" @click="onStarClick(index)">
-                    <i :class="{'el-icon-star-on':1, 'icon-red':'red'=='blue', 'icon-blue':'blue'=='blue'}"></i>
+                <el-button class="star" type="text" @click="onStarClick($event)">
+                    <i :class="{'el-icon-star-on':1, 'icon-red':'red'==btnStat, 'icon-blue':'blue'==btnStat }"></i>
                 </el-button>
             </el-col>
             <el-col :span="20" id="img">
@@ -44,6 +44,21 @@
     export default {
         name: "queueItem",
         props: {'index':Number,'name':String,'img':String,'progress':Number, 'stat':String, 'time':String},
+        data(){
+            return{
+                btnStat:"blue",
+            };
+        },
+        methods:{
+            onStarClick(event){
+              console.log("click",event.target.c);
+                if(this.btnStat=='red'){
+                    this.btnStat='blue';
+                }else {
+                    this.btnStat='red';
+                }
+            },
+        }
     }
 
 </script>
