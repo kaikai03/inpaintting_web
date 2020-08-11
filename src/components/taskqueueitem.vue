@@ -19,16 +19,22 @@
                         width="100"
                         trigger="focus">
                       <div style="text-align: right; margin: 0">
-                        <el-button  type="text" @click="onStarClick($event)" >
+                        <el-button  type="text" @click="onStarClick('正常')" >
                             <i class="el-icon-star-on icon-red"> </i>
                         </el-button>
-                        <el-button  type="text" @click="onStarClick($event)" >
+                        <el-button  type="text" @click="onStarClick('插队')" >
+                            <i class="el-icon-star-on icon-blue"> </i>
+                        </el-button>
+                          <el-button  type="text" @click="onStarClick('滞后')" >
+                            <i class="el-icon-star-on icon-blue"> </i>
+                        </el-button>
+                          <el-button  type="text" @click="onStarClick('暂停')" >
                             <i class="el-icon-star-on icon-blue"> </i>
                         </el-button>
                       </div>
 
-                    <el-button class="star" type="text" @click="onStarClick($event)" slot="reference">
-                        <i :class="{'el-icon-star-on':1, 'icon-red':'red'==btnStat, 'icon-blue':'blue'==btnStat }"></i>
+                    <el-button class="star" type="text" slot="reference">
+                        <i :class="{'el-icon-star-on':1, 'icon-red':'red'==btnStat, 'icon-gray':'gray'==btnStat }"></i>
                     </el-button>
                 </el-popover>
             </el-col>
@@ -67,7 +73,7 @@
             onStarClick(event){
               console.log("click",event.target.c);
                 if(this.btnStat=='red'){
-                    this.btnStat='blue';
+                    this.btnStat='gray';
                 }else {
                     this.btnStat='red';
                 }
@@ -122,10 +128,13 @@
         margin-top: -8px
     }
     .icon-red{
-        color: red;
+        color: #F56C6C;
     }
-    .icon-blue{
-        color: blue;
+    .icon-gray{
+        color: #909399;
+    }
+    .icon-black{
+        color: #333333;
     }
     #time{
         font-size: 12px;
