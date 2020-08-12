@@ -15,10 +15,11 @@
         <el-row >
             <el-col :span="4" id="star">
                 <el-popover
+                        v-model="popVisible"
                         placement="bottom"
                         width="100"
-                        trigger="focus">
-                      <div style="text-align: right; margin: 0">
+                        trigger="click">
+                      <div id="pop">
                         <el-button  type="text" @click="onStarClick('正常')" >
                             <i class="el-icon-star-on icon-red"> </i>
                         </el-button>
@@ -33,7 +34,7 @@
                         </el-button>
                       </div>
 
-                    <el-button class="star" type="text" slot="reference">
+                    <el-button class="star" type="text" slot="reference" >
                         <i :class="{'el-icon-star-on':1, 'icon-red':'red'==btnStat, 'icon-gray':'gray'==btnStat }"></i>
                     </el-button>
                 </el-popover>
@@ -67,16 +68,18 @@
         data(){
             return{
                 btnStat:"blue",
+                popVisible:false
             };
         },
         methods:{
-            onStarClick(event){
-              console.log("click",event.target.c);
-                if(this.btnStat=='red'){
-                    this.btnStat='gray';
-                }else {
-                    this.btnStat='red';
-                }
+            onStarClick(stat){
+              console.log("click",this.$refs.popper);
+                // if(this.btnStat=='red'){
+                //     this.btnStat='gray';
+                // }else {
+                //     this.btnStat='red';
+                // }
+                this.popVisible = false
             },
         }
     }
@@ -127,6 +130,13 @@
         padding: 0px 5px 26px 5px;
         margin-top: -8px
     }
+    .el-popover #pop .el-button{
+        float: right;
+        width: 100%;
+        background: red;
+    }
+
+
     .icon-red{
         color: #F56C6C;
     }
@@ -246,4 +256,17 @@
    .el-icon-star-on {
        font-size: 22px;
     }
+    .el-popover[x-placement^="bottom"] {
+        margin-top: -12px;
+    }
+    .el-popover {
+        min-width: 80px;
+        padding:5px;
+    }
+    .el-popover[style] {
+        width: 80px!important;
+    }
+
+
+
 </style>
