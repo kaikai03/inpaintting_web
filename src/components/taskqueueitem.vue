@@ -21,21 +21,23 @@
                         trigger="click">
                       <div id="pop">
                         <el-button  type="text" @click="onStarClick('正常')" >
-                            <i class="el-icon-star-on icon-red"> </i>
+                            <i class="el-icon-star-on icon-blue"></i> <div class="pop-btn-text icon-blue">正常</div>
                         </el-button>
                         <el-button  type="text" @click="onStarClick('插队')" >
-                            <i class="el-icon-star-on icon-blue"> </i>
+                            <i class="el-icon-star-on icon-red"></i><span class="pop-btn-text icon-red">插队</span>
                         </el-button>
                           <el-button  type="text" @click="onStarClick('滞后')" >
-                            <i class="el-icon-star-on icon-blue"> </i>
+                            <i class="el-icon-star-on icon-black"></i><span class="pop-btn-text icon-black">滞后</span>
                         </el-button>
                           <el-button  type="text" @click="onStarClick('暂停')" >
-                            <i class="el-icon-star-on icon-blue"> </i>
+                            <i class="el-icon-star-on icon-gray"></i><span class="pop-btn-text icon-gray">暂停</span>
                         </el-button>
                       </div>
 
                     <el-button class="star" type="text" slot="reference" >
-                        <i :class="{'el-icon-star-on':1, 'icon-red':'red'==btnStat, 'icon-gray':'gray'==btnStat }"></i>
+                        <i :class="{'el-icon-star-on':1, 'icon-blue':'正常'==btnStat,'icon-red':'插队'==btnStat,
+                                        'icon-black':'滞后'==btnStat, 'icon-gray':'暂停'==btnStat }">
+                        </i>
                     </el-button>
                 </el-popover>
             </el-col>
@@ -67,18 +69,17 @@
         props: {'index':Number,'name':String,'img':String,'progress':Number, 'stat':String, 'time':String},
         data(){
             return{
-                btnStat:"blue",
+                btnStat:"正常",
                 popVisible:false
             };
         },
         methods:{
             onStarClick(stat){
-              console.log("click",this.$refs.popper);
-                // if(this.btnStat=='red'){
-                //     this.btnStat='gray';
-                // }else {
-                //     this.btnStat='red';
-                // }
+                if(this.btnStat != stat){
+                    //TODO: send command to backen to change the work stat
+                    this.btnStat = stat;
+                }
+
                 this.popVisible = false
             },
         }
@@ -121,20 +122,26 @@
         height: 50px;
     }
     #star .el-button--text{
-         /*border-color:red;*/
-        /*padding-left: 5px;*/
-        /*padding-right: 5px;*/
-        /*padding-top: 0px;*/
-        /*padding-bottom: 26px;*/
         font-size: 25px;
         padding: 0px 5px 26px 5px;
         margin-top: -8px
     }
+
     .el-popover #pop .el-button{
         float: right;
         width: 100%;
-        background: red;
+        padding: 5px 0px;
     }
+
+    .el-popover #pop .pop-btn-text{
+        font-size: 14px;
+        padding: 0px 1px 6px 1px;
+         display: inline-block;
+    vertical-align: middle;
+    }
+
+
+
 
 
     .icon-red{
@@ -189,15 +196,6 @@
         }
 
     #name:hover:after {
-        /*content: "";*/
-        /*position: absolute;*/
-        /*left: 0%;*/
-        /*width: 0;*/
-        /*height: 0;*/
-        /*border-right: 8px solid #d9444a;*/
-        /*border-top: 8px solid transparent;*/
-        /*border-bottom: 8px solid transparent;*/
-
         font-size: 14px;
         font-weight: normal;
         line-height: 14px;
@@ -253,7 +251,11 @@
 </style>
 
 <style>
+
    .el-icon-star-on {
+       font-size: 28px;
+    }
+   .el-popover .el-icon-star-on {
        font-size: 22px;
     }
     .el-popover[x-placement^="bottom"] {
