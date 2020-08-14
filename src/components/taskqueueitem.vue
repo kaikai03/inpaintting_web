@@ -1,5 +1,6 @@
 <template>
-    <div class="queue-item">
+    <div :class="{'queue-item':1, 'queue-item-queuing':'queuing'==btnStat,'queue-item-high':'high'==btnStat,
+                                  'queue-item-low':'low'==btnStat, 'queue-item-stop':'stopped'==btnStat }">
         <el-row type="flex">
             <el-col :span="4" id="index" >
                 <span id="index-text">
@@ -20,23 +21,22 @@
                         width="100"
                         trigger="click">
                       <div id="pop">
-                        <el-button  type="text" @click="onStarClick('正常')" >
+                        <el-button  type="text" @click="onStarClick('queuing')" >
                             <i class="el-icon-star-on icon-blue"></i> <div class="pop-btn-text icon-blue">正常</div>
                         </el-button>
-                        <el-button  type="text" @click="onStarClick('插队')" >
+                        <el-button  type="text" @click="onStarClick('high')" >
                             <i class="el-icon-star-on icon-red"></i><span class="pop-btn-text icon-red">插队</span>
                         </el-button>
-                          <el-button  type="text" @click="onStarClick('滞后')" >
-                            <i class="el-icon-star-on icon-black"></i><span class="pop-btn-text icon-black">滞后</span>
+                          <el-button  type="text" @click="onStarClick('low')" >
+                            <i class="el-icon-star-on icon-gray1"></i><span class="pop-btn-text icon-gray1">滞后</span>
                         </el-button>
-                          <el-button  type="text" @click="onStarClick('暂停')" >
-                            <i class="el-icon-star-on icon-gray"></i><span class="pop-btn-text icon-gray">暂停</span>
+                          <el-button  type="text" @click="onStarClick('stopped')" >
+                            <i class="el-icon-star-off icon-gray2"></i><span class="pop-btn-text icon-gray2">暂停</span>
                         </el-button>
                       </div>
-
                     <el-button class="star" type="text" slot="reference" >
-                        <i :class="{'el-icon-star-on':1, 'icon-blue':'正常'==btnStat,'icon-red':'插队'==btnStat,
-                                        'icon-black':'滞后'==btnStat, 'icon-gray':'暂停'==btnStat }">
+                        <i :class="{'el-icon-star-on':1, 'icon-blue':'queuing'==btnStat,'icon-red':'high'==btnStat,
+                                        'icon-gray1':'low'==btnStat, 'icon-gray2':'stopped'==btnStat }">
                         </i>
                     </el-button>
                 </el-popover>
@@ -69,7 +69,7 @@
         props: {'index':Number,'name':String,'img':String,'progress':Number, 'stat':String, 'time':String},
         data(){
             return{
-                btnStat:"正常",
+                btnStat:"queuing",
                 popVisible:false
             };
         },
@@ -102,9 +102,28 @@
         padding: 0px 12px 0 0;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
+        border: 1px solid #409EFF;
     }
+
+    .queue-item-queuing{
+        background: #EDF6FF;
+    }
+
+    .queue-item-high{
+        background: #FDE2E2;
+    }
+
+    .queue-item-low{
+        background: #F2F2F2;
+    }
+
+    .queue-item-stop{
+        background: #F2F2F2;
+        opacity: 0.6;
+    }
+
     #index{
-        padding: 1px 0px 0px 10px;
+        padding: 8px 0px 0px 8px;
         font-size: 18px;
         font-weight: bold;
         color: darkgray;
@@ -115,7 +134,7 @@
             width: 20px;
             height: auto;
             border-radius: 50%;
-        border: 1px solid darkgray;
+        border: 1px dashed #409EFF40;
     }
 
     #star {
@@ -123,7 +142,7 @@
     }
     #star .el-button--text{
         font-size: 25px;
-        padding: 0px 5px 26px 5px;
+        padding: 5px 8px 26px 5px;
         margin-top: -8px
     }
 
@@ -142,16 +161,15 @@
 
 
 
-
-
     .icon-red{
         color: #F56C6C;
     }
-    .icon-gray{
+    .icon-gray1{
         color: #909399;
     }
-    .icon-black{
-        color: #333333;
+    .icon-gray2{
+        color: #909399;
+        opacity: 0.5;
     }
     #time{
         font-size: 12px;
@@ -255,8 +273,13 @@
    .el-icon-star-on {
        font-size: 28px;
     }
+
+
    .el-popover .el-icon-star-on {
        font-size: 22px;
+    }
+   .el-popover .el-icon-star-off {
+       font-size: 20px;
     }
     .el-popover[x-placement^="bottom"] {
         margin-top: -12px;
