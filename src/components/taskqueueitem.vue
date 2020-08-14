@@ -1,6 +1,13 @@
 <template>
-    <div :class="{'queue-item':1, 'queue-item-queuing':'queuing'==btnStat,'queue-item-high':'high'==btnStat,
-                                  'queue-item-low':'low'==btnStat, 'queue-item-stop':'stopped'==btnStat }">
+    <div :class="{'queue-item':1, 'queue-item-queuing':workState.que==starStat,
+                                   'queue-item-high':workState.hi==starStat,
+                                  'queue-item-low':workState.low==starStat,
+                                  'queue-item-stop':workState.stop==starStat }">
+        <div id="del-btn" v-if="!(index==1 && stat==workState.que && progress==0)">
+        <el-button type="text"  @click="onDelClick()" >
+                            <i class="el-icon-error"></i>
+        </el-button>
+        </div>
         <el-row type="flex">
             <el-col :span="4" id="index" >
                 <span id="index-text">
@@ -21,22 +28,24 @@
                         width="100"
                         trigger="click">
                       <div id="pop">
-                        <el-button  type="text" @click="onStarClick('queuing')" >
+                        <el-button  type="text" @click="onStarClick(workState.que)" >
                             <i class="el-icon-star-on icon-blue"></i> <div class="pop-btn-text icon-blue">正常</div>
                         </el-button>
-                        <el-button  type="text" @click="onStarClick('high')" >
+                        <el-button  type="text" @click="onStarClick(workState.hi)" >
                             <i class="el-icon-star-on icon-red"></i><span class="pop-btn-text icon-red">插队</span>
                         </el-button>
-                          <el-button  type="text" @click="onStarClick('low')" >
+                          <el-button  type="text" @click="onStarClick(workState.low)" >
                             <i class="el-icon-star-on icon-gray1"></i><span class="pop-btn-text icon-gray1">滞后</span>
                         </el-button>
-                          <el-button  type="text" @click="onStarClick('stopped')" >
+                          <el-button  type="text" @click="onStarClick(workState.stop)" >
                             <i class="el-icon-star-off icon-gray2"></i><span class="pop-btn-text icon-gray2">暂停</span>
                         </el-button>
                       </div>
                     <el-button class="star" type="text" slot="reference" >
-                        <i :class="{'el-icon-star-on':1, 'icon-blue':'queuing'==btnStat,'icon-red':'high'==btnStat,
-                                        'icon-gray1':'low'==btnStat, 'icon-gray2':'stopped'==btnStat }">
+                        <i :class="{'el-icon-star-on':1, 'icon-blue':workState.que==starStat,
+                                                         'icon-red':workState.hi==starStat,
+                                                          'icon-gray1':workState.low==starStat,
+                                                          'icon-gray2':workState.stop==starStat }">
                         </i>
                     </el-button>
                 </el-popover>
@@ -69,19 +78,28 @@
         props: {'index':Number,'name':String,'img':String,'progress':Number, 'stat':String, 'time':String},
         data(){
             return{
-                btnStat:"queuing",
+                workState:this.backen.work_stat,
+                starStat:this.stat,
                 popVisible:false
             };
         },
         methods:{
             onStarClick(stat){
-                if(this.btnStat != stat){
+                console.log(stat)
+                this.popVisible = false
+                if(this.progress !=0 && this.workState.que == this.stat){
+                    this.$message.error('进行中的任务无法更改列队级别');
+                    return;
+                }
+                if(this.starStat != stat){
                     //TODO: send command to backen to change the work stat
-                    this.btnStat = stat;
+                    this.starStat = stat;
                 }
 
-                this.popVisible = false
             },
+            onDelClick(){
+                //TODO:to implement
+            }
         }
     }
 
@@ -103,6 +121,29 @@
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
         border: 1px solid #409EFF;
+    }
+
+    #del-btn{
+        position: relative;
+        float: right;
+        right: -5px;
+        top: 0px;
+        height: 24px;
+        width: 24px;
+        /*background: red;*/
+
+    }
+
+    #del-btn .el-button{
+        height: 100%;
+        width:100%;
+    }
+
+     #del-btn .el-button--text{
+        font-size: 20px;
+         padding: 0px;
+         color: #909399;
+         opacity: 0.4;
     }
 
     .queue-item-queuing{
@@ -136,6 +177,8 @@
             border-radius: 50%;
         border: 1px dashed #409EFF40;
     }
+
+
 
     #star {
         height: 50px;
@@ -273,6 +316,8 @@
    .el-icon-star-on {
        font-size: 28px;
     }
+
+
 
 
    .el-popover .el-icon-star-on {

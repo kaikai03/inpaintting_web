@@ -4,7 +4,7 @@
             <div class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
                 <div v-for="i in count" class="list-item">
                     <queue-item :index=i :name="`QQ截图20200720184455.png${i}`" :img="`addr${i}`"
-                                :progress=i :stat="`stat${i}`"
+                                :progress=0.0 stat="queuing"
                                 :time="`2020-8-6 15:21:06${i}`"></queue-item>
                 </div>
 
