@@ -2,7 +2,7 @@
     <div class="task-queue">
         <div class="infinite-list" >
             <div class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
-                <div v-for="i in count" class="list-item">
+                <div v-for="i in taskItem" class="list-item">
                     <queue-item :index=i :name="`QQ截图20200720184455.png${i}`" :img="`addr${i}`"
                                 :progress=0.0 stat="queuing"
                                 :time="`2020-8-6 15:21:06${i}`"
@@ -23,13 +23,14 @@
         name: "taskQueue",
         data() {
             return {
+                taskItem:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
                 count: 25,
                 loading: false
             }
         },
         computed: {
             noMore() {
-                return this.count >= 35
+                return this.taskItem.length >= 35
             },
             disabled() {
                 return this.loading || this.noMore
@@ -39,13 +40,16 @@
             load() {
                 this.loading = true
                 setTimeout(() => {
-                    this.count += 2
+                    this.taskItem.push(this.taskItem.length)
+                    this.taskItem.push(this.taskItem.length)
                     this.loading = false
                 }, 2000)
                 // this.count += 2
             },
             itemDelCallback(index){
                 console.log("del",index)
+                this.taskItem.splice(index, 1);
+                this.$message({type: 'success', message: '删除成功!'});
             }
         },
         components:{

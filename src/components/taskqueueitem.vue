@@ -3,11 +3,13 @@
                                    'queue-item-high':workState.hi==starStat,
                                   'queue-item-low':workState.low==starStat,
                                   'queue-item-stop':workState.stop==starStat }">
-        <div id="del-btn" v-if="!(index==1 && stat==workState.que && progress==0)">
-        <el-button type="text"  @click="onDelClick" >
-                            <i class="el-icon-error"></i>
-        </el-button>
+
+        <div id="del-btn" v-if="!(index==0 && stat==workState.que && progress==0)">
+            <el-button type="text" @click="onDelConfirm">
+                <i class="el-icon-error"></i>
+            </el-button>
         </div>
+
         <el-row type="flex">
             <el-col :span="4" id="index" >
                 <span id="index-text">
@@ -83,25 +85,36 @@
                 popVisible:false
             };
         },
-        methods:{
-            onStarClick(stat){
+        methods: {
+            onStarClick(stat) {
                 console.log(stat)
                 this.popVisible = false
-                if(this.progress !=0 && this.workState.que == this.stat){
+                if (this.progress != 0 && this.workState.que == this.stat) {
                     this.$message.error('进行中的任务无法更改列队级别');
                     return;
                 }
-                if(this.starStat != stat){
+                if (this.starStat != stat) {
                     //TODO: send command to backen to change the work stat
                     this.starStat = stat;
                 }
 
             },
-            onDelClick(){
+            onDelConfirm() {
                 //TODO:to implement
-                sleep(100).then(() => {
-                       this.delCallback(this.index)
-                })
+                this.$confirm('确定要这个删除任务？？', 'are you sure', {
+                    iconClass:'el-icon-error',
+                    confirmButtonText: '坚决删除',
+                    cancelButtonText: '不的',
+                    type: 'warning',
+                    confirmButtonClass:'del-confirm-btn',
+                    cancelButtonClass:'del-confirm-btn'
+                }).then(() => {
+                    sleep(100).then(() => {
+                        this.delCallback(this.index)
+                    })
+                }).catch(() => {
+                    this.$message({type: 'info', message: '删除指定取消'});
+                });
             }
         }
     }
@@ -320,7 +333,11 @@
        font-size: 28px;
     }
 
-
+    .del-confirm-btn{
+        background: transparent!important;
+        border: unset!important;
+        color:#409EFF!important;
+    }
 
 
    .el-popover .el-icon-star-on {
