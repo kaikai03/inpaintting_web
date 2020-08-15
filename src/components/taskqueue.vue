@@ -5,7 +5,9 @@
                 <div v-for="i in count" class="list-item">
                     <queue-item :index=i :name="`QQ截图20200720184455.png${i}`" :img="`addr${i}`"
                                 :progress=0.0 stat="queuing"
-                                :time="`2020-8-6 15:21:06${i}`"></queue-item>
+                                :time="`2020-8-6 15:21:06${i}`"
+                                :delCallback="itemDelCallback"
+                    ></queue-item>
                 </div>
 
                 <p v-if="loading" class="list-loading">加载中...</p>
@@ -41,6 +43,9 @@
                     this.loading = false
                 }, 2000)
                 // this.count += 2
+            },
+            itemDelCallback(index){
+                console.log("del",index)
             }
         },
         components:{

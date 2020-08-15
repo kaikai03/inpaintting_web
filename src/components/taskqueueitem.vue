@@ -4,7 +4,7 @@
                                   'queue-item-low':workState.low==starStat,
                                   'queue-item-stop':workState.stop==starStat }">
         <div id="del-btn" v-if="!(index==1 && stat==workState.que && progress==0)">
-        <el-button type="text"  @click="onDelClick()" >
+        <el-button type="text"  @click="onDelClick" >
                             <i class="el-icon-error"></i>
         </el-button>
         </div>
@@ -72,10 +72,10 @@
 </template>
 
 <script>
-
+    let sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
     export default {
         name: "queueItem",
-        props: {'index':Number,'name':String,'img':String,'progress':Number, 'stat':String, 'time':String},
+        props: {'index':Number,'name':String,'img':String,'progress':Number, 'stat':String, 'time':String, 'taskID':String, 'delCallback':Function[Number]},
         data(){
             return{
                 workState:this.backen.work_stat,
@@ -99,6 +99,9 @@
             },
             onDelClick(){
                 //TODO:to implement
+                sleep(100).then(() => {
+                       this.delCallback(this.index)
+                })
             }
         }
     }
