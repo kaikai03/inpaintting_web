@@ -2,13 +2,22 @@
     <div class="task-queue">
         <div class="infinite-list" >
             <div class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
-                <div v-for="i in taskItem" class="list-item">
-                    <queue-item :index=i :name="`QQ截图20200720184455.png${i}`" :img="`addr${i}`"
-                                :progress=0.0 stat="queuing"
-                                :time="`2020-8-6 15:21:06${i}`"
-                                :delCallback="itemDelCallback"
-                    ></queue-item>
-                </div>
+
+                 <transition-group appear name="queue-move" tag="queue-item">
+                    <div v-for="(content,i) in taskItem" class="list-item" :key="content">
+
+
+                        <queue-item :index=i :name="`QQ截图20200720184455.png${content}`" :img="`addr${i}`"
+                                    :progress=0.0 stat="queuing"
+                                    :time="`2020-8-6 15:21:06${i}`"
+                                    :delCallback="itemDelCallback"
+
+                        ></queue-item>
+
+
+                    </div>
+                 </transition-group>
+
 
                 <p v-if="loading" class="list-loading">加载中...</p>
                 <p v-if="noMore" class="list-noMore">没有更多了</p>
@@ -23,14 +32,14 @@
         name: "taskQueue",
         data() {
             return {
-                taskItem:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-                count: 25,
+                taskItem:["0", "3", "5", "6", "7", "11", "13", "17", "19", "21", "22", "23", "35", "56", "87", "89", "90", "96", "97", "99"],
+                count: 18,
                 loading: false
             }
         },
         computed: {
             noMore() {
-                return this.taskItem.length >= 35
+                return this.taskItem.length >= 25
             },
             disabled() {
                 return this.loading || this.noMore
@@ -43,7 +52,7 @@
                     this.taskItem.push(this.taskItem.length)
                     this.taskItem.push(this.taskItem.length)
                     this.loading = false
-                }, 2000)
+                }, 1000)
                 // this.count += 2
             },
             itemDelCallback(index){
@@ -121,5 +130,38 @@
 
 
     }
+
+    .queue-move-enter {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    .queue-move-enter-active {
+        transition: all 0.3s ease;
+    }
+    .queue-move-enter-to {
+    }
+    .queue-move-leave{
+        position: absolute;
+        transform: translateX(0px);
+        transform: translateY(0px);
+    }
+    .queue-move-leave-active {
+        /*transition: all .38s ease;*/
+        position: absolute;
+        width: 96.5%;
+        transform: translateX(0px);
+        transform: translateY(0px);
+    }
+
+    .queue-move-leave-to {
+        transform: translateX(0px);
+        transform: translateY(0px);
+        opacity: 0;
+    }
+
+    .queue-move-move {
+        transition: all 0.58s ease;
+    }
+
 
 </style>
