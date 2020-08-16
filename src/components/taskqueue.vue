@@ -141,26 +141,22 @@
     .queue-move-enter-to {
     }
     .queue-move-leave{
-        position: absolute;
-        transform: translateX(0px);
-        transform: translateY(0px);
     }
     .queue-move-leave-active {
-        /*transition: all .38s ease;*/
         position: absolute;
         width: 96.5%;
-        transform: translateX(0px);
-        transform: translateY(0px);
+        transition: opacity 0.6s;
+        transform: scale(1);
+        opacity: 0;
     }
 
     .queue-move-leave-to {
-        transform: translateX(0px);
-        transform: translateY(0px);
+        transform: scale(0);
         opacity: 0;
     }
 
     .queue-move-move {
-        transition: all 0.58s ease;
+        transition: all 0.50s cubic-bezier(1.0,0.7,0.4,1.8);
     }
 
 
