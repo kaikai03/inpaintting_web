@@ -17,6 +17,7 @@ export default {
     port,
     work_stat,
     random_videos_urlmaker(num) {
+        //TODO： error path for test
         return http_prefix + backen + ":" + port + "/random1/" + num.toString()
     },
     upload_img_urlmaker() {
