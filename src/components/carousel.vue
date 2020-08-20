@@ -104,7 +104,7 @@
                 console.log("btn")
                 this.progress_show = true
                 this.carousel_show = false
-                this.$refs.progress.start(this.backen.random_videos_urlmaker(5))
+                this.$refs.progress.start(this.backen.randomVideosUrlmaker(5))
 
             },
             onplayerStateChanged(playerCurrentState) {
@@ -157,7 +157,7 @@
 
         },
         mounted() {
-            this.$refs.progress.start(this.backen.random_videos_urlmaker(5))
+            this.$refs.progress.start(this.backen.randomVideosUrlmaker(5))
         },
         components:{
           imgLoadingProgress

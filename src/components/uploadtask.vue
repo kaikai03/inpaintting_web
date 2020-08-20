@@ -95,7 +95,7 @@
                     name="img"
                     class="upload-file"
                     ref="uploadimg"
-                    :action=this.backen.upload_img_urlmaker()
+                    :action=this.backen.uploadImgUrlmaker()
                     :before-upload="onHandleBeforeUpload"
                     :on-preview="onHandlePreview"
                     :on-remove="onHandleRemove"
@@ -292,7 +292,7 @@
                         // setTimeout(() => {
                         //   loading.close();
                         // }, 10000);
-                        this.network.post_request(this.backen.upload_tasks(),
+                        this.network.post_request(this.backen.uploadTasksUrlmaker(),
                             JSON.stringify(this.form),
                             (res) => {
                                 console.log(res);

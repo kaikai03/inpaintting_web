@@ -16,14 +16,17 @@ export default {
     backen,
     port,
     work_stat,
-    random_videos_urlmaker(num) {
+    randomVideosUrlmaker(num) {
         //TODO： error path for test
         return http_prefix + backen + ":" + port + "/random1/" + num.toString()
     },
-    upload_img_urlmaker() {
+    uploadImgUrlmaker() {
         return http_prefix + backen + ":" + port + "/uploadimg/"
     },
-    upload_tasks() {
+    uploadTasksUrlmaker() {
         return http_prefix + backen + ":" + port + "/uploadtask/"
+    },
+    tasksListUrlmaker(page, pageSize, workState) {
+        return http_prefix + backen + ":" + port + "/tasks/?page_size=" + pageSize + "&page=" + page + "&work_status=" + workState
     }
 }
