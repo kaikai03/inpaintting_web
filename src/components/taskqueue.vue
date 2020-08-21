@@ -14,7 +14,6 @@
 
                         ></queue-item>
 
-
                     </div>
                  </transition-group>
 
