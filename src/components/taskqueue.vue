@@ -7,7 +7,7 @@
                     <div v-for="(content,i) in taskItem" class="list-item" :key="content['doc_code']">
 
 
-                        <queue-item :index=i :name="`${content.task_name}`" :imgName="content.img"
+                        <queue-item :index=i :name="`${content['task_name']}`" :imgName="content.img"
                                     :progress=0.0 :stat="content.status"
                                     :time="content.created"
                                     :delCallback="itemDelCallback"
