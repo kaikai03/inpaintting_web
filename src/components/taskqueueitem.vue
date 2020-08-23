@@ -55,7 +55,7 @@
             <el-col :span="20" id="img">
 <!--                'fill', 'contain', 'cover', 'none', 'scale-down'-->
                 <el-image id="image" fit="contain" lazy
-                        src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg">
+                        :src="imgAddr">
                     <div slot="placeholder" class="image-slot">
                         加载中<span class="dot">...</span>
                     </div>
@@ -77,12 +77,14 @@
     let sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
     export default {
         name: "queueItem",
-        props: {'index':Number,'name':String,'img':String,'progress':Number, 'stat':String, 'time':String, 'taskID':String, 'delCallback':Function[Number]},
+        props: {'index':Number,'name':String,'imgName':String,'progress':Number, 'stat':String, 'time':String, 'taskID':String, 'delCallback':Function[Number]},
         data(){
             return{
+                imgAddr:this.backen.imgUrlmaker(this.imgName),
                 workState:this.backen.work_stat,
                 starStat:this.stat,
-                popVisible:false
+                popVisible:false,
+
             };
         },
         methods: {

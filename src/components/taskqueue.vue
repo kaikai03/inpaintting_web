@@ -3,13 +3,13 @@
         <div class="infinite-list" >
             <div class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
 
-                 <transition-group appear name="queue-move" tag="queue-item">
-                    <div v-for="(content,i) in taskItem" class="list-item" :key="content">
+                 <transition-group appear name="queue-move" >
+                    <div v-for="(content,i) in taskItem" class="list-item" :key="content['doc_code']">
 
 
-                        <queue-item :index=i :name="`QQ截图20200720184455.png${content}`" :img="`addr${i}`"
-                                    :progress=0.0 stat="queuing"
-                                    :time="`2020-8-6 15:21:06${i}`"
+                        <queue-item :index=i :name="`${content.task_name}`" :imgName="content.img"
+                                    :progress=0.0 :stat="content.status"
+                                    :time="content.created"
                                     :delCallback="itemDelCallback"
 
                         ></queue-item>
@@ -31,28 +31,55 @@
         name: "taskQueue",
         data() {
             return {
-                taskItem:["0", "3", "5", "6", "7", "11", "13", "17", "19", "21", "22", "23", "35", "56", "87", "89", "90", "96", "97", "99"],
-                count: 18,
-                loading: false
+                workState:this.backen.work_stat,
+                taskItem:[],
+                fullPage: 999,
+                fullElement:999,
+                curPage:0,
+                loading: false,
+                netError: false,
             }
         },
         computed: {
             noMore() {
-                return this.taskItem.length >= 25
+                return this.taskItem.length >= this.fullElement ||  this.curPage >= this.fullPage
             },
             disabled() {
-                return this.loading || this.noMore
+                return this.loading || this.noMore|| this.netError
             }
         },
         methods: {
             load() {
                 this.loading = true
                 setTimeout(() => {
-                    this.taskItem.push(this.taskItem.length)
-                    this.taskItem.push(this.taskItem.length)
+                    console.log("start",this.curPage+1,this.taskItem.length,this.fullPage)
+                    if (this.curPage+1>this.fullPage){
+                        console.log("large")
+                        return
+                    }
+                    this.network.get_request(this.backen.tasksListUrlmaker(this.curPage+1,10, this.workState.que),
+                    (res) => {
+                        console.log("chenggong")
+                        console.log(res.body['page_info'])
+                        console.log(res.body['contents'])
+                        this.fullPage = res.body['page_info']['page_all']
+                        this.fullElement = res.body['page_info']['element_all']
+                        this.curPage = res.body['page_info']['cur_page']
+                        Array.prototype.push.apply(this.taskItem, res.body['contents'])
+                        console.log(this.taskItem)
+                    },
+                    (er) => {
+                        this.$message({
+                            message: '网络错误，无法获取任务,请刷新页面',
+                            center: true,
+                            showClose: true,
+                            type: 'error'
+                        });
+                        this.netError = true
+                    }
+                    );
                     this.loading = false
                 }, 1000)
-                // this.count += 2
             },
             itemDelCallback(index){
                 console.log("del",index)

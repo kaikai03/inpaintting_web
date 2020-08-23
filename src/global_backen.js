@@ -28,5 +28,8 @@ export default {
     },
     tasksListUrlmaker(page, pageSize, workState) {
         return http_prefix + backen + ":" + port + "/tasks/?page_size=" + pageSize + "&page=" + page + "&work_status=" + workState
+    },
+    imgUrlmaker(imgName) {
+        return http_prefix + backen + ":" + port + "/cover/" + imgName
     }
 }
