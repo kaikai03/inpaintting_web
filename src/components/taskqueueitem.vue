@@ -4,7 +4,7 @@
                                   'queue-item-low':workState.low==starStat,
                                   'queue-item-stop':workState.stop==starStat }">
 
-        <div id="del-btn" v-if="!(index==0 && stat==workState.que && progress==0)">
+        <div id="del-btn" :style="{'visibility':delBtnVisibility}" >
             <el-button type="text" @click="onDelConfirm">
                 <i class="el-icon-error"></i>
             </el-button>
@@ -84,8 +84,21 @@
                 workState:this.backen.work_stat,
                 starStat:this.stat,
                 popVisible:false,
+                isActive:false,
 
             };
+        },
+        computed:{
+            delBtnVisibility:{
+                // 使用visibility防止相对位置的改编
+                get(){
+                    if (this.isActive){
+                        return 'hidden'
+                    }else {
+                        return 'visible'
+                    }
+                }
+            }
         },
         methods: {
             onStarClick(stat) {
@@ -98,6 +111,11 @@
                 if (this.starStat != stat) {
                     //TODO: send command to backen to change the work stat
                     this.starStat = stat;
+                    if(this.starStat == this.workState.que){
+                        this.isActive = true
+                    }else{
+                        this.isActive = false
+                    }
                 }
 
             },
@@ -115,7 +133,7 @@
                         this.delCallback(this.index)
                     })
                 }).catch(() => {
-                    this.$message({type: 'info', message: '删除指定取消'});
+                    this.$message({type: 'info', message: '删除--取消'});
                 });
             }
         }
