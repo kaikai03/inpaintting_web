@@ -296,7 +296,7 @@
                             JSON.stringify(this.form),
                             (res) => {
                                 console.log(res);
-                                console.log("upload sucess");
+                                console.log("upload success");
                                 this.$message({message: '任务创建成功', center: true, showClose: true, type: 'success',effect:"dark"});
                                 this.$refs.uploadimg.clearFiles()
                                 loading.close();
