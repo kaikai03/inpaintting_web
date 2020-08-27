@@ -31,5 +31,10 @@ export default {
     },
     imgUrlmaker(imgName) {
         return http_prefix + backen + ":" + port + "/cover/" + imgName
+    },
+    taskStatusChange() {
+        return http_prefix + backen + ":" + port + "/taskstatus/change"
     }
+
+
 }
