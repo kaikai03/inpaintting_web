@@ -110,12 +110,7 @@
                 }
                 if (this.starStat != stat) {
                     //TODO: send command to backen to change the work stat
-                    this.starStat = stat;
-                    if(this.starStat == this.workState.que){
-                        this.isActive = true
-                    }else{
-                        this.isActive = false
-                    }
+                    this.changeStatus(stat)
                 }
 
             },
@@ -136,24 +131,41 @@
                     this.$message({type: 'info', message: '删除--取消'});
                 });
             },
-            changeStatus(){
+            changeStatus(status){
+                const loading = this.$loading({
+                          lock: true,
+                          text: '状态修改中，请稍后',
+                          // spinner: 'el-icon-loading',
+                          background: 'rgba(0, 0, 0, 0.6)',
+                          target: document.querySelector('#'+this.taskID)
+                        });
                 this.network.post_request(this.backen.taskStatusChange(),
-                            JSON.stringify({'doc_code':'doc_code', 'changeto_status':'queuing'}),
+                            JSON.stringify({'doc_code':this.taskID, 'changeto_status':status}),
                             (res) => {
                                 console.log(res);
-                                console.log("upload sucess");
-                                this.$message({message: '任务创建成功', center: true, showClose: true, type: 'success',effect:"dark"});
-                                this.$refs.uploadimg.clearFiles()
-                                loading.close();
+                                console.log("change success");
+                                sleep(1500).then(() => {
+                                    this.$message({message: '任务状态已改变', center: true, showClose: true, type: 'success',effect:"dark"});
+                                    this.starStat = status;
+                                    loading.close();
+                                })
+
                             },
                             (er) => {
                                 console.log(er)
-                                if(er.status == 507){
-                                    this.$message({message: '服务器存储错误，请刷新页面', center: true, showClose: true, type: 'error',effect:"dark"});
-                                }else{
-                                    this.$message({message: '网络错误，请重新加载', center: true, showClose: true, type: 'error' });
-                                }
-                                loading.close();
+                                sleep(1500).then(() => {
+                                    if(er.status == 507 || er.status == 500){
+                                        this.$message({message: '服务器存储错误，请刷新页面', center: true, showClose: true, type: 'error',effect:"dark"});
+                                    }else if(er.status == 406) {
+                                        this.$message({message: '任务ID存在问题，请联系管理员', center: true, showClose: true, type: 'error',effect:"dark"});
+                                    }else if(er.status == 422) {
+                                        this.$message({message: '参数错误，请联系管理员', center: true, showClose: true, type: 'error',effect:"dark"});
+                                    }else {
+                                        this.$message({message: '网络错误，请重新加载', center: true, showClose: true, type: 'error' });
+                                    }
+                                    loading.close();
+                                })
+
                             }
                         )
             }
