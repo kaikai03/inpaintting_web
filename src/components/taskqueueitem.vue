@@ -4,7 +4,7 @@
                                   'queue-item-low':workState.low==starStat,
                                   'queue-item-stop':workState.stop==starStat }">
 
-        <div id="del-btn" :style="{'visibility':delBtnVisibility}" >
+        <div class="del-btn" :style="{'visibility':delBtnVisibility}" >
             <el-button type="text" @click="onDelConfirm">
                 <i class="el-icon-error"></i>
             </el-button>
@@ -124,9 +124,46 @@
                     confirmButtonClass:'del-confirm-btn',
                     cancelButtonClass:'del-confirm-btn'
                 }).then(() => {
-                    sleep(100).then(() => {
-                        this.delCallback(this.index)
-                    })
+                    const loading = this.$loading({
+                          lock: true,
+                          text: '正在执行删除指令，请稍后',
+                          // spinner: 'el-icon-loading',
+                          background: 'rgba(0, 0, 0, 0.6)',
+                          target: document.querySelector('#id-'+this.taskID)
+                        });
+                    this.network.post_request(this.backen.taskDrop(),
+                            JSON.stringify({'task_codes':[this.taskID], 'work_status':this.starStat}),
+                            (res) => {
+                                console.log(res);
+                                console.log("del success");
+                                sleep(1500).then(() => {
+                                    this.$message({message: '任务成功删除', center: true, showClose: true, type: 'success',effect:"dark"});
+                                    sleep(100).then(() => {
+                                        this.delCallback(this.index)
+                                    })
+                                    loading.close();
+
+                                })
+
+                            },
+                            (er) => {
+                                console.log(er)
+                                sleep(1500).then(() => {
+                                    if(er.status == 507 || er.status == 500){
+                                        this.$message({message: '服务器存储错误，请刷新页面', center: true, showClose: true, type: 'error',effect:"dark"});
+                                    }else if(er.status == 406) {
+                                        this.$message({message: '任务ID存在问题，请联系管理员', center: true, showClose: true, type: 'error',effect:"dark"});
+                                    }else if(er.status == 422) {
+                                        this.$message({message: '参数错误，请联系管理员', center: true, showClose: true, type: 'error',effect:"dark"});
+                                    }else {
+                                        this.$message({message: '网络错误，请重新加载', center: true, showClose: true, type: 'error' });
+                                    }
+                                    loading.close();
+                                })
+
+                            }
+                        )
+
                 }).catch(() => {
                     this.$message({type: 'info', message: '删除--取消'});
                 });
@@ -137,7 +174,7 @@
                           text: '状态修改中，请稍后',
                           // spinner: 'el-icon-loading',
                           background: 'rgba(0, 0, 0, 0.6)',
-                          target: document.querySelector('#'+this.taskID)
+                          target: document.querySelector('#id-'+this.taskID)
                         });
                 this.network.post_request(this.backen.taskStatusChange(),
                             JSON.stringify({'doc_code':this.taskID, 'changeto_status':status}),
@@ -192,7 +229,7 @@
         border: 1px solid #409EFF;
     }
 
-    #del-btn{
+    .del-btn{
         position: relative;
         float: right;
         right: -5px;
@@ -203,12 +240,12 @@
 
     }
 
-    #del-btn .el-button{
+    .del-btn .el-button{
         height: 100%;
         width:100%;
     }
 
-     #del-btn .el-button--text{
+     .del-btn .el-button--text{
         font-size: 20px;
          padding: 0px;
          color: #909399;

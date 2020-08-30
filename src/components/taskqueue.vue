@@ -4,7 +4,7 @@
             <div class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
 
                  <transition-group appear name="queue-move" >
-                    <div v-for="(content,i) in taskItem" class="list-item" :id="content['doc_code']" :key="content['doc_code']">
+                    <div v-for="(content,i) in taskItem" class="list-item" :id="'id-'+content['doc_code']" :key="content['doc_code']">
 
 
                         <queue-item :index=i :name="`${content['task_name']}`" :imgName="content.img"
