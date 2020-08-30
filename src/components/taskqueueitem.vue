@@ -138,13 +138,13 @@
                                 console.log("del success");
                                 sleep(1500).then(() => {
                                     this.$message({message: '任务成功删除', center: true, showClose: true, type: 'success',effect:"dark"});
-                                    sleep(100).then(() => {
+                                    loading.close();
+                                    //此处不延迟的话，会与load的动画互相干扰，不会显示淡出效果
+                                    sleep(600).then(() => {
                                         this.delCallback(this.index)
                                     })
-                                    loading.close();
 
                                 })
-
                             },
                             (er) => {
                                 console.log(er)

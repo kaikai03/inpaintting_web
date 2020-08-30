@@ -85,7 +85,6 @@
             itemDelCallback(index){
                 console.log("del",index)
                 this.taskItem.splice(index, 1);
-                this.$message({type: 'success', message: '删除成功!'});
             }
         },
         components:{

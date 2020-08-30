@@ -34,6 +34,9 @@ export default {
     },
     taskStatusChange() {
         return http_prefix + backen + ":" + port + "/taskstatus/change"
+    },
+    taskDrop() {
+        return http_prefix + backen + ":" + port + "/drop/"
     }
 
 
