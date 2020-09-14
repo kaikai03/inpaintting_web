@@ -10,10 +10,10 @@
         name: "areasplineChart",
         data() {
             return {
-                id: 'chart',
+                id: 'lineChart',
                 option: {
                     chart: {//图表样式
-                        type: 'area',//指定图表的类型,这里是面积图
+                        type: 'areaspline',//指定图表的类型,这里是面积图
                     },
                     //是否启用Labels。x，y轴默认值都是true，如果想禁用（或不显示）Labels，设置该属性为false即可
                     credits: {
@@ -58,7 +58,7 @@
                             width: 1
                         }
                     },
-                    yAxis: [{//图表的纵坐标，多个轴[{轴一},{轴二}]
+                    yAxis: {//图表的纵坐标，多个轴[{轴一},{轴二}]
                         gridLineWidth: 1,
                         gridLineColor: '#f2f2f2',
                         tickPositions: [0, 25, 50, 75, 100],//y轴刻度值
@@ -79,30 +79,7 @@
                             format: '{value}%',//坐标轴上的单位
                         },
                         offset: -10,//距离坐标轴的距离
-                    }, {
-                        gridLineWidth: 1,
-                        gridLineColor: '#f2f2f2',
-                        tickColor: '#fff',
-                        tickInterval: 25,
-                        tickLength: 0,
-                        title: {
-                            text: '',
-                            margin: 0,
-                            style: {
-                                color: '#999999',
-                                fontSize: 10
-                            }
-                        },
-                        labels: {
-                            style: {
-                                color: '#999999',
-                                fontSize: 10
-                            },
-                            format: '{value}℃'
-                        },
-                        opposite: true,//设置opposite: true表示该轴位置反转，即为y轴时显示在右侧
-                        offset: -10
-                    }],
+                    },
                     tooltip: {//数据提示框
                         headerFormat: '<small>{point.key}</small><br/>',//标题格式
                         pointFormat: '<span style="color:{series.color};">{series.name}</span>：{point.y}<br/>',
@@ -119,12 +96,11 @@
                     },
                     //标示线总是垂直于它属于的轴。它可单独定义在x轴或y轴，也可以同时定义在x轴和y轴
                     plotOptions: {
-                        area: {
-                            //pointStart: 1940,
+                        areaspline: {
                             marker: {
-                                enabled: false,
+                                enabled: true,
                                 symbol: 'circle',
-                                radius: 2,
+                                radius: 1.5,
                                 states: {
                                     hover: {
                                         enabled: true
@@ -186,7 +162,7 @@
                         tooltip: {
                             valueSuffix: '℃'//值的前缀、后缀及小数点
                         },
-                        yAxis: 1
+                        yAxis: 0
                     }]
                 },
             }
@@ -210,11 +186,12 @@
         padding: 10px 0;
         margin-top: 20px;
         border-radius: 6px;
-        width: 800px;
+        width: 200px;
+        height: 200px;
     }
 
     .emcs_charts {
         min-width: 200px;
-        height: 280px;
+        height: 180px;
     }
 </style>
