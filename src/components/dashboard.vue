@@ -1,22 +1,22 @@
 <template>
     <div>
     <div>芜湖dash</div>
-        <lineChart ref="lineChart"></lineChart>
+        <cpuChart ref="cpuChart"></cpuChart>
         <el-button type="primary" size="mini" class="submit" @click="updateBtn">update</el-button>
     </div>
 </template>
 
 <script>
-    import areasplineChart from "~/components/common/areasplineChart";
+    import cpuChart from "~/components/common/cpuChart";
     export default {
         name: "dashboard",
         methods:{
             updateBtn(){
-                this.$refs.lineChart.updateLine("updateLine")
+                this.$refs.cpuChart.updateLine("updateLine")
             }
         },
         components: {
-            lineChart:areasplineChart
+            cpuChart:cpuChart
         }
     }
 </script>

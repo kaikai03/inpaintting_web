@@ -5,11 +5,11 @@
 </template>
 
 <script>
-    import HighStock  from 'highcharts/highstock'
+    import HighStock from 'highcharts/highstock'
+
     export default {
         name: "areasplineChart",
         data() {
-            // [1490288400000,30],[1490288500000,27],[1490288600000,25],[1490288700000,18],[1490288800000,8]
             let defaultPoint = [[(new Date()).getTime(), 0], [(new Date()).getTime() + 50, 0], [(new Date()).getTime() + 100, 0], [(new Date()).getTime() + 150, 0], [(new Date()).getTime() + 200, 0]];
             let optionSeries = [{
                 name: 'CPU',
@@ -60,7 +60,7 @@
                         }
                     },
 
-                    colors: ['#F56C6C','#409EFF', '#67C23A', '#E6A23C', '#333333'],
+                    colors: ['#333333','#409EFF', '#67C23A', '#E6A23C', '#F56C6C'],
                     xAxis: {
                         type: 'datetime',
                         dateTimeLabelFormats: {
@@ -182,12 +182,13 @@
             updateLine(data){
                 console.log("update",data)
                 console.log(this.cpuChart.series)
-                console.log((new Date()).getTime())
-                this.cpuChart.series[0].addPoint([ (new Date()).getTime(), Math.round(Math.random() * 100)], false, true);
-                this.cpuChart.series[1].addPoint([ (new Date()).getTime(), Math.round(Math.random() * 100)], false, true);
-                this.cpuChart.series[2].addPoint([ (new Date()).getTime(), Math.round(Math.random() * 100)], false, true);
-                this.cpuChart.series[3].addPoint([ (new Date()).getTime(), Math.round(Math.random() * 100)], false, true);
-                this.cpuChart.series[4].addPoint([ (new Date()).getTime(), Math.round(Math.random() * 100)], false, true);
+                let x = (new Date()).getTime()
+                console.log(x)
+                this.cpuChart.series[0].addPoint([ x, Math.round(Math.random() * 100)], false, true);
+                this.cpuChart.series[1].addPoint([ x, Math.round(Math.random() * 100)], false, true);
+                this.cpuChart.series[2].addPoint([ x, Math.round(Math.random() * 100)], false, true);
+                this.cpuChart.series[3].addPoint([ x, Math.round(Math.random() * 100)], false, true);
+                this.cpuChart.series[4].addPoint([ x, Math.round(Math.random() * 100)], false, true);
 
                 this.cpuChart.setTitle (null, {text: Math.round(Math.random() * 100).toString() + '%'}, false)
                 this.cpuChart.legend.allItems[0].legendItem.attr({text:'CPU:'+Math.round(Math.random() * 100).toString()+'%'})
@@ -199,7 +200,7 @@
             }
         },
         mounted: function () {
-            this.cpuChart = HighStock.chart(this.id, this.option);
+            this.cpuChart = HighStock.chart(this.id, this["option"]);
         },
         components: {
             HighStock
