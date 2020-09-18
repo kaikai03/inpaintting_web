@@ -5,30 +5,34 @@
 </template>
 
 <script>
-    import HighCharts from 'highcharts'
+    import HighStock  from 'highcharts/highstock'
     export default {
         name: "areasplineChart",
         data() {
-          let optionSeries=[{//数据列是一组数据集合
-                        name: 'CPU',
-                        data: [
-                            [(new Date()).getTime(),0],[(new Date()).getTime()+50,0],[(new Date()).getTime()+100,0],[(new Date()).getTime()+150,0],[(new Date()).getTime()+200,0]
-                            // [1490288400000,30],[1490288500000,27],[1490288600000,25],[1490288700000,18],[1490288800000,8]
-                        ],
-                        tooltip: {
-                            valueSuffix: '%'
-                        }
-                    }, {
-                        name: 'CPU-1',
-                        data: [
-                            [(new Date()).getTime(),0],[(new Date()).getTime()+50,0],[(new Date()).getTime()+100,0],[(new Date()).getTime()+150,0],[(new Date()).getTime()+200,0]
-                            // [1490288400000,15],[1490288500000,23],[1490288600000,26],[1490288700000,35],[1490288800000,18]
-                        ],
-                        tooltip: {
-                            valueSuffix: '%'
-                        }
-                    }
-                    ];
+            // [1490288400000,30],[1490288500000,27],[1490288600000,25],[1490288700000,18],[1490288800000,8]
+            let defaultPoint = [[(new Date()).getTime(), 0], [(new Date()).getTime() + 50, 0], [(new Date()).getTime() + 100, 0], [(new Date()).getTime() + 150, 0], [(new Date()).getTime() + 200, 0]];
+            let optionSeries = [{
+                name: 'CPU',
+                data: JSON.parse(JSON.stringify(defaultPoint)),
+                tooltip: {valueSuffix: '%'}
+            },{
+                name: 'CPU-1',
+                data: JSON.parse(JSON.stringify(defaultPoint)),
+                tooltip: {valueSuffix: '%'}
+            }, {
+                name: 'CPU-2',
+                data: JSON.parse(JSON.stringify(defaultPoint)),
+                tooltip: {valueSuffix: '%'}
+            }, {
+                name: 'CPU-3',
+                data: JSON.parse(JSON.stringify(defaultPoint)),
+                tooltip: {valueSuffix: '%'}
+            }, {
+                name: 'CPU-4',
+                data: JSON.parse(JSON.stringify(defaultPoint)),
+                tooltip: {valueSuffix: '%'}
+            }
+            ];
             return {
                 id: 'lineChart',
                 cpuChart:null,
@@ -49,7 +53,14 @@
                             fontSize: '16px',
                         }
                     },
-                    colors: ['#409EFF', '#67C23A', '#E6A23C', '#E6A23C', '#F56C6C', '#909399'],
+                    subtitle:{
+                        style: {
+                            color: '#999999',
+                            fontSize: '12px',
+                        }
+                    },
+
+                    colors: ['#F56C6C','#409EFF', '#67C23A', '#E6A23C', '#333333'],
                     xAxis: {
                         type: 'datetime',
                         dateTimeLabelFormats: {
@@ -89,11 +100,11 @@
                         }
                     },
                     yAxis: {//图表的纵坐标，多个轴[{轴一},{轴二}]
-                        gridLineWidth: 1,
-                        gridLineColor: '#f2f2f2',
+                        // gridLineWidth: 1,
+                        // gridLineColor: '#f2f2f2',
                         tickPositions: [0, 25, 50, 75, 100],//y轴刻度值
-                        gridLineDashStyle: 'Dash',
-                        tickLength: 0,
+                        // gridLineDashStyle: 'Dash',
+                        // tickLength: 0,
                         title: {//纵坐标标题
                             text: ' ',
                             margin: 0,
@@ -134,7 +145,7 @@
                             marker: {
                                 enabled: true,
                                 symbol: 'circle',
-                                radius: 1.5,
+                                radius: 2.5,
                                 states: {
                                     hover: {
                                         enabled: true
@@ -146,17 +157,22 @@
                         }
                     },
                     legend: {//图例居中显示在图表下方
-                        enabled:false,
-                        // align: 'center',
-                        // symbolRadius: 5,//图标圆角
-                        // symbolWidth: 10,//图标宽度
-                        // symbolHeight: 10,//图标高度
-                        // itemStyle: {
-                        //     color: '#999999',
-                        //     fontWeight: 'normal',
-                        //     fontSize: 12
-                        // },
-                        // itemMarginBottom: -14,//图例项底部外边距
+                        enabled:true,
+                        floating:true,
+                        align: 'left',
+                        verticalAlign: 'top',
+                        layout:'vertical',
+                        x:0,
+                        y:0,
+                        symbolRadius: 4,//图标圆角
+                        symbolWidth: 8,//图标宽度
+                        symbolHeight: 8,//图标高度
+                        itemStyle: {
+                            color: '#999999',
+                            fontWeight: 'normal',
+                            fontSize: '10px'
+                        },
+                        itemMarginBottom: 0,//图例项底部外边距
                     },
                     series: optionSeries
                 },
@@ -167,18 +183,26 @@
                 console.log("update",data)
                 console.log(this.cpuChart.series)
                 console.log((new Date()).getTime())
-                let x1 = (new Date()).getTime(), y1 = Math.round(Math.random() * 100);
-                this.cpuChart.series[0].addPoint([x1, y1], false, true);
-                let x2 = (new Date()).getTime(), y2 = Math.round(Math.random() * 100);
-                this.cpuChart.series[1].addPoint([x2, y2], false, true);
+                this.cpuChart.series[0].addPoint([ (new Date()).getTime(), Math.round(Math.random() * 100)], false, true);
+                this.cpuChart.series[1].addPoint([ (new Date()).getTime(), Math.round(Math.random() * 100)], false, true);
+                this.cpuChart.series[2].addPoint([ (new Date()).getTime(), Math.round(Math.random() * 100)], false, true);
+                this.cpuChart.series[3].addPoint([ (new Date()).getTime(), Math.round(Math.random() * 100)], false, true);
+                this.cpuChart.series[4].addPoint([ (new Date()).getTime(), Math.round(Math.random() * 100)], false, true);
+
+                this.cpuChart.setTitle (null, {text: Math.round(Math.random() * 100).toString() + '%'}, false)
+                this.cpuChart.legend.allItems[0].legendItem.attr({text:'CPU:'+Math.round(Math.random() * 100).toString()+'%'})
+                this.cpuChart.legend.allItems[1].legendItem.attr({text:'C_1:'+Math.round(Math.random() * 100).toString()+'%'})
+                this.cpuChart.legend.allItems[2].legendItem.attr({text:'C_2:'+Math.round(Math.random() * 100).toString()+'%'})
+                this.cpuChart.legend.allItems[3].legendItem.attr({text:'C_3:'+Math.round(Math.random() * 100).toString()+'%'})
+                this.cpuChart.legend.allItems[4].legendItem.attr({text:'C_4:'+Math.round(Math.random() * 100).toString()+'%'})
                 this.cpuChart.redraw()
             }
         },
         mounted: function () {
-            this.cpuChart = HighCharts.chart(this.id, this.option);
+            this.cpuChart = HighStock.chart(this.id, this.option);
         },
         components: {
-            HighCharts
+            HighStock
         }
     }
 </script>
