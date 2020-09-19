@@ -1,5 +1,5 @@
 <template>
-    <div class="boarder" id="boarder" >
+    <div class="boarder" >
         <div class="chart" :id="id" ></div>
     </div>
 </template>
@@ -39,7 +39,7 @@
             }
             ];
             return {
-                id: 'lineChart',
+                id: 'cpuChart',
                 cpuChart:null,
                 option: {
                     chart: {//图表样式
