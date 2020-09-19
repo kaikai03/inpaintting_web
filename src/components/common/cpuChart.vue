@@ -67,7 +67,7 @@
                             fontWeight: 'bold'
                         }
                     },
-                    // '#333333'  #409EFF   #67C23A   #E6A23C
+                    // colors:['#333333',  '#409EFF',   '#67C23A',   '#E6A23C'],
                     colors: ['rgba(245,108,108, 1)','rgba(64,158,255, 0.8)', 'rgba(103,194,58, 0.8)', 'rgba(230,162,60, 0.8)', 'rgba(51, 51, 51, 0.4)'],
                     xAxis: {
                         type: 'datetime',
@@ -141,10 +141,10 @@
                         followPointerMove: true,//是否跟随手指移动
                         // footerFormat: 'muzi',//尾部格式化字符串
                         style: {
-                            fontSize: 10,
+                            fontSize: '12px',
                             fontFamily: '微软雅黑',
                             fontWeight: 'normal',
-                            color: '#666'
+                            color: '#666666'
                         }
                     },
                     //标示线总是垂直于它属于的轴。它可单独定义在x轴或y轴，也可以同时定义在x轴和y轴

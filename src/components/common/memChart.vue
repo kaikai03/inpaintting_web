@@ -36,7 +36,7 @@
                         endAngle: 90,
                         background: {
                             backgroundColor: '#EEE',
-                            innerRadius: '60%',
+                            innerRadius: '45%',
                             outerRadius: '100%',
                             shape: 'arc'
                         }
@@ -74,6 +74,8 @@
                     },
                     plotOptions: {
                         solidgauge: {
+                            innerRadius: '45%',
+                            outerRadius: '100%',
                             dataLabels: {
                                 y: -30,
                                 style: {
