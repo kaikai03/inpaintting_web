@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div style="width: 400px;height: 200px;">
+    <div style="width: 300px;height: 200px;">
         <cpuChart ref="cpuChart"></cpuChart>
     </div>
         <div>

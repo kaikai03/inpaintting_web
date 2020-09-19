@@ -50,18 +50,21 @@
                         enabled: false
                     },
                     title: {//指定图表标题
-                        text: ' CPU',
-                        align: 'center',
+                        text: ' CPU(%)',
+                        align: 'left',
                         margin: -20,
                         style: {
-                            color: '#999999',
-                            fontSize: '16px',
+                            color: '#CCCCCC',
+                            fontSize: '13px',
                         }
                     },
                     subtitle:{
+                        align: 'left',
+                        y:40,
                         style: {
-                            color: '#999999',
-                            fontSize: '12px',
+                            color: '#AAAAAA',
+                            fontSize: '25px',
+                            fontWeight: 'bold'
                         }
                     },
                     // '#333333'  #409EFF   #67C23A   #E6A23C
@@ -163,11 +166,12 @@
                     legend: {//图例居中显示在图表下方
                         enabled:true,
                         floating:true,
-                        align: 'left',
+                        align: 'right',
                         verticalAlign: 'top',
                         layout:'vertical',
-                        x:0,
-                        y:0,
+                        rtl: true,
+                        x:21,
+                        y:-10,
                         symbolRadius: 4,//图标圆角
                         symbolWidth: 8,//图标宽度
                         symbolHeight: 8,//图标高度
@@ -194,8 +198,8 @@
                 this.cpuChart.series[3].addPoint([ x, Math.round(Math.random() * 100)], false, true);
                 this.cpuChart.series[4].addPoint([ x, Math.round(Math.random() * 100)], false, true);
 
-                this.cpuChart.setTitle (null, {text: Math.round(Math.random() * 100).toString() + '%'}, false)
-                this.cpuChart.legend.allItems[0].legendItem.attr({text:'CPU:'+Math.round(Math.random() * 100).toString()+'%'})
+                this.cpuChart.setTitle (null, {text: Math.round(Math.random() * 100).toString()}, false)
+                this.cpuChart.legend.allItems[0].legendItem.attr({text:'AVG:'+Math.round(Math.random() * 100).toString()+'%'})
                 this.cpuChart.legend.allItems[1].legendItem.attr({text:'C_1:'+Math.round(Math.random() * 100).toString()+'%'})
                 this.cpuChart.legend.allItems[2].legendItem.attr({text:'C_2:'+Math.round(Math.random() * 100).toString()+'%'})
                 this.cpuChart.legend.allItems[3].legendItem.attr({text:'C_3:'+Math.round(Math.random() * 100).toString()+'%'})
