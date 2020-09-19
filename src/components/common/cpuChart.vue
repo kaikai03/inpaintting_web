@@ -1,6 +1,6 @@
 <template>
-    <div class="chart" id="myChart" >
-        <div class="emcs_charts" :id="id" ></div>
+    <div class="boarder" id="boarder" >
+        <div class="chart" :id="id" ></div>
     </div>
 </template>
 
@@ -65,7 +65,7 @@
                         }
                     },
                     // '#333333'  #409EFF   #67C23A   #E6A23C
-                    colors: ['rgba(245,108,108, 1)','rgba(64,158,255, 0.5)', 'rgba(103,194,58, 0.5)', 'rgba(230,162,60, 0.5)', 'rgba(51, 51, 51, 0.5)'],
+                    colors: ['rgba(245,108,108, 1)','rgba(64,158,255, 0.8)', 'rgba(103,194,58, 0.8)', 'rgba(230,162,60, 0.8)', 'rgba(51, 51, 51, 0.4)'],
                     xAxis: {
                         type: 'datetime',
                         dateTimeLabelFormats: {
@@ -213,18 +213,20 @@
 </script>
 
 <style scoped>
-    .chart {
+    .boarder {
         float: left;
+        box-sizing:border-box;
         background-color: #fff;
-        padding: 10px 0;
-        margin-top: 20px;
-        border-radius: 6px;
-        width: 400px;
-        height: 200px;
+        border-radius: 8px;
+        width: 100%;
+        height: 100%;
     }
 
-    .emcs_charts {
-        min-width: 400px;
-        height: 200px;
+    .chart {
+        /*width: 400px;*/
+        /*height: 200px*/
+        border-radius: 8px;
+        width: 100%;
+        height: 100%;
     }
 </style>

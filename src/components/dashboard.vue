@@ -1,9 +1,13 @@
 <template>
     <div>
-    <div>芜湖dash</div>
+    <div style="width: 400px;height: 200px;">
         <cpuChart ref="cpuChart"></cpuChart>
-        <el-button type="primary" size="mini" class="submit" @click="updateBtn">update</el-button>
     </div>
+        <div>
+        <el-button type="primary" size="mini" class="submit" @click="updateBtn">update</el-button>
+
+    </div>
+        </div>
 </template>
 
 <script>
