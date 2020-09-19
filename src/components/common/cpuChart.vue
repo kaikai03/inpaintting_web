@@ -14,23 +14,28 @@
             let optionSeries = [{
                 name: 'CPU',
                 data: JSON.parse(JSON.stringify(defaultPoint)),
-                tooltip: {valueSuffix: '%'}
+                tooltip: {valueSuffix: '%'},
+                fillOpacity: 0.5
             },{
                 name: 'CPU-1',
                 data: JSON.parse(JSON.stringify(defaultPoint)),
-                tooltip: {valueSuffix: '%'}
+                tooltip: {valueSuffix: '%'},
+                fillOpacity: 0.1
             }, {
                 name: 'CPU-2',
                 data: JSON.parse(JSON.stringify(defaultPoint)),
-                tooltip: {valueSuffix: '%'}
+                tooltip: {valueSuffix: '%'},
+                fillOpacity: 0.1
             }, {
                 name: 'CPU-3',
                 data: JSON.parse(JSON.stringify(defaultPoint)),
-                tooltip: {valueSuffix: '%'}
+                tooltip: {valueSuffix: '%'},
+                fillOpacity: 0.1
             }, {
                 name: 'CPU-4',
                 data: JSON.parse(JSON.stringify(defaultPoint)),
-                tooltip: {valueSuffix: '%'}
+                tooltip: {valueSuffix: '%'},
+                fillOpacity: 0.1
             }
             ];
             return {
@@ -59,8 +64,8 @@
                             fontSize: '12px',
                         }
                     },
-
-                    colors: ['#333333','#409EFF', '#67C23A', '#E6A23C', '#F56C6C'],
+                    // '#333333'  #409EFF   #67C23A   #E6A23C
+                    colors: ['rgba(245,108,108, 1)','rgba(64,158,255, 0.5)', 'rgba(103,194,58, 0.5)', 'rgba(230,162,60, 0.5)', 'rgba(51, 51, 51, 0.5)'],
                     xAxis: {
                         type: 'datetime',
                         dateTimeLabelFormats: {
@@ -152,7 +157,6 @@
                                     }
                                 }
                             },
-                            fillOpacity: 0.2,
                             lineWidth: 1
                         }
                     },
