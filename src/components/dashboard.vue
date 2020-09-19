@@ -4,29 +4,29 @@
             <cpuChart ref="cpuChart"></cpuChart>
         </div>
         <div style="width: 300px;height: 200px;">
-            <gaugeChart ref="gaugeChart"></gaugeChart>
+            <memChart ref="memChart"></memChart>
         </div>
-        <div>
+        <span>
             <el-button type="primary" size="mini" class="submit" @click="updateBtn">update</el-button>
 
-        </div>
+        </span>
     </div>
 </template>
 
 <script>
     import cpuChart from "~/components/common/cpuChart";
-    import gaugeChart from "~/components/common/gaugeChart";
+    import memChart from "~/components/common/memChart";
     export default {
         name: "dashboard",
         methods:{
             updateBtn(){
                 this.$refs.cpuChart.updateLine("updateLine")
-                this.$refs.gaugeChart.updateMem("updateMem")
+                this.$refs.memChart.updateMem("updateMem")
 
             }
         },
         components: {
-            cpuChart:cpuChart, gaugeChart:gaugeChart
+            cpuChart:cpuChart, memChart:memChart
         }
     }
 </script>

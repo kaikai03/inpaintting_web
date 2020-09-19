@@ -12,7 +12,7 @@
     SolidGauge(Highcharts)
 
     export default {
-        name: "solidgauge",
+        name: "memChart",
         data() {
             let optionSeries = [{
                 name: 'MEM',
