@@ -1,7 +1,10 @@
 <template>
     <div>
         <div style="width: 300px;height: 200px;">
-            <cpuChart ref="cpuChart"></cpuChart>
+            <cpuChart ref="cpuChart" tag="cpuChart" title="CPU(%)" :lineCount=5
+                      :linesName="['CPU','CPU-1','CPU-2','CPU-3','CPU-4']"
+                      :linesShortName="['AVG','C_1','C_2','C_3','C_4']" unitSymbol="%">
+            </cpuChart>
         </div>
         <div style="width: 300px;height: 200px;">
             <memChart ref="memChart"></memChart>
@@ -14,7 +17,7 @@
 </template>
 
 <script>
-    import cpuChart from "~/components/common/cpuChart";
+    import cpuChart from "~/components/common/multiLinesChart";
     import memChart from "~/components/common/memChart";
     export default {
         name: "dashboard",
