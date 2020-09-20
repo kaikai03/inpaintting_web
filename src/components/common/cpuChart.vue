@@ -9,15 +9,8 @@
 
     export default {
         name: "areasplineChart",
-        props: {'tag':String,'title':String,'lineCount':Number,'linesName':[String],'linesShortName':[String],'unitSymbol':String, 'linesColor':[String]},
+        props: {'tag':String,'title':String,'lineCount':Number,'linesName':Array[String],'linesShortName':Array[String],'unitSymbol':String, 'linesColor':Array[String]},
         data() {
-            function markDefaultPoint(count = 5){
-                let defaultList = [];
-                for(let index = 0;index<count;index++){
-                    defaultList.push([(new Date()).getTime()+50*index, 0])
-                }
-                return defaultList
-            };
             // let optionSeries = [{
             //     name: 'CPU',
             //     data: JSON.parse(JSON.stringify(defaultPoint)),
@@ -193,12 +186,19 @@
             }
         },
         methods: {
+            markDefaultPoint(count = 5){
+                let defaultList = [];
+                for(let index = 0;index<count;index++){
+                    defaultList.push([(new Date()).getTime()+50*index, 0])
+                }
+                return defaultList
+            },
             markOptionSeries(){
                 let series = [];
                 for(let index = 0;index<this.lineCount;index++){
                     let item = {
                         name: this.linesName[index] || 'line'+index.toString(),
-                        data: markDefaultPoint(),
+                        data: this.markDefaultPoint(),
                         tooltip: {valueSuffix: this.unitSymbol || null},
                         fillOpacity: index==0 ? 0.5 : 0.1
                     }
