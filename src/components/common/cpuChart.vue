@@ -9,48 +9,54 @@
 
     export default {
         name: "areasplineChart",
+        props: {'tag':String,'title':String,'lineCount':Number,'linesName':[String],'linesShortName':[String],'unitSymbol':String, 'linesColor':[String]},
         data() {
-            let defaultPoint = [[(new Date()).getTime(), 0], [(new Date()).getTime() + 50, 0], [(new Date()).getTime() + 100, 0], [(new Date()).getTime() + 150, 0], [(new Date()).getTime() + 200, 0]];
-            let optionSeries = [{
-                name: 'CPU',
-                data: JSON.parse(JSON.stringify(defaultPoint)),
-                tooltip: {valueSuffix: '%'},
-                fillOpacity: 0.5
-            },{
-                name: 'CPU-1',
-                data: JSON.parse(JSON.stringify(defaultPoint)),
-                tooltip: {valueSuffix: '%'},
-                fillOpacity: 0.1
-            }, {
-                name: 'CPU-2',
-                data: JSON.parse(JSON.stringify(defaultPoint)),
-                tooltip: {valueSuffix: '%'},
-                fillOpacity: 0.1
-            }, {
-                name: 'CPU-3',
-                data: JSON.parse(JSON.stringify(defaultPoint)),
-                tooltip: {valueSuffix: '%'},
-                fillOpacity: 0.1
-            }, {
-                name: 'CPU-4',
-                data: JSON.parse(JSON.stringify(defaultPoint)),
-                tooltip: {valueSuffix: '%'},
-                fillOpacity: 0.1
-            }
-            ];
+            function markDefaultPoint(count = 5){
+                let defaultList = [];
+                for(let index = 0;index<count;index++){
+                    defaultList.push([(new Date()).getTime()+50*index, 0])
+                }
+                return defaultList
+            };
+            // let optionSeries = [{
+            //     name: 'CPU',
+            //     data: JSON.parse(JSON.stringify(defaultPoint)),
+            //     tooltip: {valueSuffix: '%'},
+            //     fillOpacity: 0.5
+            // },{
+            //     name: 'CPU-1',
+            //     data: JSON.parse(JSON.stringify(defaultPoint)),
+            //     tooltip: {valueSuffix: '%'},
+            //     fillOpacity: 0.1
+            // }, {
+            //     name: 'CPU-2',
+            //     data: JSON.parse(JSON.stringify(defaultPoint)),
+            //     tooltip: {valueSuffix: '%'},
+            //     fillOpacity: 0.1
+            // }, {
+            //     name: 'CPU-3',
+            //     data: JSON.parse(JSON.stringify(defaultPoint)),
+            //     tooltip: {valueSuffix: '%'},
+            //     fillOpacity: 0.1
+            // }, {
+            //     name: 'CPU-4',
+            //     data: JSON.parse(JSON.stringify(defaultPoint)),
+            //     tooltip: {valueSuffix: '%'},
+            //     fillOpacity: 0.1
+            // }
+            // ];
             return {
-                id: 'cpuChart',
+                id: this.tag || 'lineChart',
                 cpuChart:null,
                 option: {
-                    chart: {//图表样式
-                        type: 'areaspline',//指定图表的类型,这里是面积图
+                    chart: {
+                        type: 'areaspline',
                     },
-                    //是否启用Labels。x，y轴默认值都是true，如果想禁用（或不显示）Labels，设置该属性为false即可
                     credits: {
                         enabled: false
                     },
                     title: {//指定图表标题
-                        text: ' CPU(%)',
+                        text: this.title || null,
                         align: 'left',
                         margin: -20,
                         style: {
@@ -68,7 +74,7 @@
                         }
                     },
                     // colors:['#333333',  '#409EFF',   '#67C23A',   '#E6A23C'],
-                    colors: ['rgba(64,158,255, 1)','rgba(245,108,108, 0.8)', 'rgba(103,194,58, 0.8)', 'rgba(230,162,60, 0.8)', 'rgba(51, 51, 51, 0.4)'],
+                    colors: this.linesColor || ['rgba(64,158,255, 1)','rgba(245,108,108, 0.8)', 'rgba(103,194,58, 0.8)', 'rgba(230,162,60, 0.8)', 'rgba(51, 51, 51, 0.4)'],
                     xAxis: {
                         type: 'datetime',
                         dateTimeLabelFormats: {
@@ -182,11 +188,24 @@
                         },
                         itemMarginBottom: 0,//图例项底部外边距
                     },
-                    series: optionSeries
+                    series: this.markOptionSeries()
                 },
             }
         },
         methods: {
+            markOptionSeries(){
+                let series = [];
+                for(let index = 0;index<this.lineCount;index++){
+                    let item = {
+                        name: this.linesName[index] || 'line'+index.toString(),
+                        data: markDefaultPoint(),
+                        tooltip: {valueSuffix: this.unitSymbol || null},
+                        fillOpacity: index==0 ? 0.5 : 0.1
+                    }
+                    series.push(item)
+                }
+                return series
+            },
             updateLine(data){
                 console.log("update",data)
                 console.log(this.cpuChart.series)
