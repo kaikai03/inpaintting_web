@@ -13,11 +13,13 @@
 
     export default {
         name: "memChart",
+        props: {'tag':String,'title':String,'tipName':String,'min':Number,'max':Number,'unitSymbol':String, 'stopsColor':Array},
         data() {
             let optionSeries = [{
                 name: 'MEM',
-                data: [80],
+                data: [{y:80, extra:(new Date()).getTime()}],
             }]
+
             return {
                 id: 'memChart',
                 memChart: null,
@@ -43,12 +45,19 @@
                     },
                     tooltip: {
                         enabled: true,
-                        valueSuffix: ' %'
+                        valueSuffix: this.valueSuffix || '',
+                        followPointer: true,//跟随鼠标
+                        followPointerMove: true,//是否跟随手指移动
+                        formatter: function () {
+                            return '<small style=\"color:#666666;\">' +  Highcharts.dateFormat('%H:%M:%S', this.point.extra) +
+                                '</small><br/> <span style=\"color:'+this.color +';\">' + this.series.name+ '：' + this.point.y + '</span><br/>'
+                        }
                     },
+
                     yAxis: {
-                        min: 0,
-                        max: 100,
-                        stops: [
+                        min: this.min || 0,
+                        max: this.max || 100,
+                        stops: this.stopsColor || [
                             [0.3, '#67C23A'], // green
                             [0.6, '#E6A23C'], // yellow
                             [0.9, '#F56C6C'] // red
@@ -60,12 +69,12 @@
                         showFirstLabel: false,
                         showLastLabel: false,
                         title: {
-                            text: 'MEM(%）',
-                            x: 5,
-                            y: 25,
+                            text: this.title || '',
+                            x: 0,
+                            y: 30,
                             style: {
                                 color: '#CCCCCC',
-                                fontSize: '13px',
+                                fontSize: '15px',
                             }
                         },
                         labels: {
@@ -80,9 +89,12 @@
                                 y: -30,
                                 style: {
                                     fontSize: '25px',
-                                    color: '#666666'
+                                    color: '#AAAAAA'
                                 },
                                 borderWidth: 0,
+                                formatter: function () {
+                                    return '<span style=\"color:' + this.color + ';\">' + this.point.y + '</span>'
+                                }
                                 // useHTML: true,
                                 // format: '<div style="text-align:center"><span style="font-size:25px;font-weight:bold;color:' +
                                 // '#666666' + '">{y}</span><br/>'
