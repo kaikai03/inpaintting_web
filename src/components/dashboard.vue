@@ -7,7 +7,7 @@
             </cpuChart>
         </div>
         <div style="width: 300px;height: 200px;">
-            <solidgaugeChart ref="memChart" tag="memChart" title="MEM" :min=0 :max=100 unitSymbol="%"></solidgaugeChart>
+            <solidgaugeChart ref="memChart" tag="memChart" title="MEM" tipName="MEM" :min=0 :max=100 unitSymbol="%"></solidgaugeChart>
         </div>
         <span>
             <el-button type="primary" size="mini" class="submit" @click="updateBtn">update</el-button>

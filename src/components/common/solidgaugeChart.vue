@@ -16,12 +16,12 @@
         props: {'tag':String,'title':String,'tipName':String,'min':Number,'max':Number,'unitSymbol':String, 'stopsColor':Array},
         data() {
             let optionSeries = [{
-                name: 'MEM',
-                data: [{y:80, extra:(new Date()).getTime()}],
+                name: this.tipName || this.title ||'Val',
+                data: [{y:0, extra:(new Date()).getTime()}]
             }]
 
             return {
-                id: 'memChart',
+                id: this.tag || 'solidgaugeChart',
                 memChart: null,
                 option: {
                     chart: {
