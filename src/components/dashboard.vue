@@ -2,19 +2,11 @@
     <div>
         <div id="dashboard">
         <div id="el-tab">
-        <el-tabs  tab-position="top" :v-model="activeTab" @tab-click="tagClick" :before-leave="tagLeave">
-            <el-tab-pane name="A">
-                <span slot="label"><i class="el-icon-date"></i> AAAA</span>
-            </el-tab-pane>
-            <el-tab-pane label="BBBB" name="B">
-
-            </el-tab-pane>
-
-            <el-tab-pane label="CCCC" name="C">
-
-            </el-tab-pane>
-            <el-tab-pane label="DDDD" name="D"></el-tab-pane>
-        </el-tabs>
+            <el-tabs tab-position="top" :v-model="activeTab" @tab-click="tagClick" :before-leave="tagLeave">
+                    <el-tab-pane v-for="(worker,index) in workers" :name="worker" >
+                        <span slot="label"><i class="el-icon-date"></i>{{worker}}</span>
+                    </el-tab-pane>
+            </el-tabs>
         </div>
         <div id="dashcontent">
             <dashcontent ></dashcontent>
@@ -29,7 +21,8 @@
         name: "dashboard",
         data(){
             return {
-                activeTab:null
+                activeTab:null,
+                workers:['worker1','worker2','worker3','worker4']
             }
         },
         methods:{
