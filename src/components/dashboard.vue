@@ -3,7 +3,7 @@
         <div id="dashboard">
         <div id="el-tab">
             <el-tabs tab-position="top" :v-model="activeTab" @tab-click="tagClick" :before-leave="tagLeave">
-                    <el-tab-pane v-for="(worker,index) in workers" :name="worker" >
+                    <el-tab-pane v-for="(worker,index) in workers" :name="worker" :key="worker" >
                         <span slot="label"><i class="el-icon-date"></i>{{worker}}</span>
                     </el-tab-pane>
             </el-tabs>
