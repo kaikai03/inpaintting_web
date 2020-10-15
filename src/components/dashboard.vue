@@ -9,7 +9,7 @@
             </el-tabs>
         </div>
         <div id="dashcontent">
-            <dashcontent ></dashcontent>
+            <dashContent></dashContent>
         </div>
     </div>
         </div>
@@ -34,7 +34,7 @@
             }
         },
         components: {
-            dashcontent:dashcontent,
+            dashContent:dashcontent,
         }
     }
 </script>
@@ -47,7 +47,7 @@
         width: 100%;
     }
     #el-tab{
-        background: blue;
+        /*background: blue;*/
         height: 40px;
         margin-top: 5px;
         margin-left: 20px;
@@ -55,7 +55,7 @@
     }
 
     #dashcontent{
-        background: red;
+        /*background: red;*/
         height: calc(100% - 40px - 20px);
         margin-top: 5px;
         margin-left: 20px;
