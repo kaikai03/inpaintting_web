@@ -9,7 +9,7 @@
             </el-tabs>
         </div>
         <div id="dashcontent">
-            <dashContent></dashContent>
+            <dashContent ref="dashContent"></dashContent>
         </div>
     </div>
         </div>
@@ -31,6 +31,7 @@
             },
             tagLeave(activeName, oldActiveName){
                 console.log("tagLeave:",activeName, oldActiveName);
+                this.$refs.dashContent.startMonitor(activeName)
             }
         },
         components: {
