@@ -32,7 +32,7 @@
         methods:{
             updateBtn(){
                 this.$refs.cpuChart.updateLine("updateLine")
-                // this.$refs.memChart.updateMem("updateMem")
+                this.$refs.memChart.updateMem("updateMem")
             },
             startMonitor(workerName){
                 console.log(workerName)
