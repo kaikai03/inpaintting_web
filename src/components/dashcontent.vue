@@ -35,6 +35,8 @@
                 this.$refs.memChart.updateMem("updateMem")
             },
             startMonitor(workerName){
+                this.$refs.cpuChart.updateLine("updateLine")
+                this.$refs.memChart.updateMem("updateMem")
                 console.log(workerName)
             }
         },
