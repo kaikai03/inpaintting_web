@@ -1,6 +1,7 @@
 const backen = '127.0.0.1'
 const port = '9000'
 const http_prefix = 'http://'
+const ws_prefix = 'ws://'
 const work_stat = {
     cpl: 'completed',
     stop: 'stopped',
@@ -37,6 +38,9 @@ export default {
     },
     taskDrop() {
         return http_prefix + backen + ":" + port + "/drop/"
+    },
+    dashboardMonitorSocket(workerName){
+        return ws_prefix + backen + ":" + port +'/dashboard/ws/' + workerName
     }
 
 

@@ -27,6 +27,8 @@
         name: "dashcontent",
         data(){
             return {
+                isConnected:false,
+                ws:null
             }
         },
         methods:{
@@ -38,6 +40,36 @@
                 this.$refs.cpuChart.updateLine("updateLine")
                 this.$refs.memChart.updateMem("updateMem")
                 console.log(workerName)
+            },
+            backenConnect(workerName){
+                if(this.isConnected){
+                    this.backenDisconnect()
+                }
+                this.ws = new WebSocket(this.backen.dashboardMonitorSocket(workerName));
+
+                this.ws.onopen = this.onConnect;
+                this.ws.onmessage = this.onMessage;
+                this.ws.onclose = this.onSocketClose;
+                this.ws.onerror = this.onSocketError
+            },
+            onConnect(evt){
+                console.log("Connection open ...");
+                  this.ws.send("Hello WebSockets!");
+                  this.isConnected = true;
+            },
+            onMessage(evt){
+                console.log( "Received Message: " + evt.data);
+            },
+            onSocketClose(evt){
+                console.log("Connection closed.");
+                  this.isConnected = false
+            },
+            onSocketError(){
+                console.log('Connection error')
+            },
+            backenDisconnect(){
+                this.ws.close();
+                this.ws=null;
             }
         },
         components: {
