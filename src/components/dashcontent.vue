@@ -28,7 +28,10 @@
         data(){
             return {
                 isConnected:false,
-                ws:null
+                ws:null,
+                isConnectedError:false,
+                curWorker:null,
+                reconnectCounter:0
             }
         },
         methods:{
@@ -51,23 +54,35 @@
                 this.ws.onmessage = this.onMessage;
                 this.ws.onclose = this.onSocketClose;
                 this.ws.onerror = this.onSocketError
+                this.curWorker = workerName
             },
             onConnect(evt){
                 console.log("Connection open ...");
                   this.ws.send("Hello WebSockets!");
                   this.isConnected = true;
+                  this.isConnectedError = false;
+                  this.reconnectCounter = 0;
             },
             onMessage(evt){
                 console.log( "Received Message: " + evt.data);
+                this.isConnectedError = false;
+                this.reconnectCounter = 0;
             },
             onSocketClose(evt){
                 console.log("Connection closed.");
-                  this.isConnected = false
+                this.isConnected = false
+                if (this.isConnectedError && this.reconnectCounter<5) {
+                    console.log("remote connect error.",this.reconnectCounter);
+                    this.reconnectCounter +=1
+                    this.backenConnect(this.curWorker) //reconnect
+                }
             },
             onSocketError(){
                 console.log('Connection error')
+                this.isConnectedError = true
             },
             backenDisconnect(){
+                this.isConnectedError = false;
                 this.ws.close();
                 this.ws=null;
             }
