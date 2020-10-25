@@ -43,10 +43,11 @@
                 this.$refs.cpuChart.updateLine("updateLine")
                 this.$refs.memChart.updateMem("updateMem")
                 console.log(workerName)
+                this.backenConnect(workerName)
             },
             backenConnect(workerName){
                 if(this.isConnected){
-                    this.backenDisconnect()
+                    this.backenDisconnect() //for reconnect
                 }
                 this.ws = new WebSocket(this.backen.dashboardMonitorSocket(workerName));
 
