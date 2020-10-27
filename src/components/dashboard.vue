@@ -30,6 +30,9 @@
                 console.log("tagClick:",tab, event);
             },
             tagLeave(activeName, oldActiveName){
+                if (activeName==0){
+                    return
+                }
                 console.log("tagLeave:",activeName, oldActiveName);
                 this.$refs.dashContent.startMonitor(activeName)
             }
@@ -39,6 +42,10 @@
         }
     }
 </script>
+
+<link rel="stylesheet" href="http://view.jqueryfuns.com/2015/7/1/ba27e27fe4934e1f15219ad0b58e7c74/css/gizmoMenu.css" type="text/css" />
+<script src="http://view.jqueryfuns.com/2015/7/1/ba27e27fe4934e1f15219ad0b58e7c74/js/jquery-2.1.3.min.js" ></script >
+<script src="http://view.jqueryfuns.com/2015/7/1/ba27e27fe4934e1f15219ad0b58e7c74/js/gizmoMenu.js" ></script >
 
 <style scoped>
     #dashboard{
@@ -64,3 +71,4 @@
     }
 
 </style>
+
