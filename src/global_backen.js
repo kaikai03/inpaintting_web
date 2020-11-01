@@ -40,7 +40,7 @@ export default {
         return http_prefix + backen + ":" + port + "/drop/"
     },
     dashboardMonitorSocket(workerName){
-        return ws_prefix + backen + ":" + port +'/dashboard/ws/' + workerName
+        return ws_prefix + backen + ":" + port +'/dashboard/ws/data/' + workerName
     }
 
 
