@@ -16,9 +16,17 @@
 </template>
 
 <script>
+    let sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
     import dashcontent from "~/components/dashcontent";
     export default {
         name: "dashboard",
+        beforeRouteLeave(to, from, next) {
+            console.log("beforeRouteLeave")
+              if(this.$refs.dashContent.isConnected){
+                  this.$refs.dashContent.backenDisconnect()
+              }
+              next();
+            },
         data(){
             return {
                 activeTab:null,
@@ -34,7 +42,17 @@
                     return
                 }
                 console.log("tagLeave:",activeName, oldActiveName);
-                this.$refs.dashContent.startMonitor(activeName)
+                // if (this.$refs.dashContent.isConnected) {
+                //     this.$refs.dashContent.backenDisconnect()
+                //     this.$refs.dashContent.ws.close(1000)
+                //     sleep(5000).then(() => {
+                //         console.log("zhantingjiesu");
+                //         this.$refs.dashContent.startMonitor(activeName)
+                //     })
+                // } else {
+                    this.$refs.dashContent.startMonitor(activeName)
+                // }
+
             }
         },
         components: {

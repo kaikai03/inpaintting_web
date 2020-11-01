@@ -23,7 +23,9 @@
     import cpuChart from "~/components/common/multiLinesChart";
     import solidgaugeChart from "~/components/common/solidgaugeChart";
 
+
     export default {
+
         name: "dashcontent",
         data(){
             return {
@@ -42,12 +44,13 @@
             startMonitor(workerName){
                 this.$refs.cpuChart.updateLine("updateLine")
                 this.$refs.memChart.updateMem("updateMem")
-                console.log(workerName)
+                console.log(workerName+":startMonitor")
                 this.backenConnect(workerName)
             },
             backenConnect(workerName){
                 if(this.isConnected){
-                    this.backenDisconnect() //for reconnect
+                    console.log(this.curWorker+':disconnet')
+                    this.backenDisconnect() //change and reconnect
                 }
                 this.ws = new WebSocket(this.backen.dashboardMonitorSocket(workerName));
 
@@ -58,34 +61,35 @@
                 this.curWorker = workerName
             },
             onConnect(evt){
-                console.log("Connection open ...");
-                  this.ws.send("Hello WebSockets!");
+                console.log(this.curWorker+"Connection open ...");
+                  // this.ws.send("Hello WebSockets!");
                   this.isConnected = true;
                   this.isConnectedError = false;
                   this.reconnectCounter = 0;
             },
             onMessage(evt){
-                console.log( "Received Message: " + evt.data);
+                console.log(this.curWorker+"Received Message: " + evt.data);
                 this.isConnectedError = false;
                 this.reconnectCounter = 0;
             },
             onSocketClose(evt){
-                console.log("Connection closed.");
-                this.isConnected = false
+                console.log(this.curWorker+"Connection closed.");
                 if (this.isConnectedError && this.reconnectCounter<5) {
                     console.log("remote connect error.",this.reconnectCounter);
                     this.reconnectCounter +=1
                     this.backenConnect(this.curWorker) //reconnect
                 }
+
             },
             onSocketError(){
-                console.log('Connection error')
+                console.log(this.curWorker+'Connection error')
                 this.isConnectedError = true
+                this.isConnected = false
             },
-            backenDisconnect(){
+            backenDisconnect(evt){
                 this.isConnectedError = false;
-                this.ws.close();
-                this.ws=null;
+                this.isConnected = false
+                this.ws.close(1000);
             }
         },
         components: {
