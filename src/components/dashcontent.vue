@@ -19,6 +19,45 @@
     </div>
 </template>
 
+<!--               {-->
+<!--	"cpu": {-->
+<!--		"average": 38.73,-->
+<!--		"per": [42.4, 26.6, 32.8, 53.1]-->
+<!--	},-->
+<!--	"memory": {-->
+<!--		"virtual": {-->
+<!--			"total": 17057574912,-->
+<!--			"available": 5507387392,-->
+<!--			"percent": 67.7,-->
+<!--			"used": 11550187520,-->
+<!--			"free": 5507387392-->
+<!--		},-->
+<!--		"swap": {-->
+<!--			"total": 26919690240,-->
+<!--			"used": 17541074944,-->
+<!--			"free": 9378615296,-->
+<!--			"percent": 65.2,-->
+<!--			"sin": 0,-->
+<!--			"sout": 0-->
+<!--		}-->
+<!--	},-->
+<!--	"disk_used": {-->
+<!--		"total": 78896951296,-->
+<!--		"used": 27166470144,-->
+<!--		"free": 51730481152,-->
+<!--		"percent": 34.4-->
+<!--	},-->
+<!--	"disk_io": {-->
+<!--		"read_speed": 311296.0,-->
+<!--		"write_speed": 0.0-->
+<!--	},-->
+<!--	"net_io": {-->
+<!--		"sent_speed": 994.0,-->
+<!--		"recv_speed": 1892.0-->
+<!--	},-->
+<!--	"time": 1604667963-->
+<!--}-->
+
 <script>
     import cpuChart from "~/components/common/multiLinesChart";
     import solidgaugeChart from "~/components/common/solidgaugeChart";
@@ -37,6 +76,10 @@
             }
         },
         methods:{
+            parseMonitorData(strData){
+                let data = JSON.parse(strData)
+
+            },
             updateBtn(){
                 this.$refs.cpuChart.updateLine("updateLine")
                 this.$refs.memChart.updateMem("updateMem")
