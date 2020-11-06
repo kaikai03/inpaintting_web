@@ -76,17 +76,18 @@
             }
         },
         methods:{
-            parseMonitorData(strData){
-                let data = JSON.parse(strData)
-
+            updateCharts(strData){
+                let items = JSON.parse(strData)
+                let cpus = data['cpu']['per']
+                this.$refs.cpuChart.updateLine({'data':cpus.splice(0, 0, data['cpu']['average']),'time':data['time']})
             },
             updateBtn(){
-                this.$refs.cpuChart.updateLine("updateLine")
-                this.$refs.memChart.updateMem("updateMem")
+                //this.$refs.cpuChart.updateLine("updateLine")
+                //this.$refs.memChart.updateMem("updateMem")
             },
             startMonitor(workerName){
-                this.$refs.cpuChart.updateLine("updateLine")
-                this.$refs.memChart.updateMem("updateMem")
+                //this.$refs.cpuChart.updateLine("updateLine")
+                //this.$refs.memChart.updateMem("updateMem")
                 console.log(workerName+":startMonitor")
                 this.backenConnect(workerName)
             },
@@ -114,6 +115,7 @@
                 console.log(this.curWorker+"Received Message: " + evt.data);
                 this.isConnectedError = false;
                 this.reconnectCounter = 0;
+                this.updateCharts(evt.data)
             },
             onSocketClose(evt){
                 console.log(this.curWorker+"Connection closed.");
