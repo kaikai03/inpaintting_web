@@ -207,34 +207,19 @@
                 return series
             },
             updateLine(data){
-                // {'data':cpus.splice(0, 0, data['cpu']['average']),'time':data['time']}
                 console.log("update",data)
-                //console.log(this.cpuChart.series)
                 //let x = (new Date()).getTime()
                 // console.log(x)
                 // this.cpuChart.series[0].addPoint([ x, Math.round(Math.random() * 100)], false, true);
-                // this.cpuChart.series[1].addPoint([ x, Math.round(Math.random() * 100)], false, true);
-                // this.cpuChart.series[2].addPoint([ x, Math.round(Math.random() * 100)], false, true);
-                // this.cpuChart.series[3].addPoint([ x, Math.round(Math.random() * 100)], false, true);
-                // this.cpuChart.series[4].addPoint([ x, Math.round(Math.random() * 100)], false, true);
-                //
-                // this.cpuChart.setTitle (null, {text: Math.round(Math.random() * 100).toString()}, false)
-                // this.cpuChart.legend.allItems[0].legendItem.attr({text:'AVG:'+Math.round(Math.random() * 100).toString()+'%'})
-                // this.cpuChart.legend.allItems[1].legendItem.attr({text:'C_1:'+Math.round(Math.random() * 100).toString()+'%'})
-                // this.cpuChart.legend.allItems[2].legendItem.attr({text:'C_2:'+Math.round(Math.random() * 100).toString()+'%'})
-                // this.cpuChart.legend.allItems[3].legendItem.attr({text:'C_3:'+Math.round(Math.random() * 100).toString()+'%'})
-                // this.cpuChart.legend.allItems[4].legendItem.attr({text:'C_4:'+Math.round(Math.random() * 100).toString()+'%'})
-                // this.cpuChart.redraw()
-                data['data'].forEach((item,index,array) => {//data['time']
+
+                data['data'].forEach((item,index,array) => {
                     this.cpuChart.series[index].addPoint([data['time'], item], false, true);
-                    this.cpuChart.legend.allItems[index].legendItem.attr({text:'AVG:'+item.toString()+'%'})
+                    this.cpuChart.legend.allItems[index].legendItem.attr({text:this.linesShortName[index]+':'+item.toString()+'%'})
                 })
                 this.cpuChart.setTitle (null, {text: data['data'][0].toString()}, false)
 
-
                 if (data.hasOwnProperty('data')){
                     if (data['data'].length > 0)
-                    console.log("redrawredrawredrawredrawredraw")
                     this.cpuChart.redraw();
                 }
 
