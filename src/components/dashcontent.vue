@@ -77,9 +77,14 @@
         },
         methods:{
             updateCharts(strData){
-                let items = JSON.parse(strData)
-                let cpus = data['cpu']['per']
-                this.$refs.cpuChart.updateLine({'data':cpus.splice(0, 0, data['cpu']['average']),'time':data['time']})
+                // console.log('parse：',strData)
+                let items = JSON.parse(strData);
+                let cpus = items['cpu']['per'];
+                console.log('cpu：',items['cpu']);
+                console.log('per：',items['cpu']['per']);
+                console.log('average：',items['cpu']['average']);
+                cpus.splice(0, 0, items['cpu']['average']);
+                this.$refs.cpuChart.updateLine({'data':cpus,'time':items['time']});
             },
             updateBtn(){
                 //this.$refs.cpuChart.updateLine("updateLine")
@@ -115,7 +120,10 @@
                 console.log(this.curWorker+"Received Message: " + evt.data);
                 this.isConnectedError = false;
                 this.reconnectCounter = 0;
-                this.updateCharts(evt.data)
+                if(evt.data.substr(0,1) === '{'){
+                    this.updateCharts(evt.data);
+                }
+
             },
             onSocketClose(evt){
                 console.log(this.curWorker+"Connection closed.");

@@ -225,17 +225,23 @@
                 // this.cpuChart.legend.allItems[3].legendItem.attr({text:'C_3:'+Math.round(Math.random() * 100).toString()+'%'})
                 // this.cpuChart.legend.allItems[4].legendItem.attr({text:'C_4:'+Math.round(Math.random() * 100).toString()+'%'})
                 // this.cpuChart.redraw()
-                data['data'].forEach((item,index,array) => {
+                data['data'].forEach((item,index,array) => {//data['time']
                     this.cpuChart.series[index].addPoint([data['time'], item], false, true);
+                    this.cpuChart.legend.allItems[index].legendItem.attr({text:'AVG:'+item.toString()+'%'})
                 })
+                this.cpuChart.setTitle (null, {text: data['data'][0].toString()}, false)
+
+
                 if (data.hasOwnProperty('data')){
                     if (data['data'].length > 0)
-                    this.cpuChart.redraw()
+                    console.log("redrawredrawredrawredrawredraw")
+                    this.cpuChart.redraw();
                 }
 
             }
         },
         mounted: function () {
+            HighStock.setOptions({global:{useUTC: false}});
             this.cpuChart = HighStock.chart(this.id, this["option"]);
         },
         components: {
