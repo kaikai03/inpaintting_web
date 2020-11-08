@@ -7,14 +7,19 @@
             </cpuChart>
         </div>
 
-        <div style="width: 300px;height: 200px;">
+        <div style="width: 220px;height: 180px;border: 1px solid red;">
             <gaugeChart  ref="memChartVirtual" tag="memChartVirtual" title="MEM" tipName="memory" :min=0 :max=100
                              unitSymbol="%"></gaugeChart >
         </div>
 
-        <div style="width: 300px;height: 200px;">
+        <div style="width: 220px;height: 180px;border: 1px solid red;">
             <gaugeChart  ref="memChartSwap" tag="memChartSwap" title="SWAP" tipName="swap" :min=0 :max=100
                              unitSymbol="%"></gaugeChart >
+        </div>
+
+        <div style="width: 220px;height: 180px;border: 1px solid red;">
+            <gaugeChart2 ref="memChart" tag="memChart" title="MEM" tipName="mem" :min=0 :max=100
+                             unitSymbol="%"></gaugeChart2 >
         </div>
 
         <span>
@@ -66,7 +71,7 @@
 <script>
     import cpuChart from "~/components/common/multiLinesChart";
     import solidGaugeChart from "~/components/common/solidgaugeChart";
-
+    import solidgaugeChart2 from "~/components/common/solidgaugeChart2";
 
     export default {
 
@@ -94,6 +99,7 @@
                 this.$refs.cpuChart.updateLine({'data':cpus,'time':items['time']});
                 this.$refs.memChartVirtual.update(memVirtual)
                 this.$refs.memChartSwap.update(memSwap)
+                this.$refs.memChart.update(memVirtual,memSwap)
             },
             updateBtn(){
                 //this.$refs.cpuChart.updateLine("updateLine")
@@ -155,7 +161,7 @@
             }
         },
         components: {
-            cpuChart:cpuChart, gaugeChart:solidGaugeChart
+            cpuChart:cpuChart, gaugeChart:solidGaugeChart,gaugeChart2:solidgaugeChart2
         }
     }
 </script>

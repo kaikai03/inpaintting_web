@@ -34,8 +34,8 @@
                     pane: {
                         center: ['50%', '85%'],
                         size: '140%',
-                        startAngle: -90,
-                        endAngle: 90,
+                        startAngle: -45,
+                        endAngle: 45,
                         background: {
                             backgroundColor: '#EEE',
                             innerRadius: '45%',
