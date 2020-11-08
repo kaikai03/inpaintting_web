@@ -207,7 +207,7 @@
                 return series
             },
             updateLine(data){
-                console.log("update",data)
+                console.log(this.title, " update:", data)
                 //let x = (new Date()).getTime()
                 // console.log(x)
                 // this.cpuChart.series[0].addPoint([ x, Math.round(Math.random() * 100)], false, true);

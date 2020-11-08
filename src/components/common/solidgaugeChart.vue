@@ -107,10 +107,9 @@
         },
         methods: {
             update(data){
-                console.log("update",data)
+                console.log(this.title," update:",data)
                 let point = this.gaugeChart.series[0].points[0];
-                let inc = Math.round(Math.random() * 100);
-                point.update(inc);
+                point.update(data);
                 this.gaugeChart.redraw()
             }
         },
