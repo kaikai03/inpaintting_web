@@ -8,8 +8,13 @@
         </div>
 
         <div style="width: 300px;height: 200px;">
-            <solidgaugeChart ref="memChart" tag="memChart" title="MEM" tipName="MEM" :min=0 :max=100
-                             unitSymbol="%"></solidgaugeChart>
+            <gaugeChart  ref="memChartVirtual" tag="memChartVirtual" title="MEM" tipName="memory" :min=0 :max=100
+                             unitSymbol="%"></gaugeChart >
+        </div>
+
+        <div style="width: 300px;height: 200px;">
+            <gaugeChart  ref="memChartSwap" tag="memChartSwap" title="SWAP" tipName="swap" :min=0 :max=100
+                             unitSymbol="%"></gaugeChart >
         </div>
 
         <span>
@@ -60,7 +65,7 @@
 
 <script>
     import cpuChart from "~/components/common/multiLinesChart";
-    import solidgaugeChart from "~/components/common/solidgaugeChart";
+    import solidGaugeChart from "~/components/common/solidgaugeChart";
 
 
     export default {
@@ -77,14 +82,18 @@
         },
         methods:{
             updateCharts(strData){
+                // {"memory": {"virtual": {"total": 25679904768, "available": 16036134912, "percent": 37.6, "used": 9643769856, "free": 16036134912}, "swap": {"total": 36472508416, "used": 16790478848, "free": 19682029568, "percent": 46.0, "sin": 0, "sout": 0}},
                 // console.log('parse：',strData)
                 let items = JSON.parse(strData);
                 let cpus = items['cpu']['per'];
-                console.log('cpu：',items['cpu']);
-                console.log('per：',items['cpu']['per']);
-                console.log('average：',items['cpu']['average']);
+                let memVirtual = items['memory']['virtual']['percent'];
+                let memSwap = items['memory']['swap']['percent'];
+                console.log('memVirtual：',memVirtual);
+                console.log('memSwap：',memSwap);
                 cpus.splice(0, 0, items['cpu']['average']);
                 this.$refs.cpuChart.updateLine({'data':cpus,'time':items['time']});
+                this.$refs.memChartVirtual.update(memVirtual)
+                this.$refs.memChartSwap.update(memSwap)
             },
             updateBtn(){
                 //this.$refs.cpuChart.updateLine("updateLine")
@@ -146,7 +155,7 @@
             }
         },
         components: {
-            cpuChart:cpuChart, solidgaugeChart:solidgaugeChart
+            cpuChart:cpuChart, gaugeChart:solidGaugeChart
         }
     }
 </script>
