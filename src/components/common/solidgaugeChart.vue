@@ -12,7 +12,7 @@
     SolidGauge(Highcharts)
 
     export default {
-        name: "memChart",
+        name: "solidGaugeChart",
         props: {'tag':String,'title':String,'tipName':String,'min':Number,'max':Number,'unitSymbol':String, 'stopsColor':Array},
         data() {
             let optionSeries = [{
@@ -22,7 +22,7 @@
 
             return {
                 id: this.tag || 'solidgaugeChart',
-                memChart: null,
+                gaugeChart: null,
                 option: {
                     chart: {
                         type: 'solidgauge'
@@ -106,16 +106,16 @@
             }
         },
         methods: {
-            updateMem(data){
+            update(data){
                 console.log("update",data)
-                let point = this.memChart.series[0].points[0];
+                let point = this.gaugeChart.series[0].points[0];
                 let inc = Math.round(Math.random() * 100);
                 point.update(inc);
-                this.memChart.redraw()
+                this.gaugeChart.redraw()
             }
         },
         mounted: function () {
-            this.memChart = Highcharts.chart(this.id, this["option"]);
+            this.gaugeChart = Highcharts.chart(this.id, this["option"]);
         },
         components: {
             HighChart: Highcharts
