@@ -9,7 +9,7 @@
 
     export default {
         name: "areasplineChart",
-        props: {'tag':String,'title':String,'lineCount':Number,'linesName':Array[String],'linesShortName':Array[String],'unitSymbol':String, 'linesColor':Array[String]},
+        props: {'tag':String,'title':String,'lineCount':Number,'linesName':Array[String],'linesShortName':Array[String],'unitSymbol':String, 'linesColor':Array[String],'yShow':Boolean},
         data() {
             // let optionSeries = [{
             //     name: 'CPU',
@@ -122,14 +122,15 @@
                         },
                         labels: {//坐标轴上刻度的样式及单位
                             margin: -10,
+                            reserveSpace:false,
                             style: {
                                 color: '#999999',
-                                fontSize: '00px',
+                                fontSize: this.yShow ? '10px' : '0px',
                                 // writingMode:'sideways-lr'
                             },
                             // format: '{value}%',//坐标轴上的单位
                         },
-                        offset: -20,//距离坐标轴的距离
+                        offset: -30,//距离坐标轴的距离
                     },
                     tooltip: {//数据提示框
                         headerFormat: '<small>{point.key}</small><br/>',//标题格式
