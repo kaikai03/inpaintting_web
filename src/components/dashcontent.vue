@@ -23,6 +23,10 @@
                              unitSymbol="%"></gaugeChart2 >
         </div>
 
+        <div style="width: 1320px;height: 80px;border: 1px solid red;">
+            <romChart ref="romChart" tag="romChart" tipName="ROM"></romChart >
+        </div>
+
         <span>
             <el-button type="primary" size="mini" class="submit" @click="updateBtn">update</el-button>
 
@@ -73,6 +77,7 @@
     import cpuChart from "~/components/common/multiLinesChart";
     import solidGaugeChart from "~/components/common/solidgaugeChart";
     import solidgaugeChart2 from "~/components/common/solidgaugeChart2";
+    import transverseColumn from "~/components/common/transverseColumn";
 
     export default {
 
@@ -105,6 +110,7 @@
             updateBtn(){
                 //this.$refs.cpuChart.updateLine("updateLine")
                 //this.$refs.memChart.updateMem("updateMem")
+                this.$refs.romChart.update2("update")
             },
             startMonitor(workerName){
                 //this.$refs.cpuChart.updateLine("updateLine")
@@ -162,7 +168,7 @@
             }
         },
         components: {
-            cpuChart:cpuChart, gaugeChart:solidGaugeChart,gaugeChart2:solidgaugeChart2
+            cpuChart:cpuChart, gaugeChart:solidGaugeChart,gaugeChart2:solidgaugeChart2,romChart:transverseColumn
         }
     }
 </script>
