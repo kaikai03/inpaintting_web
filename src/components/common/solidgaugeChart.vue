@@ -10,6 +10,7 @@
     import SolidGauge from 'highcharts/modules/solid-gauge.js'
     HighchartsMore(Highcharts)
     SolidGauge(Highcharts)
+    Highcharts.setOptions({global:{useUTC: false}});
 
     export default {
         name: "solidGaugeChart",

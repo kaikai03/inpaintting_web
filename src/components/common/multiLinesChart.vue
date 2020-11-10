@@ -6,6 +6,7 @@
 
 <script>
     import HighStock from 'highcharts/highstock'
+    HighStock.setOptions({global:{useUTC: false}});
 
     export default {
         name: "areasplineChart",
@@ -227,7 +228,6 @@
             }
         },
         mounted: function () {
-            HighStock.setOptions({global:{useUTC: false}});
             this.cpuChart = HighStock.chart(this.id, this["option"]);
         },
         components: {

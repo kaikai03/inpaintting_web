@@ -10,14 +10,14 @@
     import bullet from 'highcharts/modules/bullet.js'
     HighchartsMore(Highcharts)
     bullet(Highcharts)
-
+    Highcharts.setOptions({global:{useUTC: false}});
 
     export default {
         name: "transverseColumn",
         props: {'tag':String,'title':String,'tipName':String,'unitSymbol':String},
         data() {
-            let optionSeries = [{
-                data: [{y: 120, target: 540}]}]
+            //Highcharts.dateFormat('%H:%M',1604977680108+3600*8)
+            let optionSeries = [{data: [{y: 120, target: 300, extra:Highcharts.dateFormat('%H:%M',(new Date()).getTime()+3600*8)}]}]
             return {
                 id: this.tag || 'transverseColumn',
                 chart: null,
@@ -51,16 +51,17 @@
                         // categories: ['<div style="display:none"></div>']
                     },
                     yAxis: {
+                        gridLineWidth: 0,
                         plotBands: [{
                             id: 'plot-bands-1',
                             from: 0,
-                            to: 100,
-                            color: '#CCCCCC'
+                            to: 350,
+                            color: '#67C23A'
                         }, {
                             id: 'plot-bands-2',
-                            from: 100,
+                            from: 350,
                             to: 400,
-                            color: '#909399'
+                            color: '#E6A23C'
                         }, {
                             id: 'plot-bands-3',
                             from: 400,
@@ -71,7 +72,7 @@
                         offset: -10,
                     },
                     tooltip: {
-                        pointFormat: '<b>{point.y}</b> （目标值 {point.target}）'
+                        pointFormat: '<b>{point.y}</b> （{point.extra}）'
                     },
                     plotOptions: {
                         series: {
@@ -99,25 +100,26 @@
                 // this.chart.yAxis[0].removePlotBand('plot-bands-1');
                 // this.chart.yAxis[0].removePlotBand('plot-bands-2');
                 // this.chart.yAxis[0].removePlotBand('plot-bands-3');
-                this.chart.yAxis[0].addPlotBand({
-                            id: 'plot-bands-1',
-                            from: 0,
-                            to: 200,
-                            color: '#F56C6C'
-                        });
-                this.chart.yAxis[0].addPlotBand({
-                            id: 'plot-bands-1',
-                            from: 0,
-                            to: 200,
-                            color: '#F56C6C'
-                        });
-                this.chart.yAxis[0].addPlotBand({
-                            id: 'plot-bands-1',
-                            from: 0,
-                            to: 200,
-                            color: '#F56C6C'
-                        });
-                this.chart.yAxis[0].removePlotBand('plot-bands-1');
+                // this.chart.yAxis[0].addPlotBand({
+                //             id: 'plot-bands-1',
+                //             from: 0,
+                //             to: 200,
+                //             color: '#F56C6C'
+                //         });
+                // this.chart.yAxis[0].addPlotBand({
+                //             id: 'plot-bands-1',
+                //             from: 0,
+                //             to: 200,
+                //             color: '#F56C6C'
+                //         });
+                // this.chart.yAxis[0].addPlotBand({
+                //             id: 'plot-bands-1',
+                //             from: 0,
+                //             to: 200,
+                //             color: '#F56C6C'
+                //         });
+                // this.chart.yAxis[0].removePlotBand('plot-bands-1');
+                this.chart.yAxis[0].setExtremes(11, 500,true,true);
                 this.chart.redraw()
             }
 
