@@ -84,7 +84,7 @@
             </el-form>
 
         </el-col>
-        <el-col :span="15" id="task-fileupload" class="grid-content bg-purple-light">
+        <el-col :span="16" id="task-fileupload" class="grid-content bg-purple-light">
               <div class="border-wrapper">
 			<div class="border-top"></div>
 			<div class="border-left"></div>
@@ -417,6 +417,7 @@
         min-width: 380px;
         height: var(--kerenl-height);
         /*background-color: tomato;*/
+        margin-left: 20px;
     }
 
     .bg-purple-dark {
