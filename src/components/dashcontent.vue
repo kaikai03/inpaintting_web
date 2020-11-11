@@ -1,11 +1,11 @@
 <template>
     <div>
         <div style="width: 300px;height: 200px;">
-            <cpuChart ref="cpuChart" tag="cpuChart" title="CPU(%)" :lineCount=5
+            <linesChart ref="cpuChart" tag="cpuChart" title="CPU(%)" :lineCount=5
                       :linesName="['CPU','CPU-1','CPU-2','CPU-3','CPU-4']"
                       :linesShortName="['AVG','C_1','C_2','C_3','C_4']" unitSymbol="%"
                       :yShow="true">
-            </cpuChart>
+            </linesChart>
         </div>
 
         <div style="width: 220px;height: 180px;border: 1px solid red;">
@@ -26,6 +26,24 @@
         <div style="width: 1320px;height: 80px;border: 1px solid red;">
             <romChart ref="romChart" tag="romChart" tipName="ROM"></romChart >
         </div>
+
+        <div style="width: 300px;height: 200px;">
+            <linesChart ref="netChart" tag="netChart" title="CPU(%)" :lineCount=2
+                      :linesName="['sent','recv']"
+                      :linesShortName="['sent','recv']"
+                      :yShow="true">
+            </linesChart>
+        </div>
+
+        <div style="width: 300px;height: 200px;">
+            <linesChart ref="ioChart" tag="ioChart" title="CPU(%)" :lineCount=2
+                      :linesName="['read','write']"
+                      :linesShortName="['read','write']"
+                      :yShow="true">
+            </linesChart>
+        </div>
+
+
 
         <span>
             <el-button type="primary" size="mini" class="submit" @click="updateBtn">update</el-button>
@@ -74,7 +92,7 @@
 <!--}-->
 
 <script>
-    import cpuChart from "~/components/common/multiLinesChart";
+    import linesChart from "~/components/common/multiLinesChart";
     import solidGaugeChart from "~/components/common/solidgaugeChart";
     import solidgaugeChart2 from "~/components/common/solidgaugeChart2";
     import transverseColumn from "~/components/common/transverseColumn";
@@ -106,6 +124,7 @@
                 this.$refs.memChartVirtual.update(memVirtual)
                 this.$refs.memChartSwap.update(memSwap)
                 this.$refs.memChart.update(memVirtual,memSwap)
+
             },
             updateBtn(){
                 //this.$refs.cpuChart.updateLine("updateLine")
@@ -168,7 +187,7 @@
             }
         },
         components: {
-            cpuChart:cpuChart, gaugeChart:solidGaugeChart,gaugeChart2:solidgaugeChart2,romChart:transverseColumn
+            linesChart:linesChart, gaugeChart:solidGaugeChart,gaugeChart2:solidgaugeChart2,romChart:transverseColumn
         }
     }
 </script>
