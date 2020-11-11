@@ -124,7 +124,7 @@
                 this.$refs.memChartVirtual.update(memVirtual)
                 this.$refs.memChartSwap.update(memSwap)
                 this.$refs.memChart.update(memVirtual,memSwap)
-
+                // TODO to complete net and io
             },
             updateBtn(){
                 //this.$refs.cpuChart.updateLine("updateLine")
