@@ -18,6 +18,9 @@ Vue.use(VideoPlayer)
 import global_backen from "~/global_backen";
 Vue.prototype.backen = global_backen
 
+import utils from "~/utils";
+Vue.prototype.utils = utils
+
 import http from "~/api/http";
 Vue.prototype.network = http
 
