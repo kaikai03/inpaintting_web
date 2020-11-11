@@ -1,18 +1,20 @@
 <template>
-    <div>
-        <div id="dashboard">
-        <div id="el-tab">
-            <el-tabs tab-position="top" :v-model="activeTab" @tab-click="tagClick" :before-leave="tagLeave">
-                    <el-tab-pane v-for="(worker,index) in workers" :name="worker" :key="worker" >
-                        <span slot="label"><i class="el-icon-date"></i>{{worker}}</span>
-                    </el-tab-pane>
-            </el-tabs>
-        </div>
-        <div id="dashcontent">
-            <dashContent ref="dashContent"></dashContent>
-        </div>
-    </div>
-        </div>
+    <el-row type="flex" class="row-bg" justify="space-around">
+        <el-col :span="24" class="grid-content bg-purple">
+            <div class="dashboard">
+                <div id="el-tab">
+                    <el-tabs tab-position="top" :v-model="activeTab" @tab-click="tagClick" :before-leave="tagLeave">
+                        <el-tab-pane v-for="(worker,index) in workers" :name="worker" :key="worker">
+                            <span slot="label"><i class="el-icon-date"></i>{{worker}}</span>
+                        </el-tab-pane>
+                    </el-tabs>
+                </div>
+                <div id="dashcontent">
+                    <dashContent ref="dashContent"></dashContent>
+                </div>
+            </div>
+        </el-col>
+    </el-row>
 </template>
 
 <script>
@@ -66,7 +68,32 @@
 <!--<script src="http://view.jqueryfuns.com/2015/7/1/ba27e27fe4934e1f15219ad0b58e7c74/js/gizmoMenu.js" ></script >-->
 
 <style scoped>
-    #dashboard{
+    .row-bg {
+    padding: 0px 0;
+    background-color: transparent!important;
+  }
+    .el-col {
+        height: 100%;
+        border-radius: 4px;
+    }
+        .bg-purple-dark {
+        background: #99a9bf;
+    }
+
+    .bg-purple {
+        background: #d3dce6;
+    }
+
+    .bg-purple-light {
+        background: #e5e9f2;
+    }
+
+    .grid-content {
+        border-radius: 10px;
+        min-height: 36px;
+    }
+
+    .dashboard{
         display: flex;
         flex-direction: column;
         height: 100%;
