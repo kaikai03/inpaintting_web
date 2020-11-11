@@ -17,7 +17,8 @@
         props: {'tag':String,'title':String,'tipName':String,'unitSymbol':String},
         data() {
             //Highcharts.dateFormat('%H:%M',1604977680108+3600*8)
-            let optionSeries = [{data: [{y: 120, target: 300, extra:Highcharts.dateFormat('%H:%M',(new Date()).getTime()+3600*8)}]}]
+            let optionSeries = [{data: [{y: 0.001, target: 0.001, extra:Highcharts.dateFormat('%H:%M',(new Date()).getTime())}]}]
+            let numToSize = this.utils.numberToSize
             return {
                 id: this.tag || 'transverseColumn',
                 chart: null,
@@ -51,25 +52,24 @@
                         // categories: ['<div style="display:none"></div>']
                     },
                     yAxis: {
+                        min: 0,
+                        softMax: 1,
                         gridLineWidth: 0,
                         plotBands: [{
                             id: 'plot-bands-1',
                             from: 0,
-                            to: 350,
-                            color: '#67C23A'
-                        }, {
-                            id: 'plot-bands-2',
-                            from: 350,
-                            to: 400,
-                            color: '#E6A23C'
-                        }, {
-                            id: 'plot-bands-3',
-                            from: 400,
-                            to: 500,
-                            color: '#F56C6C'
+                            to: 1,
+                            color: '#CCCCCC'
                         }],
                         title: null,
                         offset: -10,
+                        tickPositioner: function () {
+                            return [this.min, this.max * 0.65, this.max * 0.85, this.max];
+                        }, labels: {
+                            formatter: function () {
+                                return numToSize(this.value)
+                            }
+                        }
                     },
                     tooltip: {
                         pointFormat: '<b>{point.y}</b> （{point.extra}）'
@@ -96,33 +96,32 @@
                 this.chart.redraw()
             },
             update2(data){
-
-                // this.chart.yAxis[0].removePlotBand('plot-bands-1');
-                // this.chart.yAxis[0].removePlotBand('plot-bands-2');
-                // this.chart.yAxis[0].removePlotBand('plot-bands-3');
-                // this.chart.yAxis[0].addPlotBand({
-                //             id: 'plot-bands-1',
-                //             from: 0,
-                //             to: 200,
-                //             color: '#F56C6C'
-                //         });
-                // this.chart.yAxis[0].addPlotBand({
-                //             id: 'plot-bands-1',
-                //             from: 0,
-                //             to: 200,
-                //             color: '#F56C6C'
-                //         });
-                // this.chart.yAxis[0].addPlotBand({
-                //             id: 'plot-bands-1',
-                //             from: 0,
-                //             to: 200,
-                //             color: '#F56C6C'
-                //         });
-                // this.chart.yAxis[0].removePlotBand('plot-bands-1');
-                this.chart.yAxis[0].setExtremes(11, 500,true,true);
+                let point = this.chart.series[0].points[0];
+                point.update({y: 100, target: 200, extra:Highcharts.dateFormat('%H:%M',(new Date()).getTime())});
+                this.chart.yAxis[0].setExtremes(0, 100000,false,true);
+                this.updatePlotBand(100000)
                 this.chart.redraw()
-            }
-
+            },
+            updatePlotBand(upper){
+                this.chart.yAxis[0].addPlotBand({
+                            id: 'plot-bands-1',
+                            from: 0,
+                            to: upper*0.65,
+                            color: '#67C23A'
+                        });
+                this.chart.yAxis[0].addPlotBand({
+                            id: 'plot-bands-2',
+                            from: upper*0.65,
+                            to: upper*0.85,
+                            color: '#E6A23C'
+                        });
+                this.chart.yAxis[0].addPlotBand({
+                            id: 'plot-bands-3',
+                            from: upper*0.85,
+                            to: upper,
+                            color: '#F56C6C'
+                        });
+            },
         },
         mounted: function () {
             this.chart = Highcharts.chart(this.id, this["option"]);
