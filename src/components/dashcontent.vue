@@ -24,7 +24,7 @@
 <!--        </div>-->
 
         <div style="width: 1320px;height: 80px;border: 1px solid red;">
-            <romChart ref="romChart" tag="romChart" tipName="ROM"></romChart >
+            <romChart ref="romChart" tag="romChart" tipName="ROM" :unitFormatter=this.utils.numberToSize ></romChart >
         </div>
 
         <div style="width: 300px;height: 200px;">

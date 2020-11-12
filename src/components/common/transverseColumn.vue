@@ -14,11 +14,11 @@
 
     export default {
         name: "transverseColumn",
-        props: {'tag':String,'title':String,'tipName':String,'unitSymbol':String},
+        props: {'tag':String,'title':String,'tipName':String,'unitFormatter':Function},
         data() {
             //Highcharts.dateFormat('%H:%M',1604977680108+3600*8)
             let optionSeries = [{data: [{y: 0.001, target: 0.001, extra:Highcharts.dateFormat('%H:%M',(new Date()).getTime())}]}]
-            let numToSize = this.utils.numberToSize
+            let numToSize = this.unitFormatter || function (x) { return x}
             return {
                 id: this.tag || 'transverseColumn',
                 chart: null,
@@ -73,7 +73,6 @@
                         }
                     },
                     tooltip: {
-                        // pointFormat: '<b>{this.utils.numberToSize(point.y)}</b> （{point.extra}）'
                         formatter: function () {
                             return '<b>'+ numToSize(this.point.y) + '</b>' + '（'+ this.point.extra +'）';
                         }
