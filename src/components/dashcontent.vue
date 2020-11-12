@@ -18,17 +18,17 @@
                              unitSymbol="%"></gaugeChart >
         </div>
 
-        <div style="width: 220px;height: 180px;border: 1px solid red;">
-            <gaugeChart2 ref="memChart" tag="memChart" title="MEM" tipName="mem" :min=0 :max=100
-                             unitSymbol="%"></gaugeChart2 >
-        </div>
+<!--        <div style="width: 220px;height: 180px;border: 1px solid red;">-->
+<!--            <gaugeChart2 ref="memChart" tag="memChart" title="MEM" tipName="mem" :min=0 :max=100-->
+<!--                             unitSymbol="%"></gaugeChart2 >-->
+<!--        </div>-->
 
         <div style="width: 1320px;height: 80px;border: 1px solid red;">
             <romChart ref="romChart" tag="romChart" tipName="ROM"></romChart >
         </div>
 
         <div style="width: 300px;height: 200px;">
-            <linesChart ref="netChart" tag="netChart" title="CPU(%)" :lineCount=2
+            <linesChart ref="netChart" tag="netChart" title="NetIO" :lineCount=2
                       :linesName="['sent','recv']"
                       :linesShortName="['sent','recv']"
                       :yShow="true">
@@ -36,7 +36,7 @@
         </div>
 
         <div style="width: 300px;height: 200px;">
-            <linesChart ref="ioChart" tag="ioChart" title="CPU(%)" :lineCount=2
+            <linesChart ref="ioChart" tag="ioChart" title="DiskIO" :lineCount=2
                       :linesName="['read','write']"
                       :linesShortName="['read','write']"
                       :yShow="true">
@@ -52,44 +52,6 @@
     </div>
 </template>
 
-<!--               {-->
-<!--	"cpu": {-->
-<!--		"average": 38.73,-->
-<!--		"per": [42.4, 26.6, 32.8, 53.1]-->
-<!--	},-->
-<!--	"memory": {-->
-<!--		"virtual": {-->
-<!--			"total": 17057574912,-->
-<!--			"available": 5507387392,-->
-<!--			"percent": 67.7,-->
-<!--			"used": 11550187520,-->
-<!--			"free": 5507387392-->
-<!--		},-->
-<!--		"swap": {-->
-<!--			"total": 26919690240,-->
-<!--			"used": 17541074944,-->
-<!--			"free": 9378615296,-->
-<!--			"percent": 65.2,-->
-<!--			"sin": 0,-->
-<!--			"sout": 0-->
-<!--		}-->
-<!--	},-->
-<!--	"disk_used": {-->
-<!--		"total": 78896951296,-->
-<!--		"used": 27166470144,-->
-<!--		"free": 51730481152,-->
-<!--		"percent": 34.4-->
-<!--	},-->
-<!--	"disk_io": {-->
-<!--		"read_speed": 311296.0,-->
-<!--		"write_speed": 0.0-->
-<!--	},-->
-<!--	"net_io": {-->
-<!--		"sent_speed": 994.0,-->
-<!--		"recv_speed": 1892.0-->
-<!--	},-->
-<!--	"time": 1604667963-->
-<!--}-->
 
 <script>
     import linesChart from "~/components/common/multiLinesChart";
@@ -111,25 +73,29 @@
         },
         methods:{
             updateCharts(strData){
-                // {"memory": {"virtual": {"total": 25679904768, "available": 16036134912, "percent": 37.6, "used": 9643769856, "free": 16036134912}, "swap": {"total": 36472508416, "used": 16790478848, "free": 19682029568, "percent": 46.0, "sin": 0, "sout": 0}},
+                //"disk_used": {"total": 78896951296, "used": 27170922496, "free": 51726028800, "percent": 34.4}, "disk_io": {"read_s
+                //peed": 0.0, "write_speed": 823296.0}, "net_io": {"sent_speed": 583.0, "recv_speed": 931.0}, "time": 1605158658514
                 // console.log('parse：',strData)
                 let items = JSON.parse(strData);
                 let cpus = items['cpu']['per'];
-                let memVirtual = items['memory']['virtual']['percent'];
-                let memSwap = items['memory']['swap']['percent'];
-                console.log('memVirtual：',memVirtual);
-                console.log('memSwap：',memSwap);
                 cpus.splice(0, 0, items['cpu']['average']);
+                let mem = items['memory']
+                let rom = items['disk_used'];
+
+
+
                 this.$refs.cpuChart.updateLine({'data':cpus,'time':items['time']});
-                this.$refs.memChartVirtual.update(memVirtual)
-                this.$refs.memChartSwap.update(memSwap)
-                this.$refs.memChart.update(memVirtual,memSwap)
+                this.$refs.memChartVirtual.update(mem['virtual']['percent'])
+                this.$refs.memChartSwap.update(mem['swap']['percent'])
+                //this.$refs.memChart.update(memVirtual,memSwap)
+
+                this.$refs.romChart.update({'data': rom['used'],'time':items['time']},{"min":0,"max":rom['total']})
                 // TODO to complete net and io
             },
             updateBtn(){
                 //this.$refs.cpuChart.updateLine("updateLine")
                 //this.$refs.memChart.updateMem("updateMem")
-                this.$refs.romChart.update2("update")
+                // this.$refs.romChart.update2("update")
             },
             startMonitor(workerName){
                 //this.$refs.cpuChart.updateLine("updateLine")

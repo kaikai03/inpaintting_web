@@ -22,6 +22,7 @@
             return {
                 id: this.tag || 'transverseColumn',
                 chart: null,
+                maxNumY:-1,
                 option: {
                     chart: {
                         	inverted: true,
@@ -72,7 +73,10 @@
                         }
                     },
                     tooltip: {
-                        pointFormat: '<b>{point.y}</b> （{point.extra}）'
+                        // pointFormat: '<b>{this.utils.numberToSize(point.y)}</b> （{point.extra}）'
+                        formatter: function () {
+                            return '<b>'+ numToSize(this.point.y) + '</b>' + '（'+ this.point.extra +'）';
+                        }
                     },
                     plotOptions: {
                         series: {
@@ -80,7 +84,7 @@
                             borderWidth: 0,
                             color: '#000',
                             targetOptions: {
-                                width: '200%'
+                                width: '130%'
                             }
                         }
                     },
@@ -89,18 +93,20 @@
             }
         },
         methods: {
-            update(data){
+            update(data,boundary){
                 console.log(this.title," update:",data)
                 let point = this.chart.series[0].points[0];
-                point.update(data);
+                point.update({y: data['data'], target: data['data'], extra:Highcharts.dateFormat('%H:%M',data['time'])});
+
+                if(boundary){
+                    if (this.maxNumY !== boundary['max']){
+                        this.chart.yAxis[0].setExtremes(0, boundary['max'],false,true);
+                        this.updatePlotBand(boundary['max'])
+                        this.maxNumY = boundary['max']
+                    }
+                }
                 this.chart.redraw()
-            },
-            update2(data){
-                let point = this.chart.series[0].points[0];
-                point.update({y: 100, target: 200, extra:Highcharts.dateFormat('%H:%M',(new Date()).getTime())});
-                this.chart.yAxis[0].setExtremes(0, 100000,false,true);
-                this.updatePlotBand(100000)
-                this.chart.redraw()
+
             },
             updatePlotBand(upper){
                 this.chart.yAxis[0].addPlotBand({
