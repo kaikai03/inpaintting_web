@@ -23,7 +23,7 @@
 <!--                             unitSymbol="%"></gaugeChart2 >-->
 <!--        </div>-->
 
-        <div style="width: 1320px;height: 80px;border: 1px solid red;">
+        <div style="width: 320px;height: 60px;border: 1px solid red;">
             <romChart ref="romChart" tag="romChart" tipName="ROM" :unitFormatter=this.utils.numberToSize ></romChart >
         </div>
 

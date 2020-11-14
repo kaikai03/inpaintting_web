@@ -39,7 +39,7 @@
                         margin: -20,
                         style: {
                             color: '#CCCCCC',
-                            fontSize: '13px',
+                            fontSize: '0px',
                         }
                     },
                     xAxis: {
