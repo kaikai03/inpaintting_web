@@ -18,7 +18,7 @@
         data() {
             //Highcharts.dateFormat('%H:%M',1604977680108+3600*8)
             let optionSeries = [{data: [{y: 0.001, target: 0.001, extra:Highcharts.dateFormat('%H:%M',(new Date()).getTime())}]}]
-            let numToSize = this.unitFormatter || function (x) { return x}
+            let formatter = this.unitFormatter || function (x) { return x}
             return {
                 id: this.tag || 'transverseColumn',
                 chart: null,
@@ -66,15 +66,16 @@
                         offset: -10,
                         tickPositioner: function () {
                             return [this.min, this.max * 0.65, this.max * 0.85, this.max];
-                        }, labels: {
+                        },
+                        labels: {
                             formatter: function () {
-                                return numToSize(this.value)
+                                return formatter(this.value)
                             }
                         }
                     },
                     tooltip: {
                         formatter: function () {
-                            return '<b>'+ numToSize(this.point.y) + '</b>' + '（'+ this.point.extra +'）';
+                            return '<b>'+ formatter(this.point.y) + '</b>' + '（'+ this.point.extra +'）';
                         }
                     },
                     plotOptions: {

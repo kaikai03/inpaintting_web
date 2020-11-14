@@ -2,9 +2,10 @@
     <div>
         <div style="width: 300px;height: 200px;">
             <linesChart ref="cpuChart" tag="cpuChart" title="CPU(%)" :lineCount=5
-                      :linesName="['CPU','CPU-1','CPU-2','CPU-3','CPU-4']"
-                      :linesShortName="['AVG','C_1','C_2','C_3','C_4']" unitSymbol="%"
-                      :yShow="true">
+                        :linesName="['CPU','CPU-1','CPU-2','CPU-3','CPU-4']"
+                        :linesShortName="['AVG','C_1','C_2','C_3','C_4']"
+                        :unitFormatter=this.tools.addPercentSymbol
+                        :yShow="true">
             </linesChart>
         </div>
 

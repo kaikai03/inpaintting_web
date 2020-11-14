@@ -10,35 +10,10 @@
 
     export default {
         name: "areasplineChart",
-        props: {'tag':String,'title':String,'lineCount':Number,'linesName':Array[String],'linesShortName':Array[String],'unitSymbol':String, 'linesColor':Array[String],'yShow':Boolean},
+        props: {'tag':String,'title':String,'lineCount':Number,'linesName':Array[String],'linesShortName':Array[String],
+             'linesColor':Array[String],'yShow':Boolean,'unitFormatter':Function},
         data() {
-            // let optionSeries = [{
-            //     name: 'CPU',
-            //     data: JSON.parse(JSON.stringify(defaultPoint)),
-            //     tooltip: {valueSuffix: '%'},
-            //     fillOpacity: 0.5
-            // },{
-            //     name: 'CPU-1',
-            //     data: JSON.parse(JSON.stringify(defaultPoint)),
-            //     tooltip: {valueSuffix: '%'},
-            //     fillOpacity: 0.1
-            // }, {
-            //     name: 'CPU-2',
-            //     data: JSON.parse(JSON.stringify(defaultPoint)),
-            //     tooltip: {valueSuffix: '%'},
-            //     fillOpacity: 0.1
-            // }, {
-            //     name: 'CPU-3',
-            //     data: JSON.parse(JSON.stringify(defaultPoint)),
-            //     tooltip: {valueSuffix: '%'},
-            //     fillOpacity: 0.1
-            // }, {
-            //     name: 'CPU-4',
-            //     data: JSON.parse(JSON.stringify(defaultPoint)),
-            //     tooltip: {valueSuffix: '%'},
-            //     fillOpacity: 0.1
-            // }
-            // ];
+            let formatter = this.unitFormatter || function (x) { return x}
             return {
                 id: this.tag || 'lineChart',
                 cpuChart:null,
@@ -129,13 +104,18 @@
                                 fontSize: this.yShow ? '10px' : '0px',
                                 // writingMode:'sideways-lr'
                             },
-                            // format: '{value}%',//坐标轴上的单位
+                            formatter: function () {
+                                return formatter(this.value)
+                            }
+
                         },
                         offset: -30,//距离坐标轴的距离
                     },
                     tooltip: {//数据提示框
                         headerFormat: '<small>{point.key}</small><br/>',//标题格式
-                        pointFormat: '<span style="color:{series.color};">{series.name}</span>：{point.y}<br/>',
+                        pointFormatter: function () {
+                            return '<span style="color:' + this.series.color + '">' + this.series.name +'</span>：' + formatter(this.y) + '<br/>'
+                        },
                         xDateFormat: '%H:%M:%S',
                         shared: true,
                         followPointer: true,//跟随鼠标
@@ -201,7 +181,11 @@
                     let item = {
                         name: this.linesName[index] || 'line'+index.toString(),
                         data: this.markDefaultPoint(),
-                        tooltip: {valueSuffix: this.unitSymbol || null},
+                        // tooltip: {
+                        //     formatter: function () {
+                        //         return this.formatter(this.point.y);
+                        //     }
+                        // },
                         fillOpacity: index==0 ? 0.5 : 0.1
                     }
                     series.push(item)
@@ -216,7 +200,7 @@
 
                 data['data'].forEach((item,index,array) => {
                     this.cpuChart.series[index].addPoint([data['time'], item], false, true);
-                    this.cpuChart.legend.allItems[index].legendItem.attr({text:this.linesShortName[index]+':'+item.toString()+'%'})
+                    this.cpuChart.legend.allItems[index].legendItem.attr({text:this.linesShortName[index]+':'+ this.formatter(item)})
                 })
                 this.cpuChart.setTitle (null, {text: data['data'][0].toString()}, false)
 
