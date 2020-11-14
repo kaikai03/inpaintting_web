@@ -24,7 +24,7 @@
 <!--        </div>-->
 
         <div style="width: 320px;height: 60px;border: 1px solid red;">
-            <romChart ref="romChart" tag="romChart" tipName="ROM" :unitFormatter=this.utils.numberToSize ></romChart >
+            <romChart ref="romChart" tag="romChart" tipName="ROM" :unitFormatter=this.tools.numberToSize ></romChart >
         </div>
 
         <div style="width: 300px;height: 200px;">
@@ -81,6 +81,8 @@
                 cpus.splice(0, 0, items['cpu']['average']);
                 let mem = items['memory']
                 let rom = items['disk_used'];
+                let net_io = items['net_io'];
+                let disk_io = items['disk_io'];
 
 
 
@@ -90,7 +92,8 @@
                 //this.$refs.memChart.update(memVirtual,memSwap)
 
                 this.$refs.romChart.update({'data': rom['used'],'time':items['time']},{"min":0,"max":rom['total']})
-                // TODO to complete net and io
+                this.$refs.netChart.updateLine({'data':[net_io["sent_speed"],net_io["recv_speed"]],'time':items['time']});
+                this.$refs.ioChart.updateLine({'data':[net_io["read_s"],net_io["write_speed"]],'time':items['time']});
             },
             updateBtn(){
                 //this.$refs.cpuChart.updateLine("updateLine")
