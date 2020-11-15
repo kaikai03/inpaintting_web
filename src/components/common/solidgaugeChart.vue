@@ -33,8 +33,8 @@
                     },
                     title: null,
                     pane: {
-                        center: ['50%', '85%'],
-                        size: '140%',
+                        center: ['50%', '110%'],
+                        size: '200%',//140
                         startAngle: -45,
                         endAngle: 45,
                         background: {
@@ -88,7 +88,7 @@
                             outerRadius: '100%',
                             dataLabels: {
                                 //y: -30,
-                                padding  :-10,
+                                padding  :-5,
                                 style: {
                                     fontSize: '25px',
                                     color: '#AAAAAA'
