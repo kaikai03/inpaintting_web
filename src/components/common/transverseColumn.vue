@@ -26,7 +26,7 @@
                 option: {
                     chart: {
                         marginTop: 10,
-                        marginBottom: 20,
+                        marginBottom: 15,
                         	inverted: true,
                             marginLeft: 50,
                             type: 'bullet'
