@@ -25,6 +25,8 @@
                 maxNumY:-1,
                 option: {
                     chart: {
+                        marginTop: 10,
+                        marginBottom: 20,
                         	inverted: true,
                             marginLeft: 50,
                             type: 'bullet'
@@ -36,7 +38,6 @@
                     title: {
                         text: this.title || null,
                         align: 'left',
-                        margin: -20,
                         style: {
                             color: '#CCCCCC',
                             fontSize: '0px',
