@@ -27,21 +27,22 @@
                     title: {//指定图表标题
                         text: this.title || null,
                         align: 'left',
+                        y:25,
                         margin: -20,
                         style: {
-                            color: '#CCCCCC',
-                            fontSize: '13px',
+                            color: '#999999',
+                            fontSize: '15px',
                         }
                     },
-                    subtitle:{
-                        align: 'left',
-                        y:40,
-                        style: {
-                            color: '#AAAAAA',
-                            fontSize: '25px',
-                            fontWeight: 'bold'
-                        }
-                    },
+                    // subtitle:{
+                    //     align: 'left',
+                    //     y:40,
+                    //     style: {
+                    //         color: '#AAAAAA',
+                    //         fontSize: '25px',
+                    //         fontWeight: 'bold'
+                    //     }
+                    // },
                     // colors:['#333333',  '#409EFF',   '#67C23A',   '#E6A23C'],
                     colors: this.linesColor || ['rgba(64,158,255, 1)','rgba(245,108,108, 0.8)', 'rgba(103,194,58, 0.8)', 'rgba(230,162,60, 0.8)', 'rgba(51, 51, 51, 0.4)'],
                     xAxis: {
@@ -100,7 +101,7 @@
                             margin: -10,
                             reserveSpace:false,
                             style: {
-                                color: '#999999',
+                                color: '#CCCCCC',
                                 fontSize: this.yShow ? '10px' : '0px',
                                 // writingMode:'sideways-lr'
                             },

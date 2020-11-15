@@ -1,6 +1,10 @@
 <template>
-    <div>
-        <div style="width: 300px;height: 200px;">
+    <div id="dashContent">
+        <div class="transverse" id="rom">
+            <romChart ref="romChart" tag="romChart" tipName="ROM" :unitFormatter=this.tools.numberToSize ></romChart >
+        </div>
+
+        <div class="lines" id="cpuLines" >
             <linesChart ref="cpuChart" tag="cpuChart" title="CPU(%)" :lineCount=5
                         :linesName="['CPU','CPU-1','CPU-2','CPU-3','CPU-4']"
                         :linesShortName="['AVG','C_1','C_2','C_3','C_4']"
@@ -9,41 +13,36 @@
             </linesChart>
         </div>
 
-        <div style="width: 220px;height: 180px;border: 1px solid red;">
+
+        <div class="lines" id="netio" >
+            <linesChart ref="netChart" tag="netChart" title="NetIO" :lineCount=2
+                        :linesName="['sent','recv']"
+                        :linesShortName="['sent','recv']"
+                        :unitFormatter=this.tools.numberToSize
+                        :yShow="true">
+            </linesChart>
+        </div>
+
+        <div class="lines" id="diskio">
+            <linesChart ref="ioChart" tag="ioChart" title="DiskIO" :lineCount=2
+                        :linesName="['read','write']"
+                        :linesShortName="['read','write']"
+                        :unitFormatter=this.tools.numberToSize
+                        :yShow="true">
+            </linesChart>
+        </div>
+
+<!--            <div id="memS">-->
+        <div class="gauge" id="memV">
             <gaugeChart  ref="memChartVirtual" tag="memChartVirtual" title="MEM" tipName="memory" :min=0 :max=100
                              unitSymbol="%"></gaugeChart >
         </div>
 
-        <div style="width: 220px;height: 180px;border: 1px solid red;">
+        <div class="gauge" id="Swap">
             <gaugeChart  ref="memChartSwap" tag="memChartSwap" title="SWAP" tipName="swap" :min=0 :max=100
                              unitSymbol="%"></gaugeChart >
         </div>
-
-<!--        <div style="width: 220px;height: 180px;border: 1px solid red;">-->
-<!--            <gaugeChart2 ref="memChart" tag="memChart" title="MEM" tipName="mem" :min=0 :max=100-->
-<!--                             unitSymbol="%"></gaugeChart2 >-->
-<!--        </div>-->
-
-        <div style="width: 320px;height: 60px;border: 1px solid red;">
-            <romChart ref="romChart" tag="romChart" tipName="ROM" :unitFormatter=this.tools.numberToSize ></romChart >
-        </div>
-
-        <div style="width: 300px;height: 200px;">
-            <linesChart ref="netChart" tag="netChart" title="NetIO" :lineCount=2
-                      :linesName="['sent','recv']"
-                      :linesShortName="['sent','recv']"
-                      :yShow="true">
-            </linesChart>
-        </div>
-
-        <div style="width: 300px;height: 200px;">
-            <linesChart ref="ioChart" tag="ioChart" title="DiskIO" :lineCount=2
-                      :linesName="['read','write']"
-                      :linesShortName="['read','write']"
-                      :yShow="true">
-            </linesChart>
-        </div>
-
+<!--                </div>-->
 
 
         <span>
@@ -163,5 +162,49 @@
 </script>
 
 <style scoped>
+    #dashContent {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .lines {
+        width: 50%;
+        height: 220px;
+    }
+    .gauge {
+        width: 220px;
+        height: 150px;
+        border: 1px solid red;
+    }
+    .transverse{
+        width: 100%;
+        height: 60px;
+        border: 1px solid red;
+    }
+
+    #cpuLines {
+
+    }
+
+    #memV {
+
+    }
+
+    #memS {
+
+    }
+
+    #rom {
+
+    }
+
+    #netio {
+
+    }
+
+    #diskio {
+
+    }
 
 </style>
