@@ -150,8 +150,6 @@
     }
 
     .chart {
-        /*width: 400px;*/
-        /*height: 200px*/
         border-radius: 8px;
         width: 100%;
         height: 100%;
