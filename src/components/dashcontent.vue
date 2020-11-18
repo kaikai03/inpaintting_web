@@ -73,8 +73,7 @@
         },
         methods:{
             updateCharts(strData){
-                //"disk_used": {"total": 78896951296, "used": 27170922496, "free": 51726028800, "percent": 34.4}, "disk_io": {"read_s
-                //peed": 0.0, "write_speed": 823296.0}, "net_io": {"sent_speed": 583.0, "recv_speed": 931.0}, "time": 1605158658514
+
                 // console.log('parse：',strData)
                 let items = JSON.parse(strData);
                 let cpus = items['cpu']['per'];
@@ -89,7 +88,7 @@
                 this.$refs.cpuChart.updateLine({'data':cpus,'time':items['time']});
                 this.$refs.memChartVirtual.update(mem['virtual']['percent'])
                 this.$refs.memChartSwap.update(mem['swap']['percent'])
-                //this.$refs.memChart.update(memVirtual,memSwap)
+
 
                 this.$refs.romChart.update({'data': rom['used'],'time':items['time']},{"min":0,"max":rom['total']})
                 this.$refs.netChart.updateLine({'data':[net_io["sent_speed"],net_io["recv_speed"]],'time':items['time']});
@@ -101,8 +100,6 @@
                 // this.$refs.romChart.update2("update")
             },
             startMonitor(workerName){
-                //this.$refs.cpuChart.updateLine("updateLine")
-                //this.$refs.memChart.updateMem("updateMem")
                 console.log(workerName+":startMonitor")
                 this.backenConnect(workerName)
             },
