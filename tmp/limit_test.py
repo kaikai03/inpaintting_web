@@ -2,6 +2,8 @@
 
 import time
 import numpy as np
+import matplotlib.pyplot as plt
+import scipy.stats as st
 
 # start = time.time()
 # time.sleep(1)
@@ -35,7 +37,25 @@ stamp2 - stamp
 
 np.exp(stamp2/stamp)
 
-np.log(np.exp(stamp2*0.1**8) / np.exp(stamp*0.1**8))
+np.log(np.exp(stamp2*0.1**8) / np.exp(1602259200*0.1**8))
+
+x = np.array([0.001, 0.369792000, 0.739584, 1.000512, 1.3167360,1.632096])
 
 
+
+mu=4
+mean,var,skew,kurt = st.poisson.stats(mu,moments='mvsk')
+x = np.arange(st.poisson.ppf(0.01, mu),st.poisson.ppf(0.99, mu))
+
+plt.plot(x, st.poisson.pmf(x, mu),'o')
+plt.show()
+
+
+int(str(time.time())[-1]) >= 7
+count = 0
+for i in range(1, 200000):
+    if int(str(time.time())[-1]) >= 9 * (1/x[3]):
+        if int(str(time.monotonic())[-1]) >= 9:
+            count+=1
+print(count/200000)
 
