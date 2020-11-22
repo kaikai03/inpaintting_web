@@ -25,9 +25,9 @@ def fab2(n):
     return a
 
 
-for i in range(1, 50000):
+for i in range(1, 50):
     start = time.time()
-    print(i, fab2(i), time.time()-start)
+    print(i, fab(i), time.time()-start)
 
 
 
@@ -43,12 +43,12 @@ x = np.array([0.001, 0.369792000, 0.739584, 1.000512, 1.3167360,1.632096])
 
 
 
-mu=4
-mean,var,skew,kurt = st.poisson.stats(mu,moments='mvsk')
-x = np.arange(st.poisson.ppf(0.01, mu),st.poisson.ppf(0.99, mu))
-
-plt.plot(x, st.poisson.pmf(x, mu),'o')
-plt.show()
+# mu=4
+# mean,var,skew,kurt = st.poisson.stats(mu,moments='mvsk')
+# x = np.arange(st.poisson.ppf(0.01, mu),st.poisson.ppf(0.99, mu))
+#
+# plt.plot(x, st.poisson.pmf(x, mu),'o')
+# plt.show()
 
 
 int(str(time.time())[-1]) >= 7
