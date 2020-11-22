@@ -1,6 +1,7 @@
 const backen = '127.0.0.1'
 const port = '9000'
 const http_prefix = 'http://'
+const https_prefix = 'https://'
 const ws_prefix = 'ws://'
 const work_stat = {
     cpl: 'completed',
@@ -41,6 +42,9 @@ export default {
     },
     dashboardMonitorSocket(workerName){
         return ws_prefix + backen + ":" + port +'/dashboard/ws/data/' + workerName
+    },
+    getOnlineWorkers(){
+        return http_prefix + backen + ":" + port +'/dashboard/workers'
     }
 
 
