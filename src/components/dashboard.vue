@@ -57,6 +57,31 @@
 
             }
         },
+        mounted() {
+            const loading = this.$loading({
+                          lock: true,
+                          text: '正在联系工人，请稍后...',
+                          // spinner: 'el-icon-loading',
+                          background: 'rgba(0, 0, 0, 0.6)',
+                          target: document.querySelector('.el-tab')
+                        });
+            this.network.get_request(this.backen.getOnlineWorkers(),
+                            (res) => {
+                                console.log(res);
+                                console.log("get workers success");
+                                loading.close();
+                            },
+                            (er) => {
+                                console.log(er)
+                                if(er.status == 507){
+                                    this.$message({message: '服务器存储错误，请刷新页面', center: true, showClose: true, type: 'error',effect:"dark"});
+                                }else{
+                                    this.$message({message: '网络错误，请重新加载', center: true, showClose: true, type: 'error' });
+                                }
+                                loading.close();
+                            }
+                        )
+        },
         components: {
             dashContent:dashcontent,
         }
