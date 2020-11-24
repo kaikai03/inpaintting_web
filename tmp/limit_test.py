@@ -59,3 +59,32 @@ for i in range(1, 200000):
             count+=1
 print(count/200000)
 
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.gaussian_process import GaussianProcessRegressor
+import sklearn.gaussian_process.kernels as kl
+a1=np.random.normal(3.5, 2, 50).reshape(50,1)
+a2=np.random.normal(1.6, 1.6, 50).reshape(50,1)
+
+b=a1**2+a2**4-np.random.random(50).reshape(50,1)
+plt.scatter(a1,b,marker = 'o', color = 'r', label='3', s = 15)
+plt.show()
+gaussian=GaussianProcessRegressor(kernel=kl.RBF(0.5, length_scale_bounds="fixed"))
+fiting=gaussian.fit(a1,b)
+
+c=np.linspace(0.1,1,100)
+d=gaussian.predict(c.reshape(100,1))
+plt.scatter(a1,b,marker = 'o', color = 'r', label='3', s = 15)
+plt.plot(c,d)
+plt.show()
+
+gaussian.get_params(True)
+
+c=np.linspace(1,6,100)
+d=gaussian.predict(c.reshape(100,1),True)
+plt.scatter(a1,b,marker = 'o', color = 'r', label='3', s = 15)
+plt.plot(c,d[0])
+plt.plot(c,d[0]+(d[1]*112).reshape(100,1))
+plt.plot(c,d[0]-(d[1]*112).reshape(100,1))
+plt.show()
