@@ -65,24 +65,26 @@ import matplotlib.pyplot as plt
 from sklearn.gaussian_process import GaussianProcessRegressor
 import sklearn.gaussian_process.kernels as kl
 
-a1=np.random.normal(1, 1.5, 5).reshape(5,1)
+a1=np.random.normal(1, 1.5, 50).reshape(50,1)
 # a2=np.random.normal(10.6, 8.6, 50).reshape(50,1)
 
-b=a1-np.random.random(5).reshape(5,1)
+# b=a1-np.random.random(5).reshape(5,1)
+b=np.random.laplace(2,1.1,50).reshape(50,1)
 # plt.scatter(a1,b,marker = 'o', color = 'r', label='3', s = 15)
 # plt.show()
 
 
 
-gaussian=GaussianProcessRegressor(kernel=kl.RBF(1.0, length_scale_bounds="fixed"))
+gaussian=GaussianProcessRegressor(kernel=kl.RBF(2.0, length_scale_bounds="fixed"))
 fiting=gaussian.fit(a1,b)
 
 gaussian.get_params(True)
 
-c=np.linspace(a1.min()-0.1,a1.max()+0.1,50)
+# c=np.linspace(a1.min()-0.1,a1.max()+0.1,50)
+c=np.linspace(a1.min(),a1.max(),50)
 d=gaussian.predict(c.reshape(50,1),True)
 plt.scatter(a1,b,marker = 'o', color = 'r', label='3', s = 15)
 plt.plot(c,d[0])
-plt.plot(c,d[0]+(d[1]*2).reshape(50,1))
-plt.plot(c,d[0]-(d[1]*2).reshape(50,1))
+plt.plot(c,d[0]+(d[1]*200).reshape(50,1))
+plt.plot(c,d[0]-(d[1]*200).reshape(50,1))
 plt.show()
