@@ -89,10 +89,3 @@ plt.plot(c,d[0]+(d[1]*200).reshape(20,1))
 plt.plot(c,d[0]-(d[1]*200).reshape(20,1))
 plt.show()
 
-
-
-a1=np.random.normal(1, 1.5, 20).reshape(20,1)
-
-b=np.power(np.random.normal(1, 1.5, 20),2).reshape(20,1)
-plt.scatter(a1,b,marker = 'o', color = 'r', label='3', s = 15)
-plt.show()
