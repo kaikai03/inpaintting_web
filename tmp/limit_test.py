@@ -75,16 +75,24 @@ b=np.random.laplace(2,1.1,50).reshape(50,1)
 
 
 
-gaussian=GaussianProcessRegressor(kernel=kl.RBF(2.0, length_scale_bounds="fixed"))
+gaussian=GaussianProcessRegressor(kernel=kl.RBF(5.0,length_scale_bounds='fixed'))
 fiting=gaussian.fit(a1,b)
 
 gaussian.get_params(True)
 
 # c=np.linspace(a1.min()-0.1,a1.max()+0.1,50)
-c=np.linspace(a1.min(),a1.max(),50)
-d=gaussian.predict(c.reshape(50,1),True)
+c=np.linspace(a1.min(),a1.max(),20)
+d=gaussian.predict(c.reshape(20,1),True)
 plt.scatter(a1,b,marker = 'o', color = 'r', label='3', s = 15)
 plt.plot(c,d[0])
-plt.plot(c,d[0]+(d[1]*200).reshape(50,1))
-plt.plot(c,d[0]-(d[1]*200).reshape(50,1))
+plt.plot(c,d[0]+(d[1]*200).reshape(20,1))
+plt.plot(c,d[0]-(d[1]*200).reshape(20,1))
+plt.show()
+
+
+
+a1=np.random.normal(1, 1.5, 20).reshape(20,1)
+
+b=np.power(np.random.normal(1, 1.5, 20),2).reshape(20,1)
+plt.scatter(a1,b,marker = 'o', color = 'r', label='3', s = 15)
 plt.show()
