@@ -88,7 +88,7 @@
                             outerRadius: '100%',
                             dataLabels: {
                                 //y: -30,
-                                padding  :-5,
+                                padding  :25,
                                 style: {
                                     fontSize: '25px',
                                     color: '#AAAAAA'
