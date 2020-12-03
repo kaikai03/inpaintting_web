@@ -167,21 +167,22 @@
     }
 
     .lines {
-        box-sizing:border-box;
-        width: 50%;
+        width: calc(50% - 7px);
         height: 220px;
-        padding: 5px 5px 5px 0px;
+        margin: 14px 0px 0px 0px;
 
     }
     .gauge {
-        width: 220px;
-        height: 150px;
-        border: 1px solid red;
+        height: 220px;
+        /*border: 1px solid red;*/
+        width: calc(25% - 7px);
+        margin: 14px 0px 0px 0px;
     }
     .transverse{
         width: 100%;
         height: 60px;
-        border: 1px solid red;
+        margin: 14px 0px 0px 0px;
+        /*border: 1px solid red;*/
     }
 
     #cpuLines {
