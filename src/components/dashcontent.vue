@@ -167,8 +167,11 @@
     }
 
     .lines {
+        box-sizing:border-box;
         width: 50%;
         height: 220px;
+        padding: 5px 5px 5px 0px;
+
     }
     .gauge {
         width: 220px;
