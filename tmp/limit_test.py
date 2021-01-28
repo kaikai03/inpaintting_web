@@ -31,15 +31,18 @@ for i in range(1, 50):
 
 
 
-stamp = int(time.mktime(time.strptime('2020-10-10','%Y-%m-%d')))
-stamp2 = int(time.mktime(time.strptime('2023-12-12','%Y-%m-%d')))
+stamp = int(time.mktime(time.strptime('2020-01-01','%Y-%m-%d')))
+stamp2 = int(time.mktime(time.strptime('2036-04-01','%Y-%m-%d')))
 stamp2 - stamp
 
 np.exp(stamp2/stamp)
 
-np.log(np.exp(stamp2*0.1**8) / np.exp(1602259200*0.1**8))
+diff = np.log(np.exp(stamp2*0.1**8) / np.exp(stamp*0.1**8))
 
-x = np.array([0.001, 0.369792000, 0.739584, 1.000512, 1.3167360,1.632096])
+x = np.array([0.001, 0.316224, 0.63158, 0.9469, 1.2623,1.57852])
+
+plt.plot(np.linspace(1,len(x),len(x)),x)
+plt.show()
 
 
 
@@ -53,11 +56,11 @@ x = np.array([0.001, 0.369792000, 0.739584, 1.000512, 1.3167360,1.632096])
 
 int(str(time.time())[-1]) >= 7
 count = 0
-for i in range(1, 200000):
-    if int(str(time.time())[-1]) >= 9 * (1/x[3]):
+for i in range(1, 400000):
+    if int(str(time.time())[-1]) >= 9 * (1/((np.e**(diff*2)/(np.e**(diff*2)++3.567))+0.3267)):
         if int(str(time.monotonic())[-1]) >= 9:
             count+=1
-print(count/200000)
+print(count/400000)
 
 
 import numpy as np
