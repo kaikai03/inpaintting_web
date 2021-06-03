@@ -25,22 +25,25 @@ def fab2(n):
     return a
 
 
-for i in range(1, 50):
+for i in range(50, 100):
     start = time.time()
     print(i, fab(i), time.time()-start)
 
 
 
-stamp = int(time.mktime(time.strptime('2020-01-01','%Y-%m-%d')))
-stamp2 = int(time.mktime(time.strptime('2036-04-01','%Y-%m-%d')))
+stamp = int(time.mktime(time.strptime('2021-01-01','%Y-%m-%d')))
+stamp2 = int(time.mktime(time.strptime('2025-01-01','%Y-%m-%d')))
 stamp2 - stamp
 
 np.exp(stamp2/stamp)
 
 diff = np.log(np.exp(stamp2*0.1**8) / np.exp(stamp*0.1**8))
+diff = (stamp2*0.1**8) - (stamp*0.1**8)
+diff
+
+
 
 x = np.array([0.001, 0.316224, 0.63158, 0.9469, 1.2623,1.57852])
-
 plt.plot(np.linspace(1,len(x),len(x)),x)
 plt.show()
 
@@ -54,10 +57,10 @@ plt.show()
 # plt.show()
 
 
-int(str(time.time())[-1]) >= 7
+int(str(time.time())[-1]) >= 8
 count = 0
 for i in range(1, 400000):
-    if int(str(time.time())[-1]) >= 9 * (1/((np.e**(diff*2)/(np.e**(diff*2)++3.567))+0.3267)):
+    if int(str(time.time())[-1]) >= 9 * (1/((np.e**(diff*2)/(np.e**(diff*2)+3.567))+0.3267)):
         if int(str(time.monotonic())[-1]) >= 9:
             count+=1
 print(count/400000)
