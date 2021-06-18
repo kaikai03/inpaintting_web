@@ -30,23 +30,24 @@ import xmltodict
 #     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,x,y,0,0)
 #     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,x,y,0,0)
 # win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 600, 300, 600, 600, win32con.SWP_SHOWWINDOW)
+# x1,y1,x2,y2 = win32gui.GetWindowRect(handle)
+# win32api.SetCursorPos((x2-int((x2-x1)/2),y2-int((y2-y1)/2)))
+# win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP | win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+# win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP | win32con.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
+# windows = []
+# win32gui.EnumChildWindows(handle, lambda hwnd,param: param.append(hwnd), windows)
 
+
+# 0: 文本  1: 图片[imagebiztype="0(新图),1(表情包.jpg),2(热图),7(表情包.gif)"] 2: 小表情 5: 来自表情商城 6: Emoji
 handle = win32gui.FindWindow('TXGuiFoundation', "满朝文武第四次哭蜀国")
 win32gui.GetWindowText(handle)
 win32gui.GetClassName(handle)
-x1,y1,x2,y2 = win32gui.GetWindowRect(handle)
-win32api.SetCursorPos((x2-int((x2-x1)/2),y2-int((y2-y1)/2)))
-win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP | win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
-win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP | win32con.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
 
 win32gui.ShowWindow(handle,win32con.SW_SHOW)
 win32gui.ShowWindow(handle,win32con.SW_HIDE)
 
-windows = []
-win32gui.EnumChildWindows(handle, lambda hwnd,param: param.append(hwnd), windows)
 
-win32gui.SendMessage(handle, win32con.WM_PASTE, 0, 0)
-win32gui.SendMessage(handle, win32con.WM_COPY, 0, 0)
+
 
 
 text = array('b', b'\x00\x00' * 99)
