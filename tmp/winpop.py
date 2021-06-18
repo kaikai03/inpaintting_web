@@ -32,7 +32,7 @@ def main():
     win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,
                            win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE) | win32con.WS_EX_LAYERED)
     win32gui.SetLayeredWindowAttributes(hwnd, win32api.RGB(*fuchsia), 0, win32con.LWA_COLORKEY)
-    win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, int(info.current_w/2)-100, int(info.current_h/2)-50,200, 100, win32con.SWP_SHOWWINDOW)
+
 
     while not done:
         for event in pg.event.get():
@@ -61,6 +61,9 @@ def main():
 
         pg.display.flip()
         clock.tick(30)
+        win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST,
+                              0, 0, 0, 0,
+                              win32con.SWP_SHOWWINDOW | win32con.SWP_NOSIZE| win32con.SWP_NOMOVE)
 
 
 if __name__ == '__main__':
