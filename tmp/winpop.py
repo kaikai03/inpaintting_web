@@ -26,8 +26,10 @@ def main():
     timer = 10
     done = False
     show_frame = False
+    show_ctr = False
 
     fuchsia = (255, 0, 128)
+    ctr_tip = (50, 200, 50)
     hwnd = pg.display.get_wm_info()["window"]
     win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,
                            win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE) | win32con.WS_EX_LAYERED)
@@ -46,17 +48,30 @@ def main():
                     else:
                         show_frame = True
                         screen = pg.display.set_mode((200, 100), 0)
+                # if event.key == pg.K_LCTRL or event.key == pg.K_RCTRL:
+                #     show_ctr = True
+
+            # if event.type == pg.KEYUP:
+            #     if event.key == pg.K_LCTRL or event.key == pg.K_RCTRL:
+            #         show_ctr = False
+
 
 
         timer -= 1
+        show_ctr = win32api.GetKeyState(win32con.VK_CONTROL) & 0x8000
         # Update the text surface and color every 10 frames.
         if timer <= 0:
             timer = 10
             color = (randrange(256), randrange(256), randrange(256))
             txt = font.render(random_letters(randrange(5, 21)), True, color)
 
+
         # screen.fill((130, 130, 130))
-        screen.fill(fuchsia)
+        if show_ctr:
+            screen.fill(ctr_tip)
+        else:
+            screen.fill(fuchsia)
+
         screen.blit(txt, txt.get_rect(center=screen_rect.center))
 
         pg.display.flip()
