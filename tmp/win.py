@@ -28,7 +28,7 @@ class Q:
         self.select_copy_ctr()
         data = self.read_clip_board()
         if data is not None:
-            new_data = self.parse_clip_board(data)
+            new_data = self.cse_clip_board(data)
             print(new_data)
 
     def select_copy_ctr(self):
@@ -45,14 +45,18 @@ class Q:
 
     def read_clip_board(self):
         # 富文本49860  文本13
+        data = None
         w.OpenClipboard()
-        check_data = w.GetClipboardData(49860)
-        if check_data[0:len('<QQRichEditFormat>')]==b'<QQRichEditFormat>':
-            data = w.GetClipboardData(13)
-        else:
-            data = None
-            print('未get到QQ数据')
+        try:
+            check_data = w.GetClipboardData(49860)
+            if check_data[0:len('<QQRichEditFormat>')]==b'<QQRichEditFormat>':
+                data = w.GetClipboardData(13)
+        except Exception as e:
+            pass
+
         w.CloseClipboard()
+        if data is None:
+            print('未get到QQ数据')
         return data
 
     def read_clip_board_back_up(self):
