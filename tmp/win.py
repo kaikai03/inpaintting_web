@@ -5,6 +5,7 @@ import time
 import xmltodict
 import re
 
+
 class Q:
     def __init__(self, window_name="S1韭菜跟车群"):
         self.window_name = window_name
@@ -23,6 +24,13 @@ class Q:
         win32gui.ShowWindow(self.handle, win32con.SW_SHOW)
         win32gui.ShowWindow(self.handle, win32con.SW_HIDE)
 
+    def process(self):
+        self.select_copy_ctr()
+        data = self.read_clip_board()
+        if data is not None:
+            new_data = self.parse_clip_board(data)
+            print(new_data)
+
     def select_copy_ctr(self):
         win32gui.SendMessage(self.handle, win32con.WM_ACTIVATE, 0, 0)
         win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0);
@@ -35,29 +43,36 @@ class Q:
         time.sleep(0.3)
         win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
 
-    def read_clip_board(self, type='13'):
+    def read_clip_board(self):
         # 富文本49860  文本13
         w.OpenClipboard()
-        data = w.GetClipboardData(w.EnumClipboardFormats(type))
+        check_data = w.GetClipboardData(49860)
+        if check_data[0:len('<QQRichEditFormat>')]==b'<QQRichEditFormat>':
+            data = w.GetClipboardData(13)
+        else:
+            data = None
+            print('未get到QQ数据')
         w.CloseClipboard()
         return data
 
     def read_clip_board_back_up(self):
         format_ = None
-        while True:
-            w.OpenClipboard()
-            if format_ is None:
-                format_ = w.EnumClipboardFormats()
-            else:
-                format_ = w.EnumClipboardFormats(format_)
-            data = w.GetClipboardData()
-            print(format_)
-            print(data)
-            w.CloseClipboard()
+        # while True:
+        w.OpenClipboard()
+        if format_ is None:
+            format_ = w.EnumClipboardFormats()
+        else:
+            format_ = w.EnumClipboardFormats(format_)
+        data = w.GetClipboardData(format_)
+        print(format_)
+        print(data)
+        w.CloseClipboard()
 
     def parse_clip_board(self,data):
         tmp = None
         res = []
+        if data is None: return None
+
         for row in data.split('\r\n\r\n')[::-1]:
             ###！！！ 注意，倒序的。
             if len(row) < 3:
@@ -87,7 +102,6 @@ class Q:
             if tmp is not None:
                 content = content + tmp
                 at_users = re.findall(r"(@.*? )", tmp)
-                print('at_users:', at_users)
                 if len(at_users) > 0:
                     for at in at_users:
                         content = content.replace(at.replace('@', ''), '')
@@ -109,7 +123,9 @@ class Q:
 if __name__ == '__main__':
     q = Q('S1韭菜跟车群')
     q.get_handle()
-
+    while 1:
+        q.process()
+        time.sleep(15)
     pass
 
 
