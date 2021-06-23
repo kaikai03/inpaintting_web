@@ -8,6 +8,8 @@ import win32api
 import win32con
 import win32gui
 
+from tmp import winQ
+
 
 def random_letters(n):
     """Pick n random letters."""
@@ -15,6 +17,11 @@ def random_letters(n):
 
 
 def main():
+    q = winQ.Q('S1韭菜群')
+    q.get_handle()
+    if q.handle == 0:
+        raise Exception('handle errorrrr')
+
     info = pg.display.Info()
     # screen = pg.display.set_mode((info.current_w, info.current_h), pg.FULLSCREEN)
     window_size = (info.current_w-200, 30)
@@ -22,20 +29,21 @@ def main():
     fuchsia = (255, 0, 128)
     ctr_tip = (66, 66, 66)
     txt_color = (180, 180, 180)
+    fps = 20
     # color = (randrange(256), randrange(256), randrange(256))
 
-    screen = pg.display.set_mode(window_size, pg.NOFRAME) #pg.NOFRAME
+    screen = pg.display.set_mode(window_size, pg.NOFRAME)
     screen_rect = screen.get_rect()
-    font = pg.font.Font(None, 25)
-    clock = pg.time.Clock()
+    # font = pg.font.Font('SimHei', 25)
 
+    clock = pg.time.Clock()
+    font = pg.font.Font("C:\\Windows\\Fonts\\msyhbd.ttc", 20)
     txt = font.render(random_letters(randrange(5, 21)), True, txt_color)
 
     timer = 10
     done = False
     show_frame = False
     show_ctr = False
-
 
 
     hwnd = pg.display.get_wm_info()["window"]
@@ -72,16 +80,24 @@ def main():
 
         timer -= 1
         show_ctr = win32api.GetKeyState(win32con.VK_CONTROL) & 0x8000
-        # Update the text surface and color every 10 frames.
-        if timer <= 0:
-            timer = 30
-            # color = (randrange(256), randrange(256), randrange(256))
-            txt = font.render(random_letters(randrange(5, 21)), False, txt_color)
+
+        if timer % (fps * 3) == 0:
+            msg = q.get_msg()
+            if msg:
+                print('show:', msg)
+                txt = font.render(msg, False, txt_color)
+
+        if timer % (fps * 30) == 0:
+            q.process()
+
+        if timer <= 1:
+            timer = fps*30 + 1
+
 
         screen.blit(txt, txt.get_rect(center=screen_rect.center))
 
         pg.display.flip()
-        clock.tick(30)
+        clock.tick(fps)
         win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST,
                               0, 0, 0, 0,
                               win32con.SWP_SHOWWINDOW | win32con.SWP_NOSIZE| win32con.SWP_NOMOVE)
@@ -92,3 +108,8 @@ if __name__ == '__main__':
     main()
     pg.quit()
     sys.exit()
+
+# font = pg.font.get_fonts()
+# for i in font:
+#     print(i)
+#

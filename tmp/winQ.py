@@ -11,6 +11,13 @@ class Q:
         self.window_name = window_name
         self.handle = 0
         self.last_row = None
+        self.queue = []
+
+    def get_msg(self):
+        if len(self.queue):
+            data = self.queue.pop(0)
+            return data[0]+"----"+data[2]
+        return None
 
     def get_handle(self):
         handle = win32gui.FindWindow('TXGuiFoundation', self.window_name)
@@ -28,19 +35,21 @@ class Q:
         self.select_copy_ctr()
         data = self.read_clip_board()
         if data is not None:
-            new_data = self.cse_clip_board(data)
+            new_data = self.parse_clip_board(data)
+            self.queue.extend(new_data)
             print(new_data)
+
 
     def select_copy_ctr(self):
         win32gui.SendMessage(self.handle, win32con.WM_ACTIVATE, 0, 0)
         win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0);
-        time.sleep(0.8)
+        time.sleep(0.1)
         win32gui.SendMessage(self.handle, win32con.WM_KEYDOWN, 0x00000041, 0x401E0001)
         win32gui.SendMessage(self.handle, win32con.WM_CHAR, 0x00000001, 0x001E0001)
-        time.sleep(0.5)
+        time.sleep(0.05)
         win32gui.SendMessage(self.handle, win32con.WM_KEYDOWN, 0x00000043, 0x002E0001)
         win32gui.SendMessage(self.handle, win32con.WM_CHAR, 0x00000003, 0x002E0001)
-        time.sleep(0.3)
+        time.sleep(0.05)
         win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
 
     def read_clip_board(self):
@@ -52,6 +61,7 @@ class Q:
             if check_data[0:len('<QQRichEditFormat>')]==b'<QQRichEditFormat>':
                 data = w.GetClipboardData(13)
         except Exception as e:
+            print('非QQedit')
             pass
 
         w.CloseClipboard()
@@ -94,6 +104,8 @@ class Q:
             std_row_sp = row_.split('\r\n')
             user = std_row_sp[0].replace(ti[0], '')
             user = user[:-1]
+            user = re.sub(r"(【.*?】)", '', user)
+            user = re.sub(r"( \d{4}/\d{1,2}/\d{1,2})", '', user)
             ti = ti[0]
             if len(std_row_sp) > 1:
                 content = std_row_sp[1]
@@ -125,17 +137,33 @@ class Q:
 
 
 if __name__ == '__main__':
-    q = Q('S1韭菜跟车群')
+    q = Q('S1韭菜群')
     q.get_handle()
-    while 1:
+    while q.handle:
         q.process()
         time.sleep(15)
     pass
 
 
-
-
-
+#######test
+# handle = win32gui.FindWindow('TXGuiFoundation', "S1韭菜群")
+#
+#
+# win32gui.SendMessage(handle, win32con.WM_ACTIVATE, 0, 0)
+# win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0);
+# time.sleep(0.1)
+# win32gui.SendMessage(handle, win32con.WM_KEYDOWN, 0x00000041, 0x401E0001)
+# win32gui.SendMessage(handle, win32con.WM_CHAR, 0x00000001, 0x001E0001)
+# time.sleep(0.05)
+# win32gui.SendMessage(handle, win32con.WM_KEYDOWN, 0x00000043, 0x002E0001)
+# win32gui.SendMessage(handle, win32con.WM_CHAR, 0x00000003, 0x002E0001)
+# time.sleep(0.05)
+# win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
+#
+#
+# w.OpenClipboard()
+# print(w.GetClipboardData(13))
+# w.CloseClipboard()
 
 # 富文本 0: 文本  1: 图片[imagebiztype="0(新图),1(表情包.jpg),2(热图),7(表情包.gif)"] 2: 小表情 5: 来自表情商城 6: Emoji
 #
