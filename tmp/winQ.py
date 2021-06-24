@@ -10,8 +10,9 @@ class Q:
     def __init__(self, window_name="S1韭菜跟车群"):
         self.window_name = window_name
         self.handle = 0
-        self.last_row = None
+        self.last_row = []
         self.queue = []
+        self.clipboard_backup = None
 
     def get_msg(self):
         if len(self.queue):
@@ -41,6 +42,7 @@ class Q:
 
 
     def select_copy_ctr(self):
+        self.backup_clipboard()
         win32gui.SendMessage(self.handle, win32con.WM_ACTIVATE, 0, 0)
         win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0);
         time.sleep(0.1)
@@ -52,6 +54,14 @@ class Q:
         time.sleep(0.05)
         win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
 
+    def backup_clipboard(self):
+        w.OpenClipboard()
+        try:
+            self.clipboard_backup = w.GetClipboardData(win32con.CF_TEXT)
+        except Exception as e:
+            self.clipboard_backup = None
+        w.CloseClipboard()
+
     def read_clip_board(self):
         # 富文本49860  文本13
         data = None
@@ -62,14 +72,19 @@ class Q:
                 data = w.GetClipboardData(13)
         except Exception as e:
             print('非QQedit')
-            pass
+
+        w.EmptyClipboard()
+
+        if self.clipboard_backup is not None:
+            w.SetClipboardData(win32con.CF_TEXT, self.clipboard_backup)
+            self.clipboard_backup = None
 
         w.CloseClipboard()
         if data is None:
             print('未get到QQ数据')
         return data
 
-    def read_clip_board_back_up(self):
+    def read_all_clipboard(self):
         format_ = None
         # while True:
         w.OpenClipboard()
@@ -81,6 +96,12 @@ class Q:
         print(format_)
         print(data)
         w.CloseClipboard()
+
+    def get_hash(self, name, ti):
+        name_hash = hash(name)
+        ti_sp = ti.split(':')
+        ti_hash = int(ti_sp[0]) * 10000 + int(ti_sp[1]) * 100 + int(ti_sp[2])
+        return name_hash + ti_hash
 
     def parse_clip_board(self,data):
         tmp = None
@@ -124,14 +145,14 @@ class Q:
                         content = content.replace('@', '')
                 tmp = None
 
-            if self.last_row == '+'.join((user, ti, content)):
+            if self.get_hash(user, ti) in self.last_row:
                 print('匹配末尾，退出')
                 break
             res.append((user, ti, content))
 
         if len(res) > 0:  # 返回前改回正序
             res.reverse()
-            self.last_row = '+'.join(res[-1])
+            self.last_row.append(self.get_hash(res[-1][0], res[-1][1]))
 
         return res
 
@@ -143,6 +164,8 @@ if __name__ == '__main__':
         q.process()
         time.sleep(15)
     pass
+
+
 
 
 #######test
