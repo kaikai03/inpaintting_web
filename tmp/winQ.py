@@ -15,9 +15,12 @@ class Q:
         self.clipboard_backup = None
 
     def get_msg(self):
-        if len(self.queue):
-            data = self.queue.pop(0)
-            return data[0]+"----"+data[2]
+        data = None
+        while len(self.queue) > 0 and data is None:
+            tmp = self.queue.pop(0)
+            if len(tmp[2]) == 0:
+                continue
+            return tmp[0]+"----"+tmp[2]
         return None
 
     def get_handle(self):
