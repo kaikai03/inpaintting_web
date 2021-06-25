@@ -85,7 +85,10 @@ def main():
             msg = q.get_msg()
             if msg:
                 print('show:', msg)
-                txt = font.render(msg, False, txt_color)
+                try:
+                    txt = font.render(msg, False, txt_color)
+                except Exception as e:
+                    print(e)
 
         if timer % (fps * 30) == 0:
             q.process()

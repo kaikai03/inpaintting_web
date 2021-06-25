@@ -58,17 +58,23 @@ class Q:
         win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
 
     def backup_clipboard(self):
-        w.OpenClipboard()
         try:
+            w.OpenClipboard()
             self.clipboard_backup = w.GetClipboardData(win32con.CF_TEXT)
+            w.CloseClipboard()
         except Exception as e:
             self.clipboard_backup = None
-        w.CloseClipboard()
+
 
     def read_clip_board(self):
         # 富文本49860  文本13
         data = None
-        w.OpenClipboard()
+        try:
+            w.OpenClipboard()
+        except Exception as e:
+            print(e)
+            return None
+
         try:
             check_data = w.GetClipboardData(49860)
             if check_data[0:len('<QQRichEditFormat>')]==b'<QQRichEditFormat>':
