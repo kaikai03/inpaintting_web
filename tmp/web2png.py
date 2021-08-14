@@ -99,6 +99,7 @@ def print_test():
 
 
     driver.get('https://test.drims.cn/view/patient/patientDetail.jsp?id=368&type=1')
+    time.sleep(0.3)
     while driver.execute_script("return typeof detailToday==='function'?detailToday('A368', 'rd_scale_physical', 309, '体格生长', 4313, '2021-08-05 15:43:55', 2119):true"):
         print('step1 wait')
         time.sleep(0.1)
@@ -111,7 +112,7 @@ def print_test():
         time.sleep(0.1)
     driver.execute_script("$('#popup_ok').trigger('click')")
 
-    time.sleep(10)
+    time.sleep(30)
     driver.quit()
 
 
