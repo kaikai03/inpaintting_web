@@ -8,7 +8,7 @@ import sys
 
 
 def on_message(ws, message):
-    print(message)
+    print("get msg:",message)
 
 
 def on_error(ws, error):
@@ -32,9 +32,9 @@ def on_open(ws):
             time.sleep(1)
 
         time.sleep(1)
-        # ws.close()
+        ws.close()
         print("Thread terminating...")
-        # time.sleep(5)
+        time.sleep(5)
 
     Thread(target=run).start()
 
